@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ورود یا ثبت‌نام | کنار</title>
+<meta name="description" content="وارد حساب کاربری کنار شوید یا یک حساب تازه بسازید و به دنیای موسیقی بی‌پایان دسترسی پیدا کنید.">
+
+<link rel="icon" href="{% static 'images/logo-mark.svg' %}" type="image/svg+xml">
+<link rel="stylesheet" href="{% static 'css/variables.css' %}">
+<link rel="stylesheet" href="{% static  'css/base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components.css' %}">
+<link rel="stylesheet" href="{% static 'css/layout.css' %}" >
+<link rel="stylesheet" href="{% static  'css/responsive.css' %}">
+</head>
+<body>
+
+<div class="auth-wrap">
+
+  <!-- ========== سمت برند ========== -->
+  <div class="auth-side">
+    <a href="index.html" class="logo">
+      <img src="{% static 'images/logo-mark.svg' %}" alt="نماد کنار">
+      کنار<span class="sub">KONAR</span>
+    </a>
+
+    <div>
+      <p class="auth-quote">«موسیقی زبانی‌ست که نیازی به ترجمه ندارد؛ کنار فقط آن را به تو نزدیک‌تر می‌کند.»</p>
+      <p class="auth-quote-by">— تیم کنار</p>
+
+      <div class="waveform is-live" data-waveform data-bars="40" data-progress="55" data-seed="auth-side" style="height:60px; margin-top:36px; position:relative; z-index:1;"></div>
+    </div>
+
+    <div style="position:relative; z-index:1; display:flex; gap:34px;">
+      <div><span class="num" style="font-family:var(--font-mono); color:var(--gold); font-size:20px;">۴۸ هزار+</span><br><span class="text-muted" style="font-size:12.5px;">ترک در دسترس</span></div>
+      <div><span class="num" style="font-family:var(--font-mono); color:var(--gold); font-size:20px;">۹۲۰+</span><br><span class="text-muted" style="font-size:12.5px;">یادداشت تحلیلی</span></div>
+    </div>
+  </div>
+
+  <!-- ========== سمت فرم ========== -->
+  <div class="auth-form-side">
+    <div class="auth-box">
+      <a href="index.html" class="logo" style="display:none;"></a>
+
+      <div class="tabs" data-tabs style="margin-bottom:30px;">
+        <button class="tab-btn is-active" data-tab-target="signin">ورود</button>
+        <button class="tab-btn" data-tab-target="signup">ثبت‌نام</button>
+      </div>
+
+      <!-- ---------- فرم ورود ---------- -->
+      <div class="tab-panel is-active" data-tab-panel="signin">
+        <h1>خوش برگشتی</h1>
+        <p class="lead">برای ادامه‌ی شنیدن، وارد حساب کاربری‌ات شو.</p>
+
+        <form action="#" method="post">
+          <!-- DJANGO: {% csrf_token %} -->
+          <div class="field">
+            <label for="login-email">ایمیل یا نام کاربری</label>
+            <input type="text" id="login-email" name="username" placeholder="example@email.com" required>
+          </div>
+          <div class="field">
+            <label for="login-pass">رمز عبور</label>
+            <input type="password" id="login-pass" name="password" placeholder="••••••••" required>
+          </div>
+
+          <div class="field-row">
+            <label class="checkbox-row"><input type="checkbox"> مرا به‌خاطر بسپار</label>
+            <a href="#" class="text-gold">فراموشی رمز عبور؟</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">ورود به حساب</button>
+        </form>
+
+        <div class="divider-or">یا ادامه با</div>
+        <div class="social-auth">
+          <a href="#" class="btn btn-outline">گوگل</a>
+          <a href="#" class="btn btn-outline">اپل</a>
+        </div>
+      </div>
+
+      <!-- ---------- فرم ثبت‌نام ---------- -->
+      <div class="tab-panel" data-tab-panel="signup">
+        <h1>ساخت حساب تازه</h1>
+        <p class="lead">در چند ثانیه عضو شو و پلی‌لیست شخصی‌ات را بساز.</p>
+
+        <form action="#" method="post">
+          <!-- DJANGO: {% csrf_token %} -->
+          <div class="field">
+            <label for="signup-name">نام و نام‌خانوادگی</label>
+            <input type="text" id="signup-name" name="full_name" placeholder="نام شما" required>
+          </div>
+          <div class="field">
+            <label for="signup-email">ایمیل</label>
+            <input type="email" id="signup-email" name="email" placeholder="example@email.com" required>
+          </div>
+          <div class="field">
+            <label for="signup-pass">رمز عبور</label>
+            <input type="password" id="signup-pass" name="password" placeholder="حداقل ۸ کاراکتر" required>
+          </div>
+
+          <div class="field-row">
+            <label class="checkbox-row"><input type="checkbox" required> با <a href="#" class="text-gold">قوانین کنار</a> موافقم</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">ساخت حساب</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
