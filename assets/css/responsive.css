@@ -1,0 +1,72 @@
+/* ==========================================================================
+   کنار | Konar — Responsive
+   ========================================================================== */
+
+@media (max-width: 1180px) {
+  .article-layout { grid-template-columns: 1fr 280px; }
+  .article-share { display: none; }
+  .genre-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-visual { order: -1; }
+  .detail-body { grid-template-columns: 1fr; }
+  .blog-layout { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: repeat(2, 1fr); }
+  .featured-post { grid-template-columns: 1fr; }
+  .featured-post img { max-height: 280px; }
+  .auth-wrap { grid-template-columns: 1fr; }
+  .auth-side { display: none; }
+  .dashboard-wrap { grid-template-columns: 1fr; }
+  .dashboard-sidebar { display: block; border-left: 0; border-bottom: 1px solid var(--line-soft); padding: 18px 16px; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 720px) {
+  :root { --header-h: 66px; }
+  .main-nav, .search-box { display: none; }
+  .nav-toggle { display: flex; }
+  .section { padding-block: 56px; }
+  .grid-4, .grid-3, .grid-2, .blog-grid { grid-template-columns: 1fr; }
+  .genre-grid { grid-template-columns: repeat(2, 1fr); }
+  .track-row { grid-template-columns: 26px 44px 1fr auto; gap: 12px; }
+  .track-row .duration { display: none; }
+  .detail-hero-inner { grid-template-columns: 1fr; }
+  .detail-cover { max-width: 240px; margin-inline: auto; }
+  .detail-info-row, .detail-actions { justify-content: center; }
+  .detail-artist { justify-content: center; }
+  .detail-meta { text-align: center; align-items: center; }
+  .article-layout { grid-template-columns: 1fr; }
+  .newsletter-banner { flex-direction: column; text-align: center; padding: 34px 24px; }
+  .newsletter-form { min-width: 0; width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .auth-form-side { padding: 34px 22px; }
+
+  .mobile-nav-panel.is-open {
+    display: flex;
+  }
+}
+
+/* منوی موبایل */
+.mobile-nav-panel {
+  display: none;
+  position: fixed;
+  inset: var(--header-h) 0 0 0;
+  background: var(--bg-base);
+  z-index: 99;
+  flex-direction: column;
+  padding: 20px;
+  gap: 4px;
+  overflow-y: auto;
+}
+.mobile-nav-panel a {
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--line-soft);
+}

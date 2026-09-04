@@ -1,0 +1,54 @@
+/* ==========================================================================
+   کنار | Konar — Design Tokens
+   تمام رنگ‌ها، فونت‌ها، فاصله‌ها و مقادیر پایه‌ی طراحی اینجا تعریف شده‌اند
+   تا در کل قالب یکدست و قابل نگهداری بمانند.
+   ========================================================================== */
+
+:root {
+  /* --- پالت اصلی: سرمه‌ای / بنفش / فیروزه‌ای --- */
+  --bg-base: #080b14;
+  --bg-elevated: #0d1220;
+  --bg-card: #11182a;
+  --bg-card-hover: #172139;
+  --bg-input: #0b1120;
+
+  --line: #26334d;
+  --line-soft: #1a2438;
+
+  --text-primary: #f1f5ff;
+  --text-secondary: #b9c4d9;
+  --text-muted: #7f8da8;
+  --text-faint: #53617b;
+
+  /* --- رنگ تاکیدی: بنفش --- */
+  --gold: #8b5cf6;
+  --gold-dim: #6d3fd1;
+  --gold-soft: rgba(139, 92, 246, 0.15);
+
+  --wine: #22c7c3;
+  --wine-dim: #159b98;
+  --wine-soft: rgba(34, 199, 195, 0.13);
+
+  --success: #34d399;
+  --danger: #f87171;
+
+  --font-display: 'Lalezar', 'Vazirmatn', sans-serif;
+  --font-body: 'Vazirmatn', 'Tahoma', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Vazirmatn', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.30);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.42);
+  --shadow-gold: 0 8px 28px rgba(139, 92, 246, 0.20);
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 0.18s;
+  --t-med: 0.32s;
+
+  --container: 1220px;
+  --header-h: 76px;
+}
