@@ -44,8 +44,8 @@
       <a href="index.html" class="logo" style="display:none;"></a>
 
       <div class="tabs" data-tabs style="margin-bottom:30px;">
-        <button class="tab-btn is-active" data-tab-target="signin">ورود</button>
-        <button class="tab-btn" data-tab-target="signup">ثبت‌نام</button>
+        <button class="tab-btn {% if active_tab == 'signin' %} is-active {% endif %}"  data-tab-target="signin">ورود</button>
+        <button class="tab-btn {% if active_tab == 'signup' %} is-active {% endif %}" data-tab-target="signup">ثبت‌نام</button>
       </div>
 
       <!-- ---------- فرم ورود ---------- -->
@@ -53,7 +53,7 @@
         <h1>خوش برگشتی</h1>
         <p class="lead">برای ادامه‌ی شنیدن، وارد حساب کاربری‌ات شو.</p>
 
-        <form action="#" method="post">
+        <form action="{% url 'accounts:login' %}" method="post">
            {% csrf_token %}
           <div class="field">
                 {% if form.login.errors %}
@@ -61,7 +61,7 @@
                 {%endif%}
 
                 {{ form.login.label}}
-                
+
                 {{ form.login}}
                 
           </div>

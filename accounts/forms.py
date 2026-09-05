@@ -65,3 +65,61 @@ class LoginForm(forms.Form):
             raise ValidationError("ایمیل یا نام کاربری اشتباه است", code="wrong_info")
 
         self.user = user
+        
+class RegisterForm(forms.Form):
+    
+    username = forms.CharField(
+        max_length=200,
+        label= "نام کاربری",
+        required=True,
+        widget=forms.TextInput(attrs={
+            "placeholder":"نام کاربری شما"
+        })
+        )
+    email = forms.EmailField(
+        required=True,
+        label="ایمیل",
+        widget=forms.EmailInput(attrs={
+            "placeholder":"example@email.com"
+        })
+    )
+    password = forms.CharField(
+        required=True,
+        label="رمز عبور",
+        widget=forms.PasswordInput(attrs={
+            "placeholder":"حداقل ۸ کاراکتر"
+        })
+    )
+    password1 = forms.CharField(
+            required=True,
+            label="تکرار رمز عبور",
+            widget=forms.PasswordInput(attrs={
+                "placeholder":"حداقل ۸ کاراکتر"
+            })
+        )
+    
+    def clean_username(self):
+        
+        username = self.cleaned_data.get("username")
+        
+        if User.objects.filter(username=username).exists():
+            raise ValidationError("این نام کاربری قبلا ثبت شده است", code="username_exist")
+        
+        return username
+    
+    def clean_email(self):
+        
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("ایمیل متعلق به اکانت دیگری است ", code="email_exist")
+        
+        return email
+        
+    def clean(self):
+        
+        password1 = self.cleaned_data.get("password")
+        password2 = self.cleaned_data.get("password1")
+        
+        if password1 != password2 :
+            raise ValidationError("رمز عبور و تکرار آن یکسان نیست", code="not_same_pass")
+            
