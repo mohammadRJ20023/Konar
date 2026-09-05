@@ -9,7 +9,7 @@ from .forms import LoginForm
 def LoginView(request):
     
     if request.user.is_authenticated:
-        redirect("core:home")
+        return redirect("core:home")
     
     if request.method == "POST":
     

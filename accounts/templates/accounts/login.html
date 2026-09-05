@@ -54,19 +54,35 @@
         <p class="lead">برای ادامه‌ی شنیدن، وارد حساب کاربری‌ات شو.</p>
 
         <form action="#" method="post">
-          <!-- DJANGO: {% csrf_token %} -->
+           {% csrf_token %}
           <div class="field">
-            <label for="login-email">ایمیل یا نام کاربری</label>
-            <input type="text" id="login-email" name="username" placeholder="example@email.com" required>
+                {% if form.login.errors %}
+                  <div class="alert alert-danger ">{{ form.login.errors }}</div>
+                {%endif%}
+
+                {{ form.login.label}}
+                
+                {{ form.login}}
+                
           </div>
           <div class="field">
-            <label for="login-pass">رمز عبور</label>
-            <input type="password" id="login-pass" name="password" placeholder="••••••••" required>
+                {% if form.password.errors %}
+                  <div class="alert alert-danger ">{{ form.password.errors }}</div>
+                {%endif%}
+
+                {{ form.password.label}}
+
+                {{ form.password}}
           </div>
 
           <div class="field-row">
-            <label class="checkbox-row"><input type="checkbox"> مرا به‌خاطر بسپار</label>
-            <a href="#" class="text-gold">فراموشی رمز عبور؟</a>
+                <label
+        class="checkbox-row"
+        for="{{ form.remember_me.id_for_label }}"
+    >
+        {{ form.remember_me }}
+        <span>{{ form.remember_me.label }}</span>
+    </label>
           </div>
 
           <button type="submit" class="btn btn-primary btn-block">ورود به حساب</button>
