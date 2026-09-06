@@ -34,7 +34,8 @@ def LoginView(request):
             return redirect("core:home")
     else :
         form = LoginForm()
-    return render(request, "accounts/login.html", {"form":form})
+    register_form = RegisterForm()
+    return render(request, "accounts/login.html", {"form":form, "register_form":register_form, "active_tab":"signin"})
 
 
 def RegisterView(request):
@@ -50,9 +51,13 @@ def RegisterView(request):
             email = form.cleaned_data.get("email")
             password = form.cleaned_data.get("password")
             
-            User.objects.create(username=username, email=email, password=password)
+            user=User.objects.create_user(username=username, email=email, password=password)
+            login (request, user)
+            return redirect("core:home")
     else:
         
-        form = RegisterForm()
+        register_form = RegisterForm()
         
-    return render(request, "accounts/login.html" {"form":form})
+    form = LoginForm()
+        
+    return render(request, "accounts/login.html", {"register_form":register_form, "form":form, "active_tab":"signup"})

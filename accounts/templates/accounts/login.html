@@ -49,7 +49,7 @@
       </div>
 
       <!-- ---------- فرم ورود ---------- -->
-      <div class="tab-panel is-active" data-tab-panel="signin">
+      <div class="tab-panel {% if active_tab == 'signin' %} is-active {% endif %}" data-tab-panel="signin">
         <h1>خوش برگشتی</h1>
         <p class="lead">برای ادامه‌ی شنیدن، وارد حساب کاربری‌ات شو.</p>
 
@@ -96,24 +96,49 @@
       </div>
 
       <!-- ---------- فرم ثبت‌نام ---------- -->
-      <div class="tab-panel" data-tab-panel="signup">
+      <div class="tab-panel {% if active_tab == 'signup' %} is-active {% endif %}" data-tab-panel="signup">
         <h1>ساخت حساب تازه</h1>
         <p class="lead">در چند ثانیه عضو شو و پلی‌لیست شخصی‌ات را بساز.</p>
 
-        <form action="#" method="post">
-          <!-- DJANGO: {% csrf_token %} -->
+        <form action="{% url 'accounts:register' %}" method="post">
+            {% csrf_token %}
           <div class="field">
-            <label for="signup-name">نام و نام‌خانوادگی</label>
-            <input type="text" id="signup-name" name="full_name" placeholder="نام شما" required>
+                {% if register_form.username.errors %}
+                  <div class="alert alert-danger ">{{ register_form.username.errors }}</div>
+                {%endif%}
+
+                {{ register_form.username.label}}
+
+                {{ register_form.username}}
           </div>
           <div class="field">
-            <label for="signup-email">ایمیل</label>
-            <input type="email" id="signup-email" name="email" placeholder="example@email.com" required>
+                {% if register_form.email.errors %}
+                  <div class="alert alert-danger ">{{ register_form.email.errors }}</div>
+                {%endif%}
+
+                {{ register_form.email.label}}
+
+                {{ register_form.email}}
           </div>
           <div class="field">
-            <label for="signup-pass">رمز عبور</label>
-            <input type="password" id="signup-pass" name="password" placeholder="حداقل ۸ کاراکتر" required>
+              {% if register_form.password.errors %}
+                  <div class="alert alert-danger ">{{ register_form.password.errors }}</div>
+                {%endif%}
+
+                {{ register_form.password.label}}
+
+                {{ register_form.password}}
           </div>
+          <div class="field">
+              {% if register_form.password1.errors %}
+                  <div class="alert alert-danger ">{{ register_form.password1.errors }}</div>
+                {%endif%}
+
+                {{ register_form.password1.label}}
+
+                {{ register_form.password1}}
+          </div>
+
 
           <div class="field-row">
             <label class="checkbox-row"><input type="checkbox" required> با <a href="#" class="text-gold">قوانین کنار</a> موافقم</label>
