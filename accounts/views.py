@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from .forms import LoginForm
+from django.contrib.auth.models import User
+from .forms import LoginForm, RegisterForm
 
 
 
@@ -21,9 +22,8 @@ def LoginView(request):
             login(request, user)
             
             if form.cleaned_data["remember_me"]:
-                request.session.set_expiry(
-                    60 * 60 * 24 * 30
-                )
+                request.session.set_expiry(60 * 60 * 24 * 30)
+                
             else:
                 request.session.set_expiry(0)
 
@@ -35,3 +35,24 @@ def LoginView(request):
     else :
         form = LoginForm()
     return render(request, "accounts/login.html", {"form":form})
+
+
+def RegisterView(request):
+    
+    
+    if request.method == "POST":
+        
+        form = RegisterForm(request.POST)
+        
+        if form.is_valid():
+            
+            username = form.cleaned_data.get("username")
+            email = form.cleaned_data.get("email")
+            password = form.cleaned_data.get("password")
+            
+            User.objects.create(username=username, email=email, password=password)
+    else:
+        
+        form = RegisterForm()
+        
+    return render(request, "accounts/login.html" {"form":form})
