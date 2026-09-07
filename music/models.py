@@ -12,7 +12,22 @@ class Genre(models.Model):
             self.slug = slugify(self.name , allow_unicode=True)
         super(Genre, self).save()
     
-
     def __str__(self):
         
         return self.name
+    
+class Artist(models.Model):
+    name = models.CharField(max_length=200, null=False, blank=False)
+    slug = models.SlugField(unique=True, blank=True, allow_unicode=True)
+    bio = models.TextField(blank=False, null=False)
+    image = models.ImageField(upload_to="images/Artists", blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+                    self.slug = slugify(self.name , allow_unicode=True)
+        super(Artist, self).save()
+        
+    def __str__(self):
+        return self.name
+            
