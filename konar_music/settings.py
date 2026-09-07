@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     #my_app :
     'core.apps.CoreConfig',
     'accounts.apps.AccountsConfig',
+    'music.apps.MusicConfig'
     
     'django_cleanup.apps.CleanupConfig'
 ]

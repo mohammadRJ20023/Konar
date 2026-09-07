@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from .forms import LoginForm, RegisterForm
+from datetime import timedelta
 
 
 
@@ -22,7 +23,7 @@ def LoginView(request):
             login(request, user)
             
             if form.cleaned_data["remember_me"]:
-                request.session.set_expiry(60 * 60 * 24 * 30)
+                request.session.set_expiry(int(timedelta(days=30).total_seconds()))
                 
             else:
                 request.session.set_expiry(0)
@@ -43,9 +44,9 @@ def RegisterView(request):
     
     if request.method == "POST":
         
-        form = RegisterForm(request.POST)
+        register_form = RegisterForm(request.POST)
         
-        if form.is_valid():
+        if register_form.is_valid():
             
             username = form.cleaned_data.get("username")
             email = form.cleaned_data.get("email")
