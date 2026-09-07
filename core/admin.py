@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import AppStat
 
-# Register your models here.
+
+@admin.register(AppStat)
+class AppStatsAdmin(admin.ModelAdmin):
+    list_display = ("title", "user_count", "song_count",)
