@@ -70,3 +70,56 @@
   font-weight: 600;
   border-bottom: 1px solid var(--line-soft);
 }
+
+@media (max-width: 900px) {
+  .artist-hero-inner { grid-template-columns: 120px 1fr; }
+  .artist-avatar-wrap { width:120px; height:120px; }
+  .artist-play-all { grid-column: 1 / -1; justify-self: start; }
+  .artist-layout { grid-template-columns: 1fr; }
+  .artist-sidebar { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .global-player { grid-template-columns: 46px minmax(100px,1fr) auto auto auto; }
+  .global-player-progress { grid-column: 1 / -1; grid-row: 2; }
+  .global-player-cover { width:46px;height:46px; }
+}
+@media (max-width: 600px) {
+  .artist-hero-inner { grid-template-columns: 1fr; text-align:center; }
+  .artist-avatar-wrap { margin-inline:auto; }
+  .artist-stats { justify-content:center; }
+  .artist-play-all { grid-column:auto; justify-self:center; }
+  .artist-layout { gap:24px; }
+  .artist-sidebar { grid-template-columns: 1fr; }
+  .artist-track-list .track-row { grid-template-columns: 30px 46px 1fr auto; gap:10px; }
+  .artist-track-list .waveform,
+  .artist-track-list .duration { display:none; }
+  .global-player { right:10px; left:10px; bottom:10px; gap:8px; padding:8px 10px; }
+  .global-player .icon-btn[data-gp-prev],
+  .global-player .icon-btn[data-gp-next] { display:none; }
+}
+
+@media (max-width: 720px) {
+  .inner-page .tabs {
+    position: static;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .inner-page .tabs::-webkit-scrollbar { display:none; }
+  .inner-page .tab-btn { white-space: nowrap; padding: 10px 14px; }
+  .inner-page .player { padding: 20px 16px; }
+  .inner-page .player-top { gap: 12px; }
+  .inner-page .player-controls { gap: 8px; }
+  .inner-page .player-bottom { align-items: flex-start; }
+  .inner-page .player-bottom > div:last-child { width:100%; }
+  .inner-page .global-player {
+    grid-template-columns: 46px minmax(0,1fr) auto auto;
+    min-height: 70px;
+  }
+  .inner-page .global-player-progress { grid-column: 1 / -1; }
+  .inner-page .global-player .global-player-meta { min-width:0; }
+  .inner-page .global-player .icon-btn[data-gp-prev],
+  .inner-page .global-player .icon-btn[data-gp-next] { display:none; }
+  .inner-page .embed-track {
+    display:grid;
+    grid-template-columns:56px 1fr auto;
+  }
+  .inner-page .embed-track .btn { grid-column:2 / -1; justify-self:start; margin-top:8px; }
+}

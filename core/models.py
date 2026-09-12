@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from music.models import Song
+from music.models import Track
 
 
 
@@ -14,7 +14,7 @@ class AppStat(models.Model):
     def save(self, *args, **kwargs):
         if self.user_count is None or self.song_count is None:
             self.user_count = User.objects.all().count()
-            self.song_count = Song.objects.all().count()
+            self.song_count = Track.objects.all().count()
         super(AppStat, self).save()
     
     def __str__(self):

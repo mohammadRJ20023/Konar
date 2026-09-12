@@ -53,14 +53,16 @@ class Album(models.Model):
         ordering= ["-created_at"]
         
 
-class Song(models.Model):
+class Track(models.Model):
     title = models.CharField(max_length=500)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name="songs")
     album = models.ForeignKey(Album, on_delete=models.SET_NULL, blank=True, null=True, related_name="songs")
     genre = models.ManyToManyField(Genre, related_name="songs")
+    lyrics = models.TextField(null=True, blank=True)
     audio_file = models.FileField(null=False, blank=False, upload_to="songs/")
     cover = models.ImageField(null=False, blank=False, upload_to="images/Songs")
     duration = models.PositiveIntegerField(blank=True, null=True, editable=False)
+    release_date = models.DateField(null=True, blank=True)
     play_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(blank=True,unique=True, allow_unicode=True)

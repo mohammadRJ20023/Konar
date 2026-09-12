@@ -1,0 +1,286 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html dir="rtl" lang="fa">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>بی‌قرار — آرمان کیا | کنار</title>
+<meta content="پخش و دانلود آهنگ «بی‌قرار» از آرمان کیا، از آلبوم موج هزارم. متن کامل آهنگ همراه با ترک‌های دیگر آلبوم." name="description"/>
+<link href="{% static 'images/logo-mark.svg' %}" rel="icon" type="image/svg+xml"/>
+<link href="{% static 'css/variables.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/base.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/components.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/layout.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/player-v13.css' %}" rel="stylesheet"/>
+</head>
+<body class="inner-page detail-page">
+<!-- ========== هدر ========== -->
+<header class="site-header">
+<div class="container header-inner">
+<a class="logo" href="index.html">
+<img alt="نماد کنار" src="{% static 'images/logo-mark.svg' %}"/>
+      کنار<span class="sub">KONAR</span>
+</a>
+<nav class="main-nav">
+<a href="index.html">خانه</a>
+<a class="is-active" href="index.html#explore">کاوش</a>
+<a href="blog.html">وبلاگ</a>
+<a href="dashboard.html">پنل کاربری</a>
+</nav>
+<div class="header-actions">
+<div class="search-box">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+<input placeholder="جستجوی آهنگ، آلبوم یا هنرمند..." type="text"/>
+</div>
+<a class="btn btn-outline btn-sm" href="login.html">ورود</a>
+<button aria-expanded="false" aria-label="باز کردن منو" class="nav-toggle">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" viewbox="0 0 24 24"><line x1="4" x2="20" y1="7" y2="7"></line><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="17" y2="17"></line></svg>
+</button>
+</div>
+</div>
+<div class="mobile-nav-panel">
+<a href="index.html">خانه</a>
+<a href="songs.html">آهنگ‌ها</a><a href="artist.html">هنرمندان</a>
+<a href="index.html#explore">کاوش</a>
+<a href="blog.html">وبلاگ</a>
+<a href="dashboard.html">پنل کاربری</a>
+<a href="login.html">ورود / ثبت‌نام</a>
+</div>
+</header>
+<main>
+      
+<section class="detail-hero">
+<div class="container detail-hero-inner">
+<div class="detail-cover" data-detail-cover-wrap>
+<img alt="جلد آهنگ بی‌قرار" data-detail-cover src="{{ track.cover.url }}"/>
+<div class="detail-cover-badge"><span class="dot"></span> اکنون در حال پخش</div>
+</div>
+<div class="detail-meta">
+<span class="badge badge-gold" data-detail-album>{% if track.album %}{{track.album.title}}{% endif %}</span>
+<h1 class="detail-title" data-detail-title>{{ track.title }}</h1>
+<div class="detail-artist">
+<img alt=" {{ track.artist.name }}" src="{{ track.artist.image.url }}"/>
+<a href="artist.html" data-detail-artist> {{ track.artist.name }}</a>
+<span class="text-muted" data-detail-feat></span>
+</div>
+<div class="detail-info-row">
+<span><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><rect height="16" rx="2" width="18" x="3" y="5"></rect><line x1="16" x2="16" y1="3" y2="7"></line><line x1="8" x2="8" y1="3" y2="7"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg> <span data-detail-release>{{track.release_date|date:'d F Y'}}</span></span>
+<span><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg> <span data-detail-duration>{{ track.duration_display }}</span></span>
+<span><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg> <span data-detail-plays> {{ track.play_count }} بازدید</span></span>
+<span class="tag" data-detail-quality>MP3 320</span>
+<span class="tag">{% for genre in track.genre.all %}{{ genre.name }}{% endfor %}</span>
+</div>
+<div class="detail-actions">
+<a class="btn btn-primary" data-detail-download href="{{ track.audio_file.url }}">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M5 21h14"></path></svg>
+            دانلود با کیفیت ۳۲۰
+          </a>
+<button aria-label="افزودن به علاقه‌مندی‌ها" class="icon-btn"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="M12 21s-7.5-4.9-10-9.2C.3 8.4 2 4.5 6 4.2c2.2-.2 3.8 1 6 3.3 2.2-2.3 3.8-3.5 6-3.3 4 .3 5.7 4.2 4 7.6C19.5 16.1 12 21 12 21z"></path></svg></button>
+<button aria-label="افزودن به پلی‌لیست" class="icon-btn"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><line x1="4" x2="16" y1="6" y2="6"></line><line x1="4" x2="16" y1="12" y2="12"></line><line x1="4" x2="10" y1="18" y2="18"></line><circle cx="20" cy="16" r="2.4"></circle><line x1="20" x2="20" y1="6" y2="13.6"></line></svg></button>
+<button aria-label="اشتراک‌گذاری" class="icon-btn"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.6" x2="15.4" y1="10.6" y2="6.4"></line><line x1="8.6" x2="15.4" y1="13.4" y2="17.6"></line></svg></button>
+</div>
+</div>
+</div>
+</section>
+<!-- ========== پلیر اصلی ========== -->
+<section class="section" style="padding-block:44px;">
+<div class="container">
+
+<div class="player detail-player-pro" data-duration-seconds="{{ track.duration }}" data-player data-src="{{ track.audio_file.url }}" data-title="{{track.title}}" data-artist=" {{track.artist.name }}" data-cover="{{ track.cover.url }}" data-album="{% if track.album %}{{track.album.title}}{% endif %} " data-release="{{track.release_date|date:'d F Y' }}" data-plays="{{ track.play_count }}بازدید" data-genre="{{ track.genre }}" data-quality="MP3 320">
+  <div class="detail-player-glow"></div>
+  <div class="detail-player-head">
+    <div class="detail-player-ident">
+      <div class="detail-player-cover"><img src="{{ track.cover.url }}" alt="{{ track.title }}"></div>
+      <div><span class="eyebrow">پخش آنلاین</span><h3 data-detail-player-title>{{ track.title}}</h3><p data-detail-player-artist> {{ track.artist.name }} | {{ track.title }}   </p></div>
+    </div>
+    <span class="detail-player-status" data-player-status>آماده پخش</span>
+  </div>
+  <div class="detail-wave-shell">
+    <div class="waveform detail-wave" data-bars="96" data-seed="detail-pro" data-waveform></div>
+    <div class="detail-progress-visual" aria-hidden="true"><span class="detail-progress-fill"></span><i class="detail-progress-thumb"></i></div>
+    <input aria-label="پیشرفت پخش آهنگ" class="detail-progress" data-detail-progress max="100" min="0" step="0.1" type="range" value="0">
+    <div class="player-time"><span data-current-time>۰:۰۰</span><span data-duration>۳:۵۰</span></div>
+  </div>
+  <div class="detail-player-actions">
+    <button class="player-action seek-action" data-detail-action="forward" type="button" aria-label="۱۰ ثانیه جلو"><span>10</span>↷</button>
+    <button class="detail-play-main" data-detail-action="play" type="button" aria-label="پخش"><svg viewBox="0 0 24 24"><path d="M8 5.5v13L19 12 8 5.5Z"></path></svg></button>
+    <button class="player-action seek-action" data-detail-action="back" type="button" aria-label="۱۰ ثانیه عقب">↶<span>10</span></button>
+  </div>
+  <div class="detail-player-footer">
+    <button class="player-action player-volume-btn" data-detail-action="mute" type="button" aria-label="صدا">🔊</button>
+    <input class="detail-volume" data-volume max="100" min="0" type="range" value="80" aria-label="صدا">
+    <span class="tag">MP3 320</span><span class="tag">FLAC</span>
+  </div>
+</div>
+</div>
+</section>
+<!-- ========== بدنه‌ی اصلی: متن، تب‌ها، سایدبار ========== -->
+<section class="container detail-body">
+<div>
+<!-- DJANGO: تب و پنل «ترک‌های آلبوم» فقط وقتی track.kind == 'album_track' باشد نمایش داده شود -->
+<div aria-label="اطلاعات آهنگ" class="tabs" data-tabs="" role="tablist">
+<button aria-selected="true" class="tab-btn is-active" data-tab-target="lyrics" role="tab" type="button">متن آهنگ</button>
+<button aria-selected="false" class="tab-btn" data-tab-target="album" role="tab" type="button">ترک‌های آلبوم</button>
+<button aria-selected="false" class="tab-btn" data-tab-target="about" role="tab" type="button">درباره‌ی ترک</button>
+<button aria-selected="false" class="tab-btn" data-tab-target="comments" role="tab" type="button">دیدگاه‌ها (۳۴)</button>
+</div>
+<div class="tab-panel is-active" data-tab-panel="lyrics">
+<div class="lyrics-reader">
+  <div class="lyrics-reader-head">
+    <div><span class="lyrics-overline">متن آهنگ</span><h3> {{ track.title }} - {{ track.artist.name }}</h3><p>خطوط متن بر اساس فاصله‌های اصلی آهنگ نمایش داده می‌شوند.</p></div>
+    <button class="lyrics-copy-btn" type="button" data-analyze-lyrics aria-label="تحلیل متن آهنگ">✦ <span>تحلیل</span></button>
+    <button class="lyrics-copy-btn" type="button" data-copy-lyrics aria-label="کپی متن آهنگ">▣ <span>کپی متن</span></button>
+  </div>
+  <div class="lyrics-block lyrics-pro" data-lyrics-view>
+    <p class="lyrics-paragraph">
+      <span class="lyrics-line">{{ track.lyrics }}</span>
+      
+    </p>
+    
+  </div>
+</div>
+</div>
+<div class="tab-panel" data-tab-panel="album">
+<div class="sidebar-box" style="margin-bottom:0;">
+<h4>موج هزارم <span>۱۰ ترک</span></h4>
+<div class="track-list">
+<!-- DJANGO: {% for t in album.tracks.all %} -->
+<div class="track-row" data-artist="آرمان کیا" data-cover="images/cover-02.svg" data-duration="220" data-album="موج هزارم" data-release="۱۲ شهریور ۱۴۰۴" data-plays="۱۴۲ هزار" data-genre="الکترونیک" data-quality="MP3 320" data-src="/media/tracks/شب-بی-پایان.mp3" data-title="شب بی‌پایان" data-track="">
+<span class="idx">۰۱</span>
+<a class="cover-sm" data-album-select href="detail.html"><img alt="شب بی‌پایان" src="images/cover-02.svg"/></a>
+<div class="meta"><h4>شب بی‌پایان</h4><a class="artist-link" href="artist.html">آرمان کیا</a></div>
+<button aria-label="پخش شب بی‌پایان" class="icon-btn" data-play-track="" type="button"><svg fill="currentColor" viewbox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg></button>
+<span class="duration">۳:۴۰</span>
+</div>
+<div class="track-row" data-artist="آرمان کیا" data-cover="images/cover-03.svg" data-duration="178" data-album="موج هزارم" data-release="۱۲ شهریور ۱۴۰۴" data-plays="۱۴۲ هزار" data-genre="الکترونیک" data-quality="MP3 320" data-src="/media/tracks/رقص-باد.mp3" data-title="رقص باد" data-track="">
+<span class="idx">۰۲</span>
+<a class="cover-sm" data-album-select href="detail.html"><img alt="رقص باد" src="images/cover-03.svg"/></a>
+<div class="meta"><h4>رقص باد</h4><a class="artist-link" href="artist.html">آرمان کیا</a></div>
+<button aria-label="پخش رقص باد" class="icon-btn" data-play-track="" type="button"><svg fill="currentColor" viewbox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg></button>
+<span class="duration">۲:۵۸</span>
+</div>
+<div class="track-row" data-artist="آرمان کیا" data-cover="images/cover-01.svg" data-duration="230" data-album="موج هزارم" data-release="۱۲ شهریور ۱۴۰۴" data-plays="۲۱۸ هزار" data-genre="الکترونیک" data-quality="MP3 320" data-src="/media/tracks/بی-قرار.mp3" data-title="بی‌قرار" data-track="">
+<span class="idx">۰۳</span>
+<a class="cover-sm" data-album-select href="detail.html"><img alt="بی‌قرار" src="images/cover-01.svg"/></a>
+<div class="meta"><h4>بی‌قرار</h4><a class="artist-link" href="artist.html">آرمان کیا</a></div>
+<button aria-label="پخش بی‌قرار" class="icon-btn" data-play-track="" type="button"><svg fill="currentColor" viewbox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg></button>
+<span class="duration">۳:۵۰</span>
+</div>
+<div class="track-row" data-artist="آرمان کیا" data-cover="images/cover-04.svg" data-duration="202" data-album="موج هزارم" data-release="۱۲ شهریور ۱۴۰۴" data-plays="۱۴۲ هزار" data-genre="الکترونیک" data-quality="MP3 320" data-src="/media/tracks/اتاق-آبی.mp3" data-title="اتاق آبی" data-track="">
+<span class="idx">۰۴</span>
+<a class="cover-sm" data-album-select href="detail.html"><img alt="اتاق آبی" src="images/cover-04.svg"/></a>
+<div class="meta"><h4>اتاق آبی</h4><a class="artist-link" href="artist.html">آرمان کیا</a></div>
+<button aria-label="پخش اتاق آبی" class="icon-btn" data-play-track="" type="button"><svg fill="currentColor" viewbox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg></button>
+<span class="duration">۳:۲۲</span>
+</div>
+<!-- DJANGO: {% endfor %} -->
+</div>
+</div>
+</div>
+<div class="tab-panel" data-tab-panel="about">
+<p style="color:var(--text-secondary); font-size:15.5px; line-height:2;">
+          «بی‌قرار» سومین ترک آلبوم «موج هزارم» است؛ ترکیبی از سازهای الکترونیک با ملودی‌های
+          مقام‌محورِ موسیقی ایرانی. آرمان کیا در این قطعه با صدای سایه همراه شده تا حس فاصله
+          و دلتنگی را در بستری مینیمال روایت کند. میکس نهایی در استودیوی «نُت سیاه» در تهران انجام شده است.
+        </p>
+<div class="grid-2" style="margin-top:26px; gap:16px;">
+<div class="sidebar-box" style="margin-bottom:0;">
+<h4>سازندگان</h4>
+<p class="text-muted" style="font-size:14px;">تنظیم: پویا صدر<br/>میکس و مسترینگ: استودیو نت سیاه<br/>ترانه‌سرا: آرمان کیا</p>
+</div>
+<div class="sidebar-box" style="margin-bottom:0;">
+<h4>اطلاعات فنی</h4>
+<p class="text-muted" style="font-size:14px;">گام: دو مینور<br/>تمپو: ۹۲ ضربه در دقیقه<br/>فرمت: MP3 320 / FLAC</p>
+</div>
+</div>
+</div>
+<div class="tab-panel" data-tab-panel="comments">
+<!-- DJANGO: {% for comment in track.comments.all %} -->
+<div class="comment">
+<img alt="" src="images/avatar-02.svg"/>
+<div>
+<div class="head"><h5>سارا احمدی</h5><span>۲ روز پیش</span></div>
+<p>میکس این ترک فوق‌العاده‌ست، خصوصاً قسمت کورس که سازهای سنتی میان.</p>
+</div>
+</div>
+<div class="comment">
+<img alt="" src="images/avatar-03.svg"/>
+<div>
+<div class="head"><h5>رضا کمالی</h5><span>۵ روز پیش</span></div>
+<p>صدای سایه تو این قطعه یه حس متفاوتی داره، منتظر آلبوم بعدی‌شون هستم.</p>
+</div>
+</div>
+<!-- DJANGO: {% endfor %} -->
+<form class="comment-form" id="comment-form" style="margin-top:26px;">
+<div class="field">
+<label for="comment-name">نام شما</label>
+<input id="comment-name" placeholder="نام خود را وارد کنید" required="" type="text"/>
+</div>
+<div class="field">
+<label for="comment-text">دیدگاه شما</label>
+<textarea id="comment-text" placeholder="نظرت رو درباره‌ی این ترک بنویس..." required="" rows="3"></textarea>
+</div>
+<button class="btn btn-primary btn-sm" type="submit">ارسال دیدگاه</button>
+<p class="form-message" id="comment-message" role="status"></p>
+</form>
+</div>
+</div>
+<!-- ========== سایدبار ========== -->
+<aside>
+<div class="sidebar-box">
+<h4>بیشتر از آرمان کیا</h4>
+<div class="track-list">
+<div class="track-row" data-artist="سینگل · ۵:۰۱" data-cover="images/cover-05.svg" data-src="/media/tracks/خاطرات-بی-رنگ.mp3" data-title="خاطرات بی‌رنگ" data-track="" style="grid-template-columns: 44px 1fr auto; padding-inline:0;">
+<a class="cover-sm" href="detail.html" style="width:44px; height:44px;"><img alt="" src="images/cover-05.svg"/></a>
+<div class="meta"><h4 style="font-size:14px;">خاطرات بی‌رنگ</h4><a class="artist-link" href="artist.html">سینگل · ۵:۰۱</a></div>
+</div>
+<div class="track-row" data-artist="آلبوم · ۸ ترک" data-cover="images/cover-06.svg" data-src="/media/tracks/کوچه-های-خیس.mp3" data-title="کوچه‌های خیس" data-track="" style="grid-template-columns: 44px 1fr auto; padding-inline:0;">
+<a class="cover-sm" href="detail.html" style="width:44px; height:44px;"><img alt="" src="images/cover-06.svg"/></a>
+<div class="meta"><h4 style="font-size:14px;">کوچه‌های خیس</h4><a class="artist-link" href="artist.html">آلبوم · ۸ ترک</a></div>
+</div>
+</div>
+</div>
+</aside>
+</section>
+</main>
+<!-- ========== فوتر ========== -->
+</div><footer class="site-footer">
+<div class="container">
+<div class="footer-grid">
+<div class="footer-col">
+<a class="logo" href="index.html">
+<img alt="نماد کنار" src="images/logo-mark.svg"/>
+          کنار<span class="sub">KONAR</span>
+</a>
+<p class="footer-desc">کنار پلتفرمی برای شنیدن، کشف و درک عمیق‌تر موسیقی است.</p>
+<div class="social-row">
+<a aria-label="اینستاگرام" class="icon-btn" href="#"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24"><rect height="18" rx="5" width="18" x="3" y="3"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" fill="currentColor" r="0.6" stroke="none"></circle></svg></a>
+<a aria-label="تلگرام" class="icon-btn" href="#"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewbox="0 0 24 24"><path d="M21 3.5L2.8 10.7c-.8.3-.8.9.1 1.2l4.6 1.5L19.5 6l-9.6 8.4-.3 4.5c.4 0 .6-.2.9-.4l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.7L21.9 5c.3-1.1-.4-1.7-1.4-1.4z"></path></svg></a>
+<a aria-label="یوتیوب" class="icon-btn" href="#"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewbox="0 0 24 24"><rect height="13" rx="3.5" width="19" x="2.5" y="5.5"></rect><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"></path></svg></a>
+</div>
+</div>
+<div class="footer-col">
+<h4>کاوش</h4>
+<ul><li><a href="index.html">ترک‌های پرطرفدار</a></li><li><a href="index.html">آلبوم‌های تازه</a></li><li><a href="blog.html">وبلاگ تحلیلی</a></li></ul>
+</div>
+<div class="footer-col">
+<h4>حساب کاربری</h4>
+<ul><li><a href="login.html">ورود</a></li><li><a href="login.html">ثبت‌نام</a></li><li><a href="dashboard.html">پنل کاربری</a></li></ul>
+</div>
+<div class="footer-col">
+<h4>کنار</h4>
+<ul><li><a href="index.html">درباره ما</a></li><li><a href="index.html">تماس با ما</a></li><li><a href="index.html">حریم خصوصی</a></li></ul>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© ۱۴۰۴ کنار. تمام حقوق محفوظ است.</span>
+<span>ساخته‌شده با ♪ برای عاشقان موسیقی</span>
+</div>
+</div>
+</footer>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/player.js' %}"></script>
+</body>
+</html>
