@@ -55,9 +55,9 @@ class Album(models.Model):
 
 class Track(models.Model):
     title = models.CharField(max_length=500)
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name="songs")
-    album = models.ForeignKey(Album, on_delete=models.SET_NULL, blank=True, null=True, related_name="songs")
-    genre = models.ManyToManyField(Genre, related_name="songs")
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name="tracks")
+    album = models.ForeignKey(Album, on_delete=models.SET_NULL, blank=True, null=True, related_name="tracks")
+    genre = models.ManyToManyField(Genre, related_name="tracks")
     lyrics = models.TextField(null=True, blank=True)
     audio_file = models.FileField(null=False, blank=False, upload_to="songs/")
     cover = models.ImageField(null=False, blank=False, upload_to="images/Songs")

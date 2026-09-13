@@ -33,14 +33,14 @@
     volume: 0.8,
     muted: false,
     lastVolume: 0.8,
-    detailSource: null
+    detailSource: null,
+    detailTrack: null
   };
 
   let gp = null;
   let saveTimer = null;
   let beatFrame = 0;
   let playbackFrame = 0;
-  let gpProgressDragging = false;
 
   document.addEventListener('DOMContentLoaded', init);
 
@@ -50,7 +50,6 @@
     collectQueue();
     initTrackTriggers();
     initDetailPage();
-    initTabs();
     setupLyricsCopy();
     restoreSettings();
     restoreState();
@@ -108,18 +107,7 @@
     gp.querySelector('[data-gp-play]').addEventListener('click', togglePlay);
     gp.querySelector('[data-gp-back]').addEventListener('click', () => seekBy(-10));
     gp.querySelector('[data-gp-forward]').addEventListener('click', () => seekBy(10));
-    const gpProgressInput = gp.querySelector('[data-gp-progress]');
-    gpProgressInput.addEventListener('input', e => seekPercent(Number(e.target.value)));
-    gpProgressInput.addEventListener('pointerdown', () => { gpProgressDragging = true; });
-    const endGpProgressDrag = () => {
-      if (!gpProgressDragging) return;
-      gpProgressDragging = false;
-      syncAll();
-    };
-    gpProgressInput.addEventListener('pointerup', endGpProgressDrag);
-    gpProgressInput.addEventListener('pointercancel', endGpProgressDrag);
-    gpProgressInput.addEventListener('change', endGpProgressDrag);
-    gpProgressInput.addEventListener('blur', endGpProgressDrag);
+    gp.querySelector('[data-gp-progress]').addEventListener('input', e => seekPercent(Number(e.target.value)));
     gp.querySelector('[data-gp-mute]').addEventListener('click', toggleMute);
     gp.querySelector('[data-gp-volume]').addEventListener('input', e => setVolume(Number(e.target.value) / 100));
     gp.querySelector('[data-gp-artist-link]').addEventListener('click', e => {
@@ -234,59 +222,67 @@
     const detailPlayer = document.querySelector('[data-player]');
     const firstTrack = detailPlayer ? readTrack(detailPlayer) : null;
     if (!detailPlayer || !firstTrack?.title) return;
-    state.detailSource = detailPlayer;
 
-    // Make the dedicated player a rich visual companion to the floating player.
+    // IMPORTANT:
+    // state.track = آهنگی که واقعاً در Global Player در حال پخش است.
+    // state.detailTrack = آهنگی که صفحه جزئیات مربوط به آن است.
+    // این دو نباید هیچ‌وقت با هم جایگزین شوند.
+    state.detailSource = detailPlayer;
+    state.detailTrack = firstTrack;
+
     detailPlayer.querySelectorAll('[data-detail-action]').forEach(button => {
       button.addEventListener('click', () => {
         const action = button.dataset.detailAction;
-        if (action === 'play') togglePlay();
-        if (action === 'back') seekBy(-10);
-        if (action === 'forward') seekBy(10);
+        if (action === 'play') {
+          playDetailTrack();
+          return;
+        }
+        if (action === 'back') {
+          if (sameTrack(state.track, state.detailTrack)) seekBy(-10);
+          return;
+        }
+        if (action === 'forward') {
+          if (sameTrack(state.track, state.detailTrack)) seekBy(10);
+          return;
+        }
         if (action === 'mute') toggleMute();
       });
     });
+
     const progress = detailPlayer.querySelector('[data-detail-progress]');
     if (progress) {
       const seekFromPointer = (e) => {
-        if (!state.track) return;
+        // Progress bar of the detail page only controls the detail track.
+        if (!sameTrack(state.track, state.detailTrack)) return;
         const rect = progress.getBoundingClientRect();
         if (!rect.width) return;
         const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
         progress.value = String(pct * 100);
         seekPercent(pct * 100);
       };
-      progress.addEventListener('input', e => seekPercent(Number(e.target.value)));
+      progress.addEventListener('input', e => {
+        if (sameTrack(state.track, state.detailTrack)) seekPercent(Number(e.target.value));
+      });
       progress.addEventListener('pointerdown', seekFromPointer);
       progress.addEventListener('click', seekFromPointer);
       const visual = detailPlayer.querySelector('.detail-progress-visual');
       if (visual) {
-        const seekVisual = e => seekFromPointer(e);
-        visual.addEventListener('pointerdown', seekVisual);
-        visual.addEventListener('click', seekVisual);
+        visual.addEventListener('pointerdown', seekFromPointer);
+        visual.addEventListener('click', seekFromPointer);
       }
     }
-    detailPlayer.querySelectorAll('[data-volume]').forEach(input => input.addEventListener('input', e => setVolume(Number(e.target.value) / 100)));
 
-    const currentKey = localStorage.getItem('konar_open_detail_v12');
-    if (currentKey) {
-      const row = [...document.querySelectorAll('[data-tab-panel="album"] [data-track], [data-track][data-album]')].find(r => readTrack(r).id === currentKey);
-      if (row) updateDetailFromTrack(row, false);
-    }
+    detailPlayer.querySelectorAll('[data-volume]').forEach(input => {
+      input.addEventListener('input', e => setVolume(Number(e.target.value) / 100));
+    });
 
-    // The detail page itself should use the same track definition as the global queue.
-    const existing = state.tracks.find(t => sameTrack(t, firstTrack));
-    if (existing) {
-      state.track = existing;
-      state.index = existing._order;
-    } else {
-      state.track = firstTrack;
-      state.index = -1;
-    }
-    // The dedicated detail player is never a second audio source. It mirrors
-    // the same Audio element used by the floating player.
-    syncDetailMeta(state.track);
+    syncDetailMeta(state.detailTrack);
     syncAll();
+  }
+
+  function playDetailTrack() {
+    if (!state.detailSource || !state.detailTrack) return;
+    playSource(state.detailSource, true);
   }
 
   function initTabs() {
@@ -306,7 +302,7 @@
     });
   }
 
-  function playSource(source, autoplay = true, options = {}) {
+  function playSource(source, autoplay = true) {
     const track = source?.dataset ? readTrack(source) : source;
     if (!track?.src || !track.title) return;
     const queueMatch = state.tracks.findIndex(t => sameTrack(t, track));
@@ -316,72 +312,53 @@
       if (sameTrack(readTrack(row), state.track) && row.closest('[data-tab-panel="album"]')) row.classList.add('is-selected-detail');
     });
 
-    const targetSrc = new URL(state.track.src, document.baseURI).href;
-    const isSame = state.audio.src === targetSrc;
-    const requestedSeek = Number.isFinite(Number(options.seekPercent))
-      ? Math.max(0, Math.min(100, Number(options.seekPercent)))
-      : null;
-    const preservePlayback = !!options.preservePlayback;
-
-    const seekLoaded = () => {
-      if (state.track?.src !== track.src) return;
-      if (requestedSeek != null) {
-        const duration = Number.isFinite(state.audio.duration) && state.audio.duration > 0
-          ? state.audio.duration
-          : Number(state.track?.duration || 0);
-        if (duration > 0) state.audio.currentTime = duration * requestedSeek / 100;
-      }
-      syncAll();
-      if (autoplay || preservePlayback) {
-        const playPromise = state.audio.play();
-        if (playPromise?.catch) {
-          playPromise.catch(() => {
-            state.playing = false;
-            syncAll();
-          });
-        }
-      }
-    };
-
+    const isSame = state.audio.src === new URL(state.track.src, document.baseURI).href;
     if (!isSame) {
       state.playing = false;
       state.audio.pause();
-
-      if (requestedSeek != null || autoplay || preservePlayback) {
-        const onMetadata = () => seekLoaded();
-        state.audio.addEventListener('loadedmetadata', onMetadata, { once: true });
-      }
-
-      state.audio.src = targetSrc;
+      state.audio.src = new URL(state.track.src, document.baseURI).href;
       state.audio.load();
-      try { state.audio.currentTime = 0; } catch (_) {}
-    } else {
-      if (requestedSeek != null) {
-        const duration = Number.isFinite(state.audio.duration) && state.audio.duration > 0
-          ? state.audio.duration
-          : Number(state.track?.duration || 0);
-        if (duration > 0) state.audio.currentTime = duration * requestedSeek / 100;
-      }
-      syncAll();
-      if (autoplay || preservePlayback) {
-        const playPromise = state.audio.play();
-        if (playPromise?.catch) {
-          playPromise.catch(() => {
-            state.playing = false;
-            syncAll();
-          });
-        }
+      state.audio.currentTime = 0;
+    }
+    gp.hidden = false;
+    document.body.classList.add('has-global-player');
+    // Update every visual immediately, before the async media play event.
+    syncAll();
+    if (autoplay) {
+      const playPromise = state.audio.play();
+      if (playPromise?.catch) {
+        playPromise.catch(() => {
+          state.playing = false;
+          syncAll();
+        });
       }
     }
-    updateDetailFromTrack(source, false);
+    // Playing a track from Home/other lists must NEVER replace the
+    // information of the current detail page.
     saveState();
     syncAll();
   }
 
   function togglePlay() {
     if (!state.track) {
+      if (state.detailTrack && state.detailSource) return playDetailTrack();
       const first = state.tracks[0];
       if (first) return playSource(first._node, true);
+      return;
+    }
+    // On the detail page, state.track is pre-filled by initDetailPage() before
+    // the <audio> element ever loads that track's src. If we call audio.play()
+    // here without first loading the source, playback fails immediately (no
+    // 'play' event fires), so the button icon never flips to pause. Route
+    // through playSource() whenever the audio element isn't actually loaded
+    // with the current track yet.
+    const loadedSrc = state.track.src ? new URL(state.track.src, document.baseURI).href : '';
+    if (!loadedSrc || state.audio.src !== loadedSrc) {
+      if (state.detailTrack && sameTrack(state.track, state.detailTrack) && state.detailSource) {
+        playSource(state.detailSource, true);
+      } else {
+        playSource(state.track, true);
+      }
       return;
     }
     if (state.audio.paused) state.audio.play().catch(() => {});
@@ -516,7 +493,7 @@
     const safe = Math.max(0, Math.min(100, Number(percent) || 0));
     const progress = gp?.querySelector('[data-gp-progress]');
     if (progress) {
-      if (!gpProgressDragging) progress.value = String(safe);
+      progress.value = String(safe);
       paintRange(progress, safe, '--gp-progress');
     }
     document.querySelectorAll('[data-detail-progress]').forEach(input => {
@@ -557,7 +534,7 @@
     gp.querySelector('[data-gp-current]').textContent = formatTime(current);
     gp.querySelector('[data-gp-duration]').textContent = formatTime(duration);
     const progress = gp.querySelector('[data-gp-progress]');
-    if (!gpProgressDragging) progress.value = String(percent);
+    progress.value = String(percent);
     paintRange(progress, percent, '--gp-progress');
     const play = gp.querySelector('[data-gp-play]');
     play.innerHTML = state.playing ? ICONS.pause : ICONS.play;
@@ -567,7 +544,8 @@
     syncRows();
     syncDetailPlayer(percent, duration, current);
     syncNowPlaying(percent, duration, current);
-    syncDetailMeta(track);
+    // Never render the global player's track into the detail page.
+    if (state.detailTrack) syncDetailMeta(state.detailTrack);
     animateWaveforms(percent, current);
     updateMediaSessionPosition(duration, current);
   }
@@ -592,8 +570,9 @@
 
   function syncDetailPlayer(percent, duration, current) {
     document.querySelectorAll('[data-player]').forEach(player => {
-      const currentPlayer = state.track && sameTrack(readTrack(player), state.track);
-      const detailTrack = state.track || readTrack(player);
+      const playerTrack = readTrack(player);
+      const detailTrack = state.detailTrack || playerTrack;
+      const currentPlayer = state.track && sameTrack(playerTrack, state.track);
       const localPercent = currentPlayer ? percent : 0;
       player.classList.toggle('is-playing', !!(currentPlayer && state.playing));
       player.classList.toggle('is-active', !!currentPlayer);
@@ -648,7 +627,7 @@
     set('[data-detail-title]', track.title);
     set('[data-detail-artist]', track.artist);
     set('[data-detail-release]', track.release);
-    set('[data-detail-duration]', formatTime(track.duration || state.audio.duration || 0));
+    set('[data-detail-duration]', formatTime(track.duration || 0));
     set('[data-detail-plays]', track.plays);
     const download = detail.querySelector('[data-detail-download]');
     if (download) download.href = track.src || '#';
@@ -668,16 +647,15 @@
 
   function updateDetailFromTrack(source, autoplay) {
     const track = source?.dataset ? readTrack(source) : source;
-    if (!track?.title) return;
-    if (document.querySelector('.detail-hero')) {
-      state.track = track;
-      const matching = state.tracks.findIndex(t => sameTrack(t, track));
-      state.index = matching;
-      syncDetailMeta(track);
-      localStorage.setItem('konar_open_detail_v13', track.id);
-      const lyrics = document.querySelector('[data-tab-panel="lyrics"] .lyrics-block');
-      if (lyrics && track.lyrics) renderLyrics(lyrics, track.lyrics);
-    }
+    if (!track?.title || !document.querySelector('.detail-hero')) return;
+
+    state.detailTrack = track;
+    syncDetailMeta(track);
+    localStorage.setItem('konar_open_detail_v13', track.id);
+
+    const lyrics = document.querySelector('[data-tab-panel="lyrics"] .lyrics-block');
+    if (lyrics) renderLyrics(lyrics, track.lyrics || '');
+
     if (autoplay) playSource(source, true);
   }
 
@@ -773,30 +751,21 @@
         ensureBars(wave);
         const bars = [...wave.querySelectorAll('span')];
         const total = bars.length || 1;
-
-        // Every waveform is driven by the same real Audio element, but a row
-        // waveform should only display progress when that row is the active track.
-        const row = wave.closest('[data-track], .track-row');
-        const rowTrack = row ? readTrack(row) : null;
-        const isActiveRow = !!(rowTrack && state.track && sameTrack(rowTrack, state.track));
-        const localPercent = row ? (isActiveRow ? percent : 0) : percent;
-        const localLive = row ? (isActiveRow && state.playing) : state.playing;
-
-        const head = Math.max(0, Math.min(total - 1, Math.floor((localPercent / 100) * total)));
+        const head = Math.max(0, Math.min(total - 1, Math.floor((percent / 100) * total)));
         const pulseWindow = Math.max(1, Math.floor(total / 42));
-        wave.style.setProperty('--wave-progress', `${localPercent}%`);
-        wave.style.setProperty('--wave-head', `${localPercent}%`);
-        wave.classList.toggle('is-live', localLive);
-        wave.classList.toggle('has-progress', !!state.track && (!row || isActiveRow));
+        wave.style.setProperty('--wave-progress', `${percent}%`);
+        wave.style.setProperty('--wave-head', `${percent}%`);
+        wave.classList.toggle('is-live', state.playing);
+        wave.classList.toggle('has-progress', !!state.track);
         const playhead = wave.querySelector('.wave-playhead');
         if (playhead) {
-          playhead.style.left = `${Math.max(0, Math.min(100, localPercent))}%`;
-          playhead.classList.toggle('is-live', localLive);
+          playhead.style.left = `${Math.max(0, Math.min(100, percent))}%`;
+          playhead.classList.toggle('is-live', state.playing);
         }
         bars.forEach((bar, i) => {
-          const played = i / Math.max(1, total - 1) * 100 <= localPercent;
+          const played = i / Math.max(1, total - 1) * 100 <= percent;
           bar.classList.toggle('is-played', played);
-          bar.classList.toggle('is-head', localLive && Math.abs(i - head) <= pulseWindow);
+          bar.classList.toggle('is-head', state.playing && Math.abs(i - head) <= pulseWindow);
           bar.style.setProperty('--bar-index', String(i));
         });
       });
@@ -815,88 +784,19 @@
         wave.appendChild(span);
       }
     }
-
     if (wave.dataset.seekBound) return;
     wave.dataset.seekBound = 'true';
-
-    let dragging = false;
-    let pendingSeekPercent = null;
-    let pendingAutoplay = false;
-
-    const getRow = () => wave.closest('[data-track], .track-row');
-
-    const getPercentFromClientX = clientX => {
-      const rect = wave.getBoundingClientRect();
-      if (!rect.width) return null;
-      return Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
-    };
-
-    const applySeek = percent => {
-      if (percent == null || !state.audio) return;
-      const duration = Number.isFinite(state.audio.duration) && state.audio.duration > 0
-        ? state.audio.duration
-        : Number(state.track?.duration || 0);
-      if (!duration) return;
-      state.audio.currentTime = duration * percent / 100;
-      syncAll();
-    };
-
     const seekAtClientX = clientX => {
-      const percent = getPercentFromClientX(clientX);
-      if (percent == null) return;
-
-      const row = getRow();
-      if (row) {
-        const rowTrack = readTrack(row);
-        const active = state.track && sameTrack(state.track, rowTrack);
-        const wasPlaying = state.playing && !state.audio.paused;
-
-        if (!active) {
-          pendingSeekPercent = percent;
-          pendingAutoplay = wasPlaying;
-          playSource(row, false, { seekPercent: percent, preservePlayback: wasPlaying });
-          return;
-        }
-      }
-
-      applySeek(percent);
+      if (!state.track) return;
+      const rect = wave.getBoundingClientRect();
+      if (!rect.width) return;
+      const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      seekPercent(pct * 100);
     };
-
-    const move = e => {
-      if (!dragging) return;
-      e.preventDefault();
-      seekAtClientX(e.clientX);
-    };
-
-    const stop = e => {
-      if (!dragging) return;
-      dragging = false;
-      if (wave.releasePointerCapture && e.pointerId != null) {
-        try { wave.releasePointerCapture(e.pointerId); } catch (_) {}
-      }
-      wave.classList.remove('is-seeking');
-    };
-
     wave.addEventListener('pointerdown', e => {
       e.preventDefault();
-      dragging = true;
-      wave.classList.add('is-seeking');
-      if (wave.setPointerCapture && e.pointerId != null) {
-        try { wave.setPointerCapture(e.pointerId); } catch (_) {}
-      }
       seekAtClientX(e.clientX);
     });
-    wave.addEventListener('pointermove', move);
-    wave.addEventListener('pointerup', stop);
-    wave.addEventListener('pointercancel', stop);
-    wave.addEventListener('lostpointercapture', () => {
-      dragging = false;
-      wave.classList.remove('is-seeking');
-    });
-
-    // Expose pending seek state to the shared engine. This makes row-waveform
-    // seeking reliable even before the new audio file finishes loading metadata.
-    wave._getPendingSeek = () => ({ percent: pendingSeekPercent, autoplay: pendingAutoplay });
   }
 
   function paintRange(input, percent, cssVar) {

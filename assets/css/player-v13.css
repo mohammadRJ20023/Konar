@@ -239,16 +239,6 @@
 .hero-waveform-big.waveform { min-height: 84px; }
 .detail-wave.waveform { min-height: 104px; }
 .mini-wave.waveform { min-height: 24px !important; }
-.track-row .mini-wave.waveform {
-  display: flex !important;
-  cursor: pointer !important;
-  touch-action: none !important;
-  user-select: none !important;
-}
-.track-row .mini-wave.waveform.is-seeking {
-  filter: brightness(1.12);
-}
-
 @keyframes p-wave { 0%,100% { transform: scaleY(.58); } 45% { transform: scaleY(1); } }
 @keyframes wave-head-pulse { 0%,100% { opacity:.70; box-shadow:0 0 8px rgba(154,124,255,.45), 0 0 18px rgba(57,215,208,.14); } 50% { opacity:1; box-shadow:0 0 14px rgba(154,124,255,.82), 0 0 30px rgba(57,215,208,.28); } }
 
@@ -653,35 +643,4 @@
 .waveform {
   --wave-progress: 0% !important;
   --wave-head: 0% !important;
-}
-/* =========================================================
-   FIX: track buttons must always receive mouse/touch clicks
-   ========================================================= */
-
-.track-row {
-  position: relative !important;
-}
-
-.track-row [data-play-track] {
-  position: relative !important;
-  z-index: 20 !important;
-  pointer-events: auto !important;
-  cursor: pointer !important;
-}
-
-.track-row .cover-sm,
-.track-row .artist-link {
-  position: relative !important;
-  z-index: 10 !important;
-}
-
-.track-row .mini-wave {
-  position: relative !important;
-  z-index: 1 !important;
-}
-
-.track-row button {
-  user-select: none !important;
-  -webkit-user-select: none !important;
-  -webkit-tap-highlight-color: transparent !important;
 }

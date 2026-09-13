@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>بی‌قرار — آرمان کیا | کنار</title>
+<title>{{ track.title }} — {{ track.artist.name }} | کنار</title>
 <meta content="پخش و دانلود آهنگ «بی‌قرار» از آرمان کیا، از آلبوم موج هزارم. متن کامل آهنگ همراه با ترک‌های دیگر آلبوم." name="description"/>
 <link href="{% static 'images/logo-mark.svg' %}" rel="icon" type="image/svg+xml"/>
 <link href="{% static 'css/variables.css' %}" rel="stylesheet"/>
@@ -54,15 +54,15 @@
 <section class="detail-hero">
 <div class="container detail-hero-inner">
 <div class="detail-cover" data-detail-cover-wrap>
-<img alt="جلد آهنگ بی‌قرار" data-detail-cover src="{{ track.cover.url }}"/>
+<img alt="جلد {{ track.title }}" data-detail-cover src="{{ track.cover.url }}"/>
 <div class="detail-cover-badge"><span class="dot"></span> اکنون در حال پخش</div>
 </div>
 <div class="detail-meta">
 <span class="badge badge-gold" data-detail-album>{% if track.album %}{{track.album.title}}{% endif %}</span>
 <h1 class="detail-title" data-detail-title>{{ track.title }}</h1>
 <div class="detail-artist">
-<img alt=" {{ track.artist.name }}" src="{{ track.artist.image.url }}"/>
-<a href="artist.html" data-detail-artist> {{ track.artist.name }}</a>
+{% if track.artist.image %}<img alt="{{ track.artist.name }}" src="{{ track.artist.image.url }}"/>{% endif %}
+<a href="#" data-detail-artist>{{ track.artist.name }}</a>
 <span class="text-muted" data-detail-feat></span>
 </div>
 <div class="detail-info-row">
@@ -88,12 +88,12 @@
 <section class="section" style="padding-block:44px;">
 <div class="container">
 
-<div class="player detail-player-pro" data-duration-seconds="{{ track.duration }}" data-player data-src="{{ track.audio_file.url }}" data-title="{{track.title}}" data-artist=" {{track.artist.name }}" data-cover="{{ track.cover.url }}" data-album="{% if track.album %}{{track.album.title}}{% endif %} " data-release="{{track.release_date|date:'d F Y' }}" data-plays="{{ track.play_count }}بازدید" data-genre="{{ track.genre }}" data-quality="MP3 320">
+<div class="player detail-player-pro" data-duration-seconds="{{ track.duration|default:0 }}" data-player data-src="{{ track.audio_file.url }}" data-id="{{ track.id }}" data-title="{{ track.title }}" data-artist="{{ track.artist.name }}" data-cover="{{ track.cover.url }}" data-album="{% if track.album %}{{ track.album.title }}{% endif %}" data-release="{{ track.release_date|date:'d F Y' }}" data-plays="{{ track.play_count }} بازدید" data-quality="MP3 320">
   <div class="detail-player-glow"></div>
   <div class="detail-player-head">
     <div class="detail-player-ident">
       <div class="detail-player-cover"><img src="{{ track.cover.url }}" alt="{{ track.title }}"></div>
-      <div><span class="eyebrow">پخش آنلاین</span><h3 data-detail-player-title>{{ track.title}}</h3><p data-detail-player-artist> {{ track.artist.name }} | {{ track.title }}   </p></div>
+      <div><span class="eyebrow">پخش آنلاین</span><h3 data-detail-player-title>{{ track.title}}</h3><p data-detail-player-artist>{{ track.artist.name }}{% if track.album %} | {{ track.album.title }}{% endif %}</p></div>
     </div>
     <span class="detail-player-status" data-player-status>آماده پخش</span>
   </div>
@@ -142,77 +142,70 @@
   </div>
 </div>
 </div>
+{% if track.album %}
 <div class="tab-panel" data-tab-panel="album">
 <div class="sidebar-box" style="margin-bottom:0;">
-<h4>موج هزارم <span>۱۰ ترک</span></h4>
+<h4>{{ track.album.title }}<span>{{ track.album.tracks.count }}</span></h4>
 <div class="track-list">
-<!-- DJANGO: {% for t in album.tracks.all %} -->
-<div class="track-row" data-artist="آرمان کیا" data-cover="images/cover-02.svg" data-duration="220" data-album="موج هزارم" data-release="۱۲ شهریور ۱۴۰۴" data-plays="۱۴۲ هزار" data-genre="الکترونیک" data-quality="MP3 320" data-src="/media/tracks/شب-بی-پایان.mp3" data-title="شب بی‌پایان" data-track="">
-<span class="idx">۰۱</span>
-<a class="cover-sm" data-album-select href="detail.html"><img alt="شب بی‌پایان" src="images/cover-02.svg"/></a>
-<div class="meta"><h4>شب بی‌پایان</h4><a class="artist-link" href="artist.html">آرمان کیا</a></div>
-<button aria-label="پخش شب بی‌پایان" class="icon-btn" data-play-track="" type="button"><svg fill="currentColor" viewbox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg></button>
-<span class="duration">۳:۴۰</span>
+{% for album_track in track.album.tracks.all %}
+<div class="track-row"
+     data-id="{{ album_track.id }}"
+     data-artist="{{ album_track.artist.name }}"
+     data-cover="{{ album_track.cover.url }}"
+     data-duration="{{ album_track.duration|default:0 }}"
+     data-album="{{ track.album.title }}"
+     data-release="{{ album_track.release_date|date:'d F Y' }}"
+     data-plays="{{ album_track.play_count }}"
+     data-quality="MP3 320"
+     data-src="{{ album_track.audio_file.url }}"
+     data-title="{{ album_track.title }}"
+     data-track>
+  <span class="idx">{{ forloop.counter|stringformat:"02d" }}</span>
+  <a class="cover-sm" data-album-select href="{% url 'music:detail' album_track.slug %}">
+    <img alt="{{ album_track.title }}" src="{{ album_track.cover.url }}"/>
+  </a>
+  <div class="meta">
+    <h4>{{ album_track.title }}</h4>
+    <a class="artist-link" href="#">{{ album_track.artist.name }}</a>
+  </div>
+  <button aria-label="پخش {{ album_track.title }}" class="icon-btn" data-play-track type="button">
+    <svg fill="currentColor" viewbox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg>
+  </button>
+  <span class="duration">{{ album_track.duration_display }}</span>
 </div>
-<div class="track-row" data-artist="آرمان کیا" data-cover="images/cover-03.svg" data-duration="178" data-album="موج هزارم" data-release="۱۲ شهریور ۱۴۰۴" data-plays="۱۴۲ هزار" data-genre="الکترونیک" data-quality="MP3 320" data-src="/media/tracks/رقص-باد.mp3" data-title="رقص باد" data-track="">
-<span class="idx">۰۲</span>
-<a class="cover-sm" data-album-select href="detail.html"><img alt="رقص باد" src="images/cover-03.svg"/></a>
-<div class="meta"><h4>رقص باد</h4><a class="artist-link" href="artist.html">آرمان کیا</a></div>
-<button aria-label="پخش رقص باد" class="icon-btn" data-play-track="" type="button"><svg fill="currentColor" viewbox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg></button>
-<span class="duration">۲:۵۸</span>
-</div>
-<div class="track-row" data-artist="آرمان کیا" data-cover="images/cover-01.svg" data-duration="230" data-album="موج هزارم" data-release="۱۲ شهریور ۱۴۰۴" data-plays="۲۱۸ هزار" data-genre="الکترونیک" data-quality="MP3 320" data-src="/media/tracks/بی-قرار.mp3" data-title="بی‌قرار" data-track="">
-<span class="idx">۰۳</span>
-<a class="cover-sm" data-album-select href="detail.html"><img alt="بی‌قرار" src="images/cover-01.svg"/></a>
-<div class="meta"><h4>بی‌قرار</h4><a class="artist-link" href="artist.html">آرمان کیا</a></div>
-<button aria-label="پخش بی‌قرار" class="icon-btn" data-play-track="" type="button"><svg fill="currentColor" viewbox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg></button>
-<span class="duration">۳:۵۰</span>
-</div>
-<div class="track-row" data-artist="آرمان کیا" data-cover="images/cover-04.svg" data-duration="202" data-album="موج هزارم" data-release="۱۲ شهریور ۱۴۰۴" data-plays="۱۴۲ هزار" data-genre="الکترونیک" data-quality="MP3 320" data-src="/media/tracks/اتاق-آبی.mp3" data-title="اتاق آبی" data-track="">
-<span class="idx">۰۴</span>
-<a class="cover-sm" data-album-select href="detail.html"><img alt="اتاق آبی" src="images/cover-04.svg"/></a>
-<div class="meta"><h4>اتاق آبی</h4><a class="artist-link" href="artist.html">آرمان کیا</a></div>
-<button aria-label="پخش اتاق آبی" class="icon-btn" data-play-track="" type="button"><svg fill="currentColor" viewbox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg></button>
-<span class="duration">۳:۲۲</span>
-</div>
-<!-- DJANGO: {% endfor %} -->
+{% endfor %}
 </div>
 </div>
 </div>
+{% endif %}
 <div class="tab-panel" data-tab-panel="about">
 <p style="color:var(--text-secondary); font-size:15.5px; line-height:2;">
-          «بی‌قرار» سومین ترک آلبوم «موج هزارم» است؛ ترکیبی از سازهای الکترونیک با ملودی‌های
-          مقام‌محورِ موسیقی ایرانی. آرمان کیا در این قطعه با صدای سایه همراه شده تا حس فاصله
-          و دلتنگی را در بستری مینیمال روایت کند. میکس نهایی در استودیوی «نُت سیاه» در تهران انجام شده است.
-        </p>
+  آهنگ «{{ track.title }}» از {{ track.artist.name }}{% if track.album %} و از آلبوم «{{ track.album.title }}»{% endif %} است.
+  {% if track.lyrics %}برای این ترک متن آهنگ نیز در کنار اطلاعات اصلی ثبت شده است.{% else %}برای این ترک توضیحات بیشتری در سیستم ثبت نشده است.{% endif %}
+</p>
 <div class="grid-2" style="margin-top:26px; gap:16px;">
 <div class="sidebar-box" style="margin-bottom:0;">
-<h4>سازندگان</h4>
-<p class="text-muted" style="font-size:14px;">تنظیم: پویا صدر<br/>میکس و مسترینگ: استودیو نت سیاه<br/>ترانه‌سرا: آرمان کیا</p>
+<h4>اطلاعات ترک</h4>
+<p class="text-muted" style="font-size:14px;">
+  هنرمند: {{ track.artist.name }}<br/>
+  {% if track.album %}آلبوم: {{ track.album.title }}<br/>{% endif %}
+  مدت: {{ track.duration_display }}
+</p>
 </div>
 <div class="sidebar-box" style="margin-bottom:0;">
-<h4>اطلاعات فنی</h4>
-<p class="text-muted" style="font-size:14px;">گام: دو مینور<br/>تمپو: ۹۲ ضربه در دقیقه<br/>فرمت: MP3 320 / FLAC</p>
+<h4>ژانر</h4>
+<p class="text-muted" style="font-size:14px;">
+  {% for genre in track.genre.all %}{{ genre.name }}{% endfor %}
+</p>
 </div>
 </div>
 </div>
 <div class="tab-panel" data-tab-panel="comments">
-<!-- DJANGO: {% for comment in track.comments.all %} -->
-<div class="comment">
-<img alt="" src="images/avatar-02.svg"/>
-<div>
-<div class="head"><h5>سارا احمدی</h5><span>۲ روز پیش</span></div>
-<p>میکس این ترک فوق‌العاده‌ست، خصوصاً قسمت کورس که سازهای سنتی میان.</p>
+
+<div class="comment-list">
+  <p class="text-muted" style="font-size:14px;">هنوز دیدگاهی برای این ترک ثبت نشده است.</p>
 </div>
-</div>
-<div class="comment">
-<img alt="" src="images/avatar-03.svg"/>
-<div>
-<div class="head"><h5>رضا کمالی</h5><span>۵ روز پیش</span></div>
-<p>صدای سایه تو این قطعه یه حس متفاوتی داره، منتظر آلبوم بعدی‌شون هستم.</p>
-</div>
-</div>
-<!-- DJANGO: {% endfor %} -->
+
 <form class="comment-form" id="comment-form" style="margin-top:26px;">
 <div class="field">
 <label for="comment-name">نام شما</label>
@@ -230,17 +223,17 @@
 <!-- ========== سایدبار ========== -->
 <aside>
 <div class="sidebar-box">
-<h4>بیشتر از آرمان کیا</h4>
+<h4>بیشتر از {{ track.artist.name}}</h4>
 <div class="track-list">
-<div class="track-row" data-artist="سینگل · ۵:۰۱" data-cover="images/cover-05.svg" data-src="/media/tracks/خاطرات-بی-رنگ.mp3" data-title="خاطرات بی‌رنگ" data-track="" style="grid-template-columns: 44px 1fr auto; padding-inline:0;">
-<a class="cover-sm" href="detail.html" style="width:44px; height:44px;"><img alt="" src="images/cover-05.svg"/></a>
-<div class="meta"><h4 style="font-size:14px;">خاطرات بی‌رنگ</h4><a class="artist-link" href="artist.html">سینگل · ۵:۰۱</a></div>
+{% for track in track.artist.tracks.all|slice:"0:5" %}
+<div class="track-row" data-artist="{{ track.duration_display }}" data-cover="{{ track.cover.url }}" data-src="{{ track.audio_file.url }}" data-title="{{ track.title }}" data-track="" style="grid-template-columns: 44px 1fr auto; padding-inline:0;">
+<a class="cover-sm" href="{% url 'music:detail' track.slug %}" style="width:44px; height:44px;"><img alt="" src="{{ track.cover.url }}"/></a>
+<div class="meta"><h4 style="font-size:14px;"> {{ track.title }}</h4><a class="artist-link" href="{% url 'music:detail' track.slug %}">{{  track.duration_display}}</a></div>
+
 </div>
-<div class="track-row" data-artist="آلبوم · ۸ ترک" data-cover="images/cover-06.svg" data-src="/media/tracks/کوچه-های-خیس.mp3" data-title="کوچه‌های خیس" data-track="" style="grid-template-columns: 44px 1fr auto; padding-inline:0;">
-<a class="cover-sm" href="detail.html" style="width:44px; height:44px;"><img alt="" src="images/cover-06.svg"/></a>
-<div class="meta"><h4 style="font-size:14px;">کوچه‌های خیس</h4><a class="artist-link" href="artist.html">آلبوم · ۸ ترک</a></div>
+
 </div>
-</div>
+{% endfor %}
 </div>
 </aside>
 </section>
