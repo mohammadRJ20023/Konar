@@ -157,7 +157,7 @@ function initComments() {
     const item = document.createElement('article');
     item.className = 'comment comment-new';
     item.innerHTML = `
-      <img src="assets/images/avatar-01.svg" alt="">
+      <img src="images/avatar-01.svg" alt="">
       <div>
         <div class="head"><h5></h5><span>همین حالا</span></div>
         <p></p>

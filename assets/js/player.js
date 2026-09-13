@@ -76,7 +76,7 @@
     gp.innerHTML = `
       <div class="gp-main">
         <div class="gp-cover-wrap">
-          <img class="global-player-cover" data-gp-cover src="assets/images/cover-01.svg" alt="جلد آهنگ">
+          <img class="global-player-cover" data-gp-cover src="images/cover-01.svg" alt="جلد آهنگ">
           <span class="gp-live-dot" aria-hidden="true"></span>
         </div>
         <div class="global-player-meta">
@@ -169,7 +169,7 @@
       title: d.title || source?.querySelector('.meta h4')?.textContent?.trim() || source?.querySelector('[data-track-title]')?.textContent?.trim() || '',
       artist: d.artist || source?.querySelector('.artist-link')?.textContent?.trim() || '',
       album: d.album || '',
-      cover: d.cover || source?.querySelector('img')?.getAttribute('src') || 'assets/images/cover-01.svg',
+      cover: d.cover || source?.querySelector('img')?.getAttribute('src') || 'images/cover-01.svg',
       src: d.src || '',
       duration: Number(d.duration || d.durationSeconds || 0),
       release: d.release || '',

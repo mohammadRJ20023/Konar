@@ -62,7 +62,7 @@
 <h1 class="detail-title" data-detail-title>{{ track.title }}</h1>
 <div class="detail-artist">
 {% if track.artist.image %}<img alt="{{ track.artist.name }}" src="{{ track.artist.image.url }}"/>{% endif %}
-<a href="#" data-detail-artist>{{ track.artist.name }}</a>
+<a href="{% url 'music:artist' track.artist.slug %}" data-detail-artist>{{ track.artist.name }}</a>
 <span class="text-muted" data-detail-feat></span>
 </div>
 <div class="detail-info-row">

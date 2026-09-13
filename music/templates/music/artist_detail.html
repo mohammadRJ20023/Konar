@@ -1,0 +1,354 @@
+{% load static %}
+
+<!doctype html>
+
+<html dir="rtl" lang="fa">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>آرمان کیا | کنار</title>
+    <meta
+      content="صفحه هنرمند آرمان کیا در کنار؛ معرفی هنرمند، آهنگ‌ها و آثار منتشرشده."
+      name="description"
+    />
+    <link href="{% static 'images/logo-mark.svg' %}" rel="icon" type="image/svg+xml" />
+    <link href="{% static 'css/variables.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/base.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/components.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/layout.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/player-v13.css' %}" rel="stylesheet" />
+  </head>
+  <body class="inner-page artist-page">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="index.html">
+          <img alt="نماد کنار" src="{% static 'images/logo-mark.svg' %}" />
+          کنار
+          <span class="sub">KONAR</span>
+        </a>
+        <nav class="main-nav">
+          <a href="index.html">خانه</a>
+          <a href="songs.html">آهنگ‌ها</a>
+          <a href="artist.html">هنرمندان</a>
+          <a href="index.html#explore">کاوش</a>
+          <a href="blog.html">وبلاگ</a>
+          <a href="dashboard.html">پنل کاربری</a>
+        </nav>
+        <div class="header-actions">
+          <div class="search-box">
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              viewbox="0 0 24 24"
+            >
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-5-5"></path>
+            </svg>
+            <input
+              placeholder="جستجوی آهنگ، آلبوم یا هنرمند..."
+              type="search"
+            />
+          </div>
+          <a class="btn btn-outline btn-sm" href="login.html">ورود</a>
+          <button
+            aria-expanded="false"
+            aria-label="باز کردن منو"
+            class="nav-toggle"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+      <div class="mobile-nav-panel">
+        <a href="index.html">خانه</a>
+        <a href="songs.html">آهنگ‌ها</a>
+        <a href="artist.html">هنرمندان</a>
+        <a href="index.html#explore">کاوش</a>
+        <a href="blog.html">وبلاگ</a>
+        <a href="dashboard.html">پنل کاربری</a>
+        <a href="login.html">ورود / ثبت‌نام</a>
+      </div>
+    </header>
+    <main>
+      <section class="artist-hero">
+        <div class="container artist-hero-inner">
+          <div class="artist-avatar-wrap">
+            <img
+              alt="آرمان کیا"
+              id="artist-avatar"
+              src="{% static 'images/avatar-01.svg' %}"
+            />
+            <span aria-label="هنرمند تأییدشده" class="artist-verified">✓</span>
+          </div>
+          <div class="artist-main">
+            <span class="eyebrow">صفحه هنرمند</span>
+            <h1 class="detail-title" id="artist-name">آرمان کیا</h1>
+            <p class="detail-desc" id="artist-bio">
+              از هنرمندان نسل تازه موسیقی پاپ؛ روایت‌های شهری و ملودی‌های
+              مینیمال، بخش مهمی از هویت آثار او را شکل می‌دهند.
+            </p>
+            <div class="artist-stats">
+              <div>
+                <strong id="artist-track-count">۶</strong>
+                <span>ترک</span>
+              </div>
+              <div>
+                <strong>۲</strong>
+                <span>آلبوم</span>
+              </div>
+              <div>
+                <strong>۱۲۸K</strong>
+                <span>شنونده ماهانه</span>
+              </div>
+            </div>
+            <div class="artist-cta-row">
+              <a class="btn btn-primary" href="songs.html">
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="1.8"
+                  viewbox="0 0 24 24"
+                >
+                  <path d="M4 6h16M4 12h10M4 18h16"></path>
+                </svg>
+                همه آهنگ‌ها
+              </a>
+              <a class="btn btn-outline" href="#artist-albums">
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  viewbox="0 0 24 24"
+                >
+                  <circle cx="12" cy="12" r="8.4"></circle>
+                  <circle cx="12" cy="12" r="2.2"></circle>
+                </svg>
+                همه آلبوم‌ها
+              </a>
+            </div>
+          </div>
+          <button
+            aria-label="پخش همه آهنگ‌های هنرمند"
+            class="play-btn-circle lg artist-play-all"
+            data-artist-play="all"
+            type="button"
+          >
+            <svg fill="currentColor" viewbox="0 0 24 24">
+              <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
+            </svg>
+          </button>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container artist-layout">
+          <div>
+            <div class="section-head">
+              <div>
+                <span class="eyebrow">درباره هنرمند</span>
+                <h2 class="section-title">داستان آرمان کیا</h2>
+              </div>
+            </div>
+            <div class="bio-copy">
+              <p>
+                آرمان کیا از هنرمندان نسل تازه موسیقی پاپ فارسی است؛ صدایی که از
+                دل شب‌های شهری بیرون آمده و روایت‌های ساده‌ی زندگی روزمره را با
+                ملودی‌های مینیمال و تنظیم‌های الکترونیک گرم پیوند می‌زند. سبک او
+                ترکیبی از پاپ معاصر و بافت‌های صوتی سینمایی است؛ ملودی‌هایی که
+                بیشتر از آنکه پرسروصدا باشند، در سکوت میان نت‌ها معنا پیدا
+                می‌کنند.
+              </p>
+              <p>
+                او فعالیت حرفه‌ای خود را با انتشار چند تک‌آهنگ مستقل آغاز کرد و
+                به‌سرعت با ترکیبی از صداقت در ترانه‌سرایی و تنظیم‌های تازه، توجه
+                شنوندگان موسیقی پاپ فارسی را جلب کرد. آلبوم «موج هزارم» نقطه
+                عطفی در مسیر او بود و پس از آن «شهر بی‌خواب» تصویری تیره‌تر و
+                شهری‌تر از دنیای موسیقایی‌اش را به نمایش گذاشت.
+              </p>
+            </div>
+            <blockquote class="bio-quote">
+              «برای من موسیقی یعنی نوشتن نامه‌ای که هیچ‌وقت نمی‌فرستم؛ فقط باید
+              یک‌جایی شنیده شود.»
+            </blockquote>
+            <p>
+              امروز آرمان کیا در کنار انتشار تک‌آهنگ‌های تازه، روی پروژه‌ای
+              مشترک نیز کار می‌کند و همچنان یکی از چهره‌های ثابت پلی‌لیست‌های
+              پاپ شهری در «کنار» است.
+            </p>
+            <div class="tag-list bio-tags">
+              <span class="tag">پاپ</span>
+              <span class="tag">الکترونیک</span>
+              <span class="tag">موسیقی فارسی</span>
+            </div>
+            <div class="bio-highlights">
+              <div class="highlight-card">
+                <strong>۱۴۰۱</strong>
+                <span>آغاز فعالیت حرفه‌ای</span>
+              </div>
+              <div class="highlight-card">
+                <strong>۲</strong>
+                <span>آلبوم کامل منتشرشده</span>
+              </div>
+              <div class="highlight-card">
+                <strong>۱۲۸K</strong>
+                <span>شنونده ماهانه</span>
+              </div>
+            </div>
+          </div>
+          <aside class="artist-sidebar">
+            <div class="artist-card">
+              <span class="eyebrow">آلبوم‌ها</span>
+              <div class="album-mini">
+                <img alt="" src="{% static 'images/cover-01.svg' %}" />
+                <div>
+                  <strong>موج هزارم</strong>
+                  <span>۱۴۰۴ · ۸ ترک</span>
+                </div>
+              </div>
+              <div class="album-mini">
+                <img alt="" src="{% static 'images/cover-02.svg' %}" />
+                <div>
+                  <strong>شهر بی‌خواب</strong>
+                  <span>۱۴۰۵ · ۱۰ ترک</span>
+                </div>
+              </div>
+            </div>
+            <div class="artist-card">
+              <span class="eyebrow">هنرمندان مشابه</span>
+              <div class="similar-artist-row">
+                <img alt="نیلوفر راد" src="{% static 'images/avatar-02.svg' %}" />
+                <div>
+                  <strong>نیلوفر راد</strong>
+                  <span>پاپ فارسی</span>
+                </div>
+              </div>
+              <div class="similar-artist-row">
+                <img alt="پویا صدر" src="{% static 'images/avatar-03.svg' %}" />
+                <div>
+                  <strong>پویا صدر</strong>
+                  <span>الکترونیک</span>
+                </div>
+              </div>
+              <div class="similar-artist-row">
+                <img alt="سایه" src="{% static 'images/avatar-01.svg' %}" />
+                <div>
+                  <strong>سایه</strong>
+                  <span>سنتی مدرن</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+      <section class="section" id="artist-albums" style="padding-top: 0">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">کارنامه هنری</span>
+              <h2 class="section-title">آلبوم‌های آرمان کیا</h2>
+            </div>
+            <a class="btn btn-outline btn-sm" href="songs.html">
+              مشاهده تک‌آهنگ‌ها هم
+            </a>
+          </div>
+          <div class="grid-2 album-grid">
+            <div class="track-card">
+              <a class="track-card-cover" href="detail.html">
+                <img alt="جلد موج هزارم" src="{% static 'images/cover-01.svg' %}" />
+                <div class="play-overlay">
+                  <span class="play-btn-circle">
+                    <svg fill="currentColor" viewbox="0 0 24 24">
+                      <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
+                    </svg>
+                  </span>
+                </div>
+              </a>
+              <div class="track-card-body">
+                <span class="kind">آلبوم · ۸ ترک · ۱۴۰۴</span>
+                <h3>موج هزارم</h3>
+                <span class="artist">آرمان کیا</span>
+              </div>
+            </div>
+            <div class="track-card">
+              <a class="track-card-cover" href="detail.html">
+                <img alt="جلد شهر بی‌خواب" src="{% static 'images/cover-02.svg' %}" />
+                <div class="play-overlay">
+                  <span class="play-btn-circle">
+                    <svg fill="currentColor" viewbox="0 0 24 24">
+                      <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
+                    </svg>
+                  </span>
+                </div>
+              </a>
+              <div class="track-card-body">
+                <span class="kind">آلبوم · ۱۰ ترک · ۱۴۰۵</span>
+                <h3>شهر بی‌خواب</h3>
+                <span class="artist">آرمان کیا</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="global-player" data-global-player="" hidden="">
+      <img
+        alt=""
+        class="global-player-cover"
+        data-gp-cover=""
+        src="{% static 'images/cover-01.svg' %}"
+      />
+      <div class="global-player-meta">
+        <strong data-gp-title="">—</strong>
+        <span data-gp-artist="">—</span>
+      </div>
+      <button aria-label="قبلی" class="icon-btn" data-gp-prev="" type="button">
+        ‹
+      </button>
+      <button
+        aria-label="پخش"
+        class="play-btn-circle"
+        data-gp-play=""
+        type="button"
+      >
+        <svg fill="currentColor" viewbox="0 0 24 24">
+          <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
+        </svg>
+      </button>
+      <button aria-label="بعدی" class="icon-btn" data-gp-next="" type="button">
+        ›
+      </button>
+      <div class="global-player-progress">
+        <input
+          aria-label="پیشرفت پخش"
+          data-gp-progress=""
+          max="100"
+          min="0"
+          type="range"
+          value="0"
+        />
+        <div>
+          <span data-gp-current="">۰:۰۰</span>
+          <span data-gp-duration="">۰:۰۰</span>
+        </div>
+      </div>
+      <button aria-label="بستن" class="icon-btn" data-gp-close="" type="button">
+        ×
+      </button>
+      <audio data-gp-audio="" preload="metadata"></audio>
+    </div>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-bottom">
+          <span>© ۱۴۰۴ کنار. تمام حقوق محفوظ است.</span>
+          <span>ساخته‌شده با ♪ برای عاشقان موسیقی</span>
+        </div>
+      </div>
+    </footer>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/player.js' %}"></script>
+  </body>
+</html>
