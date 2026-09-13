@@ -5,5 +5,6 @@ from .import views
 app_name = 'music'
 
 urlpatterns = [
-    path("detail/<slug:slug>", views.Track_Detail_View, name="detail")
+    path("detail/<slug:slug>", views.Track_Detail_View, name="detail"),
+    path("Artist/<slug:slug>", views.Artist_Detail_View, name ="artist")
 ]
