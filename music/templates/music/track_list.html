@@ -1,0 +1,244 @@
+{% load static %}
+<!doctype html>
+
+<html dir="rtl" lang="fa">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>لیست آهنگ‌ها | کنار</title>
+    <meta
+      content="لیست آهنگ‌های کنار با امکان جست‌وجو و صفحه‌بندی."
+      name="description"
+    />
+    <link href="{% static 'images/logo-mark.svg' %}" rel="icon" type="image/svg+xml" />
+    <link href="{% static 'css/variables.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/base.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/components.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/layout.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/player-v13.css' %}" rel="stylesheet" />
+  </head>
+  <body class="inner-page songs-page">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="index.html">
+          <img alt="نماد کنار" src="{% static 'images/logo-mark.svg' %}" />
+          کنار
+          <span class="sub">KONAR</span>
+        </a>
+        <nav class="main-nav">
+          <a href="index.html">خانه</a>
+          <a class="is-active" href="songs.html">آهنگ‌ها</a>
+          <a href="artist.html">هنرمندان</a>
+          <a href="index.html#explore">کاوش</a>
+          <a href="blog.html">وبلاگ</a>
+          <a href="dashboard.html">پنل کاربری</a>
+        </nav>
+        <div class="header-actions">
+          <div class="search-box">
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              viewbox="0 0 24 24"
+            >
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-4-4"></path>
+            </svg>
+            <input
+              id="song-search"
+              placeholder="جست‌وجوی آهنگ..."
+              type="search"
+            />
+          </div>
+          <a class="btn btn-outline btn-sm" href="login.html">ورود</a>
+          <button aria-label="منو" class="nav-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="page-banner songs-banner">
+        <div class="container songs-banner-inner">
+          <div>
+            <span class="eyebrow">کتابخانه موسیقی</span>
+            <h1 class="page-title">همه آهنگ‌ها</h1>
+            <p class="page-desc">
+              جدیدترین و محبوب‌ترین ترک‌ها را پیدا کن و مستقیم وارد صفحه جزئیات
+              شو.
+            </p>
+          </div>
+          <div class="songs-banner-stats">
+            <div>
+              <strong>۲۴</strong>
+              <span>ترک</span>
+            </div>
+            <div>
+              <strong>۴</strong>
+              <span>ژانر</span>
+            </div>
+            <div>
+              <strong>۴</strong>
+              <span>هنرمند</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="list-toolbar">
+            <div>
+              <h2 class="section-title">لیست ترک‌ها</h2>
+              <span class="text-muted">۲۴ ترک</span>
+            </div>
+            <div class="list-filters">
+              <select id="genre-filter">
+                <option value="all">همه ژانرها</option>
+                <option value="pop">پاپ</option>
+                <option value="rock">راک</option>
+                <option value="electronic">الکترونیک</option>
+                <option value="traditional">سنتی</option>
+              </select>
+            </div>
+          </div>
+          <div
+            class="track-list songs-list"
+            data-pagination=""
+            data-per-page="6"
+          >
+            <div
+              class="track-row is-top"
+              data-artist="آرمان کیا"
+              data-cover="{% static 'images/cover-01.svg' %}"
+              data-duration="230"
+              data-genre="pop"
+              data-page-item=""
+              data-popularity="94"
+              data-src="{% static '/media/tracks/بی-قرار.mp3' %}"
+              data-title="بی‌قرار"
+              data-track=""
+            >
+              <span class="idx rank-badge">01</span>
+              <a class="cover-sm" href="detail.html">
+                <img alt="بی‌قرار" src="{% static 'images/cover-01.svg' %}" />
+              </a>
+              <div class="meta">
+                <h4>بی‌قرار</h4>
+                <a class="artist-link" href="artist.html">آرمان کیا</a>
+              </div>
+              <div
+                class="waveform mini-wave"
+                data-bars="24"
+                data-progress="0"
+                data-seed="song1"
+                data-waveform=""
+                style="height: 26px"
+              ></div>
+              <button
+                aria-label="پخش بی‌قرار"
+                class="icon-btn"
+                data-play-track=""
+                type="button"
+              >
+                <svg fill="currentColor" viewbox="0 0 24 24">
+                  <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
+                </svg>
+              </button>
+              <span class="duration">۳:۵۰</span>
+            </div>
+            <nav
+              aria-label="صفحه‌های آهنگ‌ها"
+              class="pagination"
+              data-pagination-controls=""
+            ></nav>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-bottom">
+        <span>© ۱۴۰۴ کنار. تمام حقوق محفوظ است.</span>
+        <span>ساخته‌شده برای عاشقان موسیقی ♪</span>
+      </div>
+    </footer>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/player.js' %}"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const wrapper = document.querySelector("[data-pagination]");
+        const search = document.querySelector("#song-search");
+        const genre = document.querySelector("#genre-filter");
+        if (!wrapper) return;
+        const items = [...wrapper.querySelectorAll("[data-page-item]")];
+        const apply = () => {
+          const q = (search?.value || "").trim().toLowerCase(),
+            g = genre?.value || "all";
+          items.forEach((x) => {
+            x.dataset.filtered =
+              (!q || x.dataset.title.toLowerCase().includes(q)) &&
+              (g === "all" || x.dataset.genre === g)
+                ? "1"
+                : "0";
+          });
+          items.forEach((x) => (x.hidden = x.dataset.filtered !== "1"));
+          // pagination is rebuilt by main.js after filters
+          if (wrapper._renderPagination) wrapper._renderPagination();
+        };
+        [search, genre].forEach(
+          (el) =>
+            el &&
+            el.addEventListener(el === search ? "input" : "change", apply),
+        );
+      });
+    </script>
+    <div class="global-player" data-global-player="" hidden="">
+      <img
+        alt=""
+        class="global-player-cover"
+        data-gp-cover=""
+        src="{% static 'images/cover-01.svg' %}"
+      />
+      <div class="global-player-meta">
+        <strong data-gp-title="">—</strong>
+        <span data-gp-artist="">—</span>
+      </div>
+      <button aria-label="قبلی" class="icon-btn" data-gp-prev="" type="button">
+        ‹
+      </button>
+      <button
+        aria-label="پخش"
+        class="play-btn-circle"
+        data-gp-play=""
+        type="button"
+      >
+        <svg fill="currentColor" viewbox="0 0 24 24">
+          <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
+        </svg>
+      </button>
+      <button aria-label="بعدی" class="icon-btn" data-gp-next="" type="button">
+        ›
+      </button>
+      <div class="global-player-progress">
+        <input
+          aria-label="پیشرفت پخش"
+          data-gp-progress=""
+          max="100"
+          min="0"
+          type="range"
+          value="0"
+        />
+        <div>
+          <span data-gp-current="">۰:۰۰</span>
+          <span data-gp-duration="">۰:۰۰</span>
+        </div>
+      </div>
+      <button aria-label="بستن" class="icon-btn" data-gp-close="" type="button">
+        ×
+      </button>
+      <audio data-gp-audio="" preload="metadata"></audio>
+    </div>
+  </body>
+</html>

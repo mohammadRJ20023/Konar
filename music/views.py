@@ -24,3 +24,8 @@ def Artist_Detail_View(request, slug):
     }
     
     return render(request, "music/artist_detail.html", context)
+
+def Track_List_View(request):
+    
+    
+    return render(request, "music/track_list.html")
