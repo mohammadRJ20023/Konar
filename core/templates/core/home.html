@@ -213,7 +213,7 @@
               </a>
               <div class="meta">
                 <h4><a href="{% url 'music:detail' track.slug %}">{{track.title}}</a></h4>
-                <a class="artist-link" >{{ track.artist.name}}</a>
+                <a class="artist-link" href="{% url 'music:artist' track.artist.slug %}">{{ track.artist.name}}</a>
               </div>
               <div
                 class="waveform mini-wave"

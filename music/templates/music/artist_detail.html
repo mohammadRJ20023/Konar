@@ -78,31 +78,24 @@
         <div class="container artist-hero-inner">
           <div class="artist-avatar-wrap">
             <img
-              alt="آرمان کیا"
+              alt="{{ artist.name }}"
               id="artist-avatar"
-              src="{% static 'images/avatar-01.svg' %}"
+              src="{{ artist.image.url }}"
             />
             <span aria-label="هنرمند تأییدشده" class="artist-verified">✓</span>
           </div>
           <div class="artist-main">
             <span class="eyebrow">صفحه هنرمند</span>
-            <h1 class="detail-title" id="artist-name">آرمان کیا</h1>
-            <p class="detail-desc" id="artist-bio">
-              از هنرمندان نسل تازه موسیقی پاپ؛ روایت‌های شهری و ملودی‌های
-              مینیمال، بخش مهمی از هویت آثار او را شکل می‌دهند.
-            </p>
+            <h1 class="detail-title" id="artist-name">{{ artist.name }}</h1>
+            
             <div class="artist-stats">
               <div>
-                <strong id="artist-track-count">۶</strong>
+                <strong id="artist-track-count">{{tracks.count}}</strong>
                 <span>ترک</span>
               </div>
               <div>
-                <strong>۲</strong>
+                <strong>{{ albums.count }}</strong>
                 <span>آلبوم</span>
-              </div>
-              <div>
-                <strong>۱۲۸K</strong>
-                <span>شنونده ماهانه</span>
               </div>
             </div>
             <div class="artist-cta-row">
@@ -132,16 +125,6 @@
               </a>
             </div>
           </div>
-          <button
-            aria-label="پخش همه آهنگ‌های هنرمند"
-            class="play-btn-circle lg artist-play-all"
-            data-artist-play="all"
-            type="button"
-          >
-            <svg fill="currentColor" viewbox="0 0 24 24">
-              <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
-            </svg>
-          </button>
         </div>
       </section>
       <section class="section">
@@ -150,97 +133,53 @@
             <div class="section-head">
               <div>
                 <span class="eyebrow">درباره هنرمند</span>
-                <h2 class="section-title">داستان آرمان کیا</h2>
+                <h2 class="section-title">{{ artist.name  }}</h2>
               </div>
             </div>
             <div class="bio-copy">
-              <p>
-                آرمان کیا از هنرمندان نسل تازه موسیقی پاپ فارسی است؛ صدایی که از
-                دل شب‌های شهری بیرون آمده و روایت‌های ساده‌ی زندگی روزمره را با
-                ملودی‌های مینیمال و تنظیم‌های الکترونیک گرم پیوند می‌زند. سبک او
-                ترکیبی از پاپ معاصر و بافت‌های صوتی سینمایی است؛ ملودی‌هایی که
-                بیشتر از آنکه پرسروصدا باشند، در سکوت میان نت‌ها معنا پیدا
-                می‌کنند.
-              </p>
-              <p>
-                او فعالیت حرفه‌ای خود را با انتشار چند تک‌آهنگ مستقل آغاز کرد و
-                به‌سرعت با ترکیبی از صداقت در ترانه‌سرایی و تنظیم‌های تازه، توجه
-                شنوندگان موسیقی پاپ فارسی را جلب کرد. آلبوم «موج هزارم» نقطه
-                عطفی در مسیر او بود و پس از آن «شهر بی‌خواب» تصویری تیره‌تر و
-                شهری‌تر از دنیای موسیقایی‌اش را به نمایش گذاشت.
+              <p>{{ artist.bio }}
               </p>
             </div>
             <blockquote class="bio-quote">
               «برای من موسیقی یعنی نوشتن نامه‌ای که هیچ‌وقت نمی‌فرستم؛ فقط باید
               یک‌جایی شنیده شود.»
             </blockquote>
-            <p>
-              امروز آرمان کیا در کنار انتشار تک‌آهنگ‌های تازه، روی پروژه‌ای
-              مشترک نیز کار می‌کند و همچنان یکی از چهره‌های ثابت پلی‌لیست‌های
-              پاپ شهری در «کنار» است.
-            </p>
             <div class="tag-list bio-tags">
-              <span class="tag">پاپ</span>
-              <span class="tag">الکترونیک</span>
-              <span class="tag">موسیقی فارسی</span>
+            {% for tracks in tracks %}
+              {% for genre in tracks.genre.all %}
+              <span class="tag">{{ genre.name }}</span>
+              {% endfor %}
+            {% endfor %}
+              
             </div>
             <div class="bio-highlights">
+              
               <div class="highlight-card">
-                <strong>۱۴۰۱</strong>
-                <span>آغاز فعالیت حرفه‌ای</span>
-              </div>
-              <div class="highlight-card">
-                <strong>۲</strong>
+                <strong>{{ albums.count}}</strong>
                 <span>آلبوم کامل منتشرشده</span>
               </div>
               <div class="highlight-card">
-                <strong>۱۲۸K</strong>
-                <span>شنونده ماهانه</span>
+                <strong>{{ tracks.count}}</strong>
+                <span>ترک های منتشرشده</span>
               </div>
+              
             </div>
           </div>
           <aside class="artist-sidebar">
             <div class="artist-card">
               <span class="eyebrow">آلبوم‌ها</span>
               <div class="album-mini">
-                <img alt="" src="{% static 'images/cover-01.svg' %}" />
+                {% for album in albums %}
+                <img alt="" src="{{ album.cover.url }}" />
+                
                 <div>
-                  <strong>موج هزارم</strong>
-                  <span>۱۴۰۴ · ۸ ترک</span>
+                  <strong>{{ album.title }}</strong>
+                  <span>{{album.release_date|date:"Y"}} · {{ album.tracks.count }} ترک</span>
                 </div>
-              </div>
-              <div class="album-mini">
-                <img alt="" src="{% static 'images/cover-02.svg' %}" />
-                <div>
-                  <strong>شهر بی‌خواب</strong>
-                  <span>۱۴۰۵ · ۱۰ ترک</span>
-                </div>
+                {% endfor %}
               </div>
             </div>
-            <div class="artist-card">
-              <span class="eyebrow">هنرمندان مشابه</span>
-              <div class="similar-artist-row">
-                <img alt="نیلوفر راد" src="{% static 'images/avatar-02.svg' %}" />
-                <div>
-                  <strong>نیلوفر راد</strong>
-                  <span>پاپ فارسی</span>
-                </div>
-              </div>
-              <div class="similar-artist-row">
-                <img alt="پویا صدر" src="{% static 'images/avatar-03.svg' %}" />
-                <div>
-                  <strong>پویا صدر</strong>
-                  <span>الکترونیک</span>
-                </div>
-              </div>
-              <div class="similar-artist-row">
-                <img alt="سایه" src="{% static 'images/avatar-01.svg' %}" />
-                <div>
-                  <strong>سایه</strong>
-                  <span>سنتی مدرن</span>
-                </div>
-              </div>
-            </div>
+            
           </aside>
         </div>
       </section>
@@ -249,16 +188,17 @@
           <div class="section-head">
             <div>
               <span class="eyebrow">کارنامه هنری</span>
-              <h2 class="section-title">آلبوم‌های آرمان کیا</h2>
+              <h2 class="section-title">آلبوم‌های {{ artist.name }} </h2>
             </div>
             <a class="btn btn-outline btn-sm" href="songs.html">
-              مشاهده تک‌آهنگ‌ها هم
+              مشاهده تک‌آهنگ‌ها 
             </a>
           </div>
           <div class="grid-2 album-grid">
+            {% for album in albums|slice:"0:2" %}
             <div class="track-card">
               <a class="track-card-cover" href="detail.html">
-                <img alt="جلد موج هزارم" src="{% static 'images/cover-01.svg' %}" />
+                <img alt="{{ album.name }}" src="{{ album.cover.url  }}" />
                 <div class="play-overlay">
                   <span class="play-btn-circle">
                     <svg fill="currentColor" viewbox="0 0 24 24">
@@ -266,30 +206,14 @@
                     </svg>
                   </span>
                 </div>
+              {% endfor %}
               </a>
               <div class="track-card-body">
                 <span class="kind">آلبوم · ۸ ترک · ۱۴۰۴</span>
                 <h3>موج هزارم</h3>
                 <span class="artist">آرمان کیا</span>
               </div>
-            </div>
-            <div class="track-card">
-              <a class="track-card-cover" href="detail.html">
-                <img alt="جلد شهر بی‌خواب" src="{% static 'images/cover-02.svg' %}" />
-                <div class="play-overlay">
-                  <span class="play-btn-circle">
-                    <svg fill="currentColor" viewbox="0 0 24 24">
-                      <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
-                    </svg>
-                  </span>
-                </div>
-              </a>
-              <div class="track-card-body">
-                <span class="kind">آلبوم · ۱۰ ترک · ۱۴۰۵</span>
-                <h3>شهر بی‌خواب</h3>
-                <span class="artist">آرمان کیا</span>
-              </div>
-            </div>
+            
           </div>
         </div>
       </section>

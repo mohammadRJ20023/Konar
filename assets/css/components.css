@@ -715,6 +715,46 @@ body,
 .artist-track-list .meta { min-width:0; }
 .artist-track-list .meta h4 { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
+.artist-cta-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.artist-cta-row .btn svg { width: 17px; height: 17px; }
+
+.bio-copy p { color: var(--text-secondary); font-size: 15.5px; line-height: 2; margin-bottom: 18px; }
+.bio-quote {
+  position: relative;
+  margin: 8px 0 24px;
+  padding: 20px 26px;
+  border-inline-start: 3px solid var(--gold);
+  background: var(--bg-card);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.85;
+  color: var(--text-primary);
+}
+.bio-tags { margin: 4px 0 28px; }
+.bio-highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.highlight-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 18px 14px;
+  text-align: center;
+  transition: border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.highlight-card:hover { transform: translateY(-3px); border-color: rgba(139,92,246,.28); }
+.highlight-card strong { display: block; font-family: var(--font-display); font-size: 22px; color: var(--gold); margin-bottom: 4px; }
+.highlight-card span { font-size: 12px; color: var(--text-muted); }
+
+.similar-artist-row { display: flex; align-items: center; gap: 12px; padding-top: 14px; margin-top: 14px; border-top: 1px solid var(--line-soft); }
+.similar-artist-row:first-of-type { padding-top: 0; margin-top: 0; border-top: 0; }
+.similar-artist-row img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); }
+.similar-artist-row div { display: flex; flex-direction: column; gap: 3px; }
+.similar-artist-row strong { font-size: 14px; }
+.similar-artist-row span { font-size: 12px; color: var(--text-muted); }
+
+.album-grid .track-card-body h3 { font-size: 18px; }
+
 /* ---------- پلیر شناور مشترک ---------- */
 .global-player {
   position: fixed;

@@ -46,6 +46,12 @@
   .footer-grid { grid-template-columns: 1fr; gap: 30px; }
   .stat-grid { grid-template-columns: 1fr 1fr; }
   .auth-form-side { padding: 34px 22px; }
+  .songs-banner-inner { flex-direction: column; align-items: flex-start; }
+  .songs-banner-stats { gap: 22px; }
+  .list-toolbar { flex-direction: column; align-items: stretch; }
+  .list-toolbar > div:first-child { justify-content: space-between; }
+  .bio-highlights { grid-template-columns: 1fr 1fr; }
+  .bio-highlights .highlight-card:last-child { grid-column: 1 / -1; }
 
   .mobile-nav-panel.is-open {
     display: flex;
