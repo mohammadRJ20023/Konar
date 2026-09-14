@@ -245,15 +245,15 @@
           <div class="section-head">
             <div>
               <span class="eyebrow">تازه‌منتشرشده</span>
-              <h2 class="section-title">آلبوم‌ها و سینگل‌های این هفته</h2>
+              <h2 class="section-title">آلبوم‌های این هفته</h2>
             </div>
             <a class="btn btn-ghost" href="index.html">مشاهده همه ←</a>
           </div>
           <div class="grid-4">
-            <!-- DJANGO: {% for release in new_releases %} -->
+            {% for album in albums|slice:"a:4" %}
             <div class="track-card">
               <a class="track-card-cover" href="detail.html">
-                <img alt="جلد موج هزارم" src="{% static 'images/cover-01.svg' %}" />
+                <img alt="{{ album.name }}" src="{{ album.cover.url }}" />
                 <div class="play-overlay">
                   <span class="play-btn-circle">
                     <svg fill="currentColor" viewbox="0 0 24 24">
@@ -261,65 +261,12 @@
                     </svg>
                   </span>
                 </div>
-              </a>
-              <div class="track-card-body">
-                <span class="kind">آلبوم · ۱۰ ترک</span>
-                <h3>موج هزارم</h3>
-                <span class="artist">آرمان کیا</span>
-              </div>
+              </a> 
             </div>
-            <div class="track-card">
-              <a class="track-card-cover" href="detail.html">
-                <img alt="جلد شب بی‌پایان" src="{% static 'images/cover-02.svg' %}" />
-                <div class="play-overlay">
-                  <span class="play-btn-circle">
-                    <svg fill="currentColor" viewbox="0 0 24 24">
-                      <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
-                    </svg>
-                  </span>
-                </div>
-              </a>
-              <div class="track-card-body">
-                <span class="kind">سینگل</span>
-                <h3>شب بی‌پایان</h3>
-                <span class="artist">سایه</span>
-              </div>
-            </div>
-            <div class="track-card">
-              <a class="track-card-cover" href="detail.html">
-                <img alt="جلد کوچه‌های خیس" src="{% static 'images/cover-03.svg' %}" />
-                <div class="play-overlay">
-                  <span class="play-btn-circle">
-                    <svg fill="currentColor" viewbox="0 0 24 24">
-                      <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
-                    </svg>
-                  </span>
-                </div>
-              </a>
-              <div class="track-card-body">
-                <span class="kind">آلبوم · ۸ ترک</span>
-                <h3>کوچه‌های خیس</h3>
-                <span class="artist">کیان آروین</span>
-              </div>
-            </div>
-            <div class="track-card">
-              <a class="track-card-cover" href="detail.html">
-                <img alt="جلد اتاق آبی" src="{% static 'images/cover-04.svg' %}" />
-                <div class="play-overlay">
-                  <span class="play-btn-circle">
-                    <svg fill="currentColor" viewbox="0 0 24 24">
-                      <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
-                    </svg>
-                  </span>
-                </div>
-              </a>
-              <div class="track-card-body">
-                <span class="kind">سینگل</span>
-                <h3>اتاق آبی</h3>
-                <span class="artist">بهراد مهر</span>
-              </div>
-            </div>
-            <!-- DJANGO: {% endfor %} -->
+          {% endfor %}
+            
+           
+            
           </div>
         </div>
       </section>
