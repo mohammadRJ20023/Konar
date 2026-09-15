@@ -1,15 +1,11 @@
 {% load static %}
 <!doctype html>
-
 <html dir="rtl" lang="fa">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>لیست آهنگ‌ها | کنار</title>
-    <meta
-      content="لیست آهنگ‌های کنار با امکان جست‌وجو و صفحه‌بندی."
-      name="description"
-    />
+    <meta content="لیست آهنگ‌های کنار با امکان جست‌وجو و صفحه‌بندی." name="description" />
     <link href="{% static 'images/logo-mark.svg' %}" rel="icon" type="image/svg+xml" />
     <link href="{% static 'css/variables.css' %}" rel="stylesheet" />
     <link href="{% static 'css/base.css' %}" rel="stylesheet" />
@@ -26,6 +22,7 @@
           کنار
           <span class="sub">KONAR</span>
         </a>
+
         <nav class="main-nav">
           <a href="index.html">خانه</a>
           <a class="is-active" href="songs.html">آهنگ‌ها</a>
@@ -34,24 +31,18 @@
           <a href="blog.html">وبلاگ</a>
           <a href="dashboard.html">پنل کاربری</a>
         </nav>
+
         <div class="header-actions">
           <div class="search-box">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              viewbox="0 0 24 24"
-            >
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
               <circle cx="11" cy="11" r="7"></circle>
               <path d="m20 20-4-4"></path>
             </svg>
-            <input
-              id="song-search"
-              placeholder="جست‌وجوی آهنگ..."
-              type="search"
-            />
+            <input id="song-search" placeholder="جست‌وجوی آهنگ..." type="search" />
           </div>
+
           <a class="btn btn-outline btn-sm" href="login.html">ورود</a>
+
           <button aria-label="منو" class="nav-toggle">
             <span></span>
             <span></span>
@@ -60,6 +51,7 @@
         </div>
       </div>
     </header>
+
     <main>
       <section class="page-banner songs-banner">
         <div class="container songs-banner-inner">
@@ -67,68 +59,66 @@
             <span class="eyebrow">کتابخانه موسیقی</span>
             <h1 class="page-title">همه آهنگ‌ها</h1>
             <p class="page-desc">
-              جدیدترین و محبوب‌ترین ترک‌ها را پیدا کن و مستقیم وارد صفحه جزئیات
-              شو.
+              جدیدترین و محبوب‌ترین ترک‌ها را پیدا کن .
             </p>
           </div>
+
           <div class="songs-banner-stats">
             <div>
-              <strong>۲۴</strong>
+              <strong>{{ app_stats.song_count }}</strong>
               <span>ترک</span>
             </div>
             <div>
-              <strong>۴</strong>
+                
+              <strong>{{ app_stats.genre_count }}</strong>
               <span>ژانر</span>
+              
             </div>
             <div>
-              <strong>۴</strong>
+              <strong>{{ app_stats.artist_count }}</strong>
               <span>هنرمند</span>
             </div>
           </div>
         </div>
       </section>
+
       <section class="section">
         <div class="container">
           <div class="list-toolbar">
             <div>
               <h2 class="section-title">لیست ترک‌ها</h2>
-              <span class="text-muted">۲۴ ترک</span>
+              <span class="text-muted">{{ app_stats.song_count }} ترک</span>
             </div>
+
             <div class="list-filters">
-              <select id="genre-filter">
-                <option value="all">همه ژانرها</option>
-                <option value="pop">پاپ</option>
-                <option value="rock">راک</option>
-                <option value="electronic">الکترونیک</option>
-                <option value="traditional">سنتی</option>
-              </select>
+              
             </div>
           </div>
-          <div
-            class="track-list songs-list"
-            data-pagination=""
-            data-per-page="6"
-          >
+
+          <div class="track-list songs-list">
+            {% for track in tracks %}
             <div
               class="track-row is-top"
-              data-artist="آرمان کیا"
-              data-cover="{% static 'images/cover-01.svg' %}"
-              data-duration="230"
-              data-genre="pop"
-              data-page-item=""
+              data-artist="{{ track.artist.title }} "
+              data-cover="{{ track.cover.url }}"
+              data-duration="{{ track.duration }}"
+              data-genre="{{ track.genre.first }}"
               data-popularity="94"
-              data-src="{% static '/media/tracks/بی-قرار.mp3' %}"
-              data-title="بی‌قرار"
+              data-src="{{ track.audio_file.url }}"
+              data-title="{{ track.title }}"
               data-track=""
             >
-              <span class="idx rank-badge">01</span>
-              <a class="cover-sm" href="detail.html">
-                <img alt="بی‌قرار" src="{% static 'images/cover-01.svg' %}" />
+              <span class="idx rank-badge">{{ forloop.counter }}</span>
+
+              <a class="cover-sm" href="{% url 'music:detail' track.slug %}">
+                <img alt="{{ track.title }}" src="{{ track.cover.url }}" />
               </a>
+
               <div class="meta">
-                <h4>بی‌قرار</h4>
-                <a class="artist-link" href="artist.html">آرمان کیا</a>
+                <h4><a href="{% url 'music:detail' track.slug %}">{{ track.title }}</a></h4>
+                <a class="artist-link" href="{% url 'music:artist' track.artist.slug %}">{{ track.artist.name }}</a>
               </div>
+
               <div
                 class="waveform mini-wave"
                 data-bars="24"
@@ -137,8 +127,9 @@
                 data-waveform=""
                 style="height: 26px"
               ></div>
+
               <button
-                aria-label="پخش بی‌قرار"
+                aria-label="{{ track.ttile }}"
                 class="icon-btn"
                 data-play-track=""
                 type="button"
@@ -147,53 +138,48 @@
                   <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
                 </svg>
               </button>
-              <span class="duration">۳:۵۰</span>
+
+              <span class="duration">{{ track.display_duration }}</span>
             </div>
-            <nav
-              aria-label="صفحه‌های آهنگ‌ها"
-              class="pagination"
-              data-pagination-controls=""
-            ></nav>
+             {% endfor %}
           </div>
+        
+
+            <nav class="pagination" aria-label="صفحه‌های آهنگ‌ها">
+        <!--
+            اینجا Pagination جنگو را پیاده کن.
+
+            چیزهایی که خودت باید اینجا قرار بدی:
+            - page_obj.has_previous
+            - page_obj.previous_page_number
+            - page_obj.number
+            - page_obj.paginator.num_pages
+            - page_obj.has_next
+            - page_obj.next_page_number
+
+            ساختار ظاهری مورد انتظار:
+        -->
+
+                    <a href="#"><</a>
+                    <a href="#" class="is-active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">></a>
+            </nav>
         </div>
       </section>
     </main>
+
     <footer class="site-footer">
       <div class="container footer-bottom">
         <span>© ۱۴۰۴ کنار. تمام حقوق محفوظ است.</span>
         <span>ساخته‌شده برای عاشقان موسیقی ♪</span>
       </div>
     </footer>
+
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/player.js' %}"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const wrapper = document.querySelector("[data-pagination]");
-        const search = document.querySelector("#song-search");
-        const genre = document.querySelector("#genre-filter");
-        if (!wrapper) return;
-        const items = [...wrapper.querySelectorAll("[data-page-item]")];
-        const apply = () => {
-          const q = (search?.value || "").trim().toLowerCase(),
-            g = genre?.value || "all";
-          items.forEach((x) => {
-            x.dataset.filtered =
-              (!q || x.dataset.title.toLowerCase().includes(q)) &&
-              (g === "all" || x.dataset.genre === g)
-                ? "1"
-                : "0";
-          });
-          items.forEach((x) => (x.hidden = x.dataset.filtered !== "1"));
-          // pagination is rebuilt by main.js after filters
-          if (wrapper._renderPagination) wrapper._renderPagination();
-        };
-        [search, genre].forEach(
-          (el) =>
-            el &&
-            el.addEventListener(el === search ? "input" : "change", apply),
-        );
-      });
-    </script>
+
     <div class="global-player" data-global-player="" hidden="">
       <img
         alt=""
@@ -201,26 +187,22 @@
         data-gp-cover=""
         src="{% static 'images/cover-01.svg' %}"
       />
+
       <div class="global-player-meta">
         <strong data-gp-title="">—</strong>
         <span data-gp-artist="">—</span>
       </div>
-      <button aria-label="قبلی" class="icon-btn" data-gp-prev="" type="button">
-        ‹
-      </button>
-      <button
-        aria-label="پخش"
-        class="play-btn-circle"
-        data-gp-play=""
-        type="button"
-      >
+
+      <button aria-label="قبلی" class="icon-btn" data-gp-prev="" type="button">‹</button>
+
+      <button aria-label="پخش" class="play-btn-circle" data-gp-play="" type="button">
         <svg fill="currentColor" viewbox="0 0 24 24">
           <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
         </svg>
       </button>
-      <button aria-label="بعدی" class="icon-btn" data-gp-next="" type="button">
-        ›
-      </button>
+
+      <button aria-label="بعدی" class="icon-btn" data-gp-next="" type="button">›</button>
+
       <div class="global-player-progress">
         <input
           aria-label="پیشرفت پخش"
@@ -235,9 +217,9 @@
           <span data-gp-duration="">۰:۰۰</span>
         </div>
       </div>
-      <button aria-label="بستن" class="icon-btn" data-gp-close="" type="button">
-        ×
-      </button>
+
+      <button aria-label="بستن" class="icon-btn" data-gp-close="" type="button">×</button>
+
       <audio data-gp-audio="" preload="metadata"></audio>
     </div>
   </body>
