@@ -155,3 +155,8 @@ textarea:focus-visible,
   background: linear-gradient(180deg, var(--gold), transparent);
   border-radius: 2px;
 }
+.pagination a.active {
+    background: #7c3aed;
+    color: #fff;
+    border-color: #7c3aed;
+}

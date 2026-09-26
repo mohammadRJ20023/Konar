@@ -53,6 +53,7 @@
     </header>
 
     <main>
+      
       <section class="page-banner songs-banner">
         <div class="container songs-banner-inner">
           <div>
@@ -146,25 +147,16 @@
         
 
             <nav class="pagination" aria-label="صفحه‌های آهنگ‌ها">
-        <!--
-            اینجا Pagination جنگو را پیاده کن.
-
-            چیزهایی که خودت باید اینجا قرار بدی:
-            - page_obj.has_previous
-            - page_obj.previous_page_number
-            - page_obj.number
-            - page_obj.paginator.num_pages
-            - page_obj.has_next
-            - page_obj.next_page_number
-
-            ساختار ظاهری مورد انتظار:
-        -->
-
-                    <a href="#"><</a>
-                    <a href="#" class="is-active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">></a>
+     
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}"><</a>
+                    {% endif %}
+                    {% for numb in page_obj.paginator.page_range %}
+                    <a href="?page={{ numb }}" class="{% if page_obj.number == numb %}active{% endif %}">{{  numb }}</a>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">></a>
+                    {% endif %}
             </nav>
         </div>
       </section>

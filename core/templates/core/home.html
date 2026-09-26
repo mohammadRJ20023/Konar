@@ -252,7 +252,7 @@
           <div class="grid-4">
             {% for album in albums|slice:"a:4" %}
             <div class="track-card">
-              <a class="track-card-cover" href="detail.html">
+              <a class="track-card-cover" href="{% url 'music:album_detail' album.slug %}">
                 <img alt="{{ album.name }}" src="{{ album.cover.url }}" />
                 <div class="play-overlay">
                   <span class="play-btn-circle">
