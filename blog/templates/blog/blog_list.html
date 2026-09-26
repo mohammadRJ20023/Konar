@@ -23,10 +23,10 @@
         {% for article in articles %}
           {% if article.is_featured == True %}
         <article class="featured-post">
-          <img src="{{ article.image.url }}" alt="">
+        <a href="{% url 'blog:detail' article.slug %}"><img src="{{ article.image.url }}" alt=""></a>
           <div class="content">
             <span class="badge badge-wine" style="width:fit-content;">{{ article.category.title }}</span>
-            <a href="blog-detail.html"><h2>{{ article.title }}</h2></a>
+            <a href="{% url 'blog:detail' article.slug %}"><h2>{{ article.title }}</h2></a>
             <p class="text-muted" style="font-size:14.5px;">{{ article.body|slice:"0:60" }}</p>
             <div class="post-meta">
               <img src="{{ article.author.profile.avatar.url }}" alt="">
@@ -42,10 +42,10 @@
           {% for article in articles %}
             {% if not article.is_featured %}
           <article class="post-card">
-            <a href="blog-detail.html"><img src="{{ article.image.url }}" alt=""></a>
+            <a href="{% url 'blog:detail' article.slug %}"><img src="{{ article.image.url }}" alt=""></a>
             <div class="content">
               <span class="badge badge-gold">{{ article.category.title }}</span>
-              <a href="blog-detail.html"><h3>{{ article.title }}</h3></a>
+              <a href="{% url 'blog:detail' article.slug %}"><h3>{{ article.title }}</h3></a>
               <div class="post-meta">
                 <img src="{{ article.author.profile.avatar.url }}" alt="">
                 <span>{{ article.author.username }}</span> · <span> {{ article.created_at|date:"Y, m, d" }}</span>

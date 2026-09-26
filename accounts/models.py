@@ -8,6 +8,7 @@ class Profile(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     avatar = models.ImageField(upload_to="Profile/avatar", blank=True, null=True)
+    bio = models.TextField()
     phone_number = models.CharField(max_length=11, blank=False, null=False)
     
     def __str__(self):

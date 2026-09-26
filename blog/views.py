@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , get_object_or_404
 from .models import Category, Article
 from django.core.paginator import Paginator
 
@@ -19,7 +19,13 @@ def Article_List_View(request):
         "popular_articles":popular_articles,
         })
 
-def Article_Detail_View(request):
+def Article_Detail_View(request, slug):
     
-    return render(request, 'blog/blog_detail.html')
+    article = get_object_or_404(Article, slug=slug)
+    article.view_count += 1
+    article.save(update_fields=["view_count"])
+    popular_articles = Article.objects.order_by("-view_count")[:3]
+    category = Category.objects.all()
+    
+    return render(request, 'blog/blog_detail.html', context={'article':article, "categories":category, "popular_articles":popular_articles, })
     

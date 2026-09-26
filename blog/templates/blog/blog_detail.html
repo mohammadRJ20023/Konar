@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% block title %} {{article.title}} | وبلاگ کنار {% endblock %}
 {% block content %}
-{% block title %}{{article.title}} | وبلاگ کنا{% endblock %}
+
 
 
 
@@ -10,22 +11,22 @@
   <!-- ========== هیرو مقاله ========== -->
   <section class="article-hero">
     <div class="container" style="max-width:900px;">
-      <span class="badge badge-wine">تحلیل آلبوم</span>
-      <h1>موج هزارم: وقتی الکترونیک با سنت گفت‌وگو می‌کند</h1>
+      <span class="badge badge-wine">{{ article.category.title }}</span>
+      <h1> {{ article.title }} </h1>
       <div class="article-meta-row">
-        <img src="{% static 'images/avatar-01.svg' %}" alt="">
-        <span>محمد رستمی</span>
+        <img src="{{ article.author.profile.avatar.url }}" alt="">
+        <span>{{ article.author.username }}</span>
         <span>·</span>
-        <span>۶ شهریور ۱۴۰۴</span>
+        <span>{{ article.created_at|date:"Y, m , d" }}</span>
         <span>·</span>
-        <span>۸ دقیقه مطالعه</span>
+        <span>{{ article.reading_time }} دقیقه مطالعه</span>
       </div>
     </div>
   </section>
 
   <div class="container" style="max-width:1180px;">
     <div class="article-cover">
-      <img src="{% static 'images/blog-cover-01.svg' %}" alt="جلد مقاله موج هزارم">
+      <img src="{{ article.image.url }}" alt="جلد مقاله موج هزارم">
     </div>
   </div>
 
@@ -41,61 +42,41 @@
 
     <!-- متن مقاله -->
     <article class="article-body">
-      <p>
-        سه سال از آخرین آلبوم آرمان کیا می‌گذرد؛ سه سالی که او بیشترش را در استودیویی کوچک
-        در تهران گذراند تا «موج هزارم» را بسازد. آلبومی که از همان ترک نخست، رابطه‌ای تازه
-        میان سازهای الکترونیک و ردیف موسیقی سنتی ایرانی برقرار می‌کند.
-      </p>
+      
 
-      <h2>ترکیبی که تصادفی نیست</h2>
+      <h2>{{ article.title }}</h2>
       <p>
-        آنچه «موج هزارم» را از بسیاری آثار مشابه جدا می‌کند، دقتی است که در چیدمان لایه‌های صوتی
-        به‌کار رفته. سنتور و تار، به‌جای آنکه صرفاً به‌عنوان تزئین روی بستر الکترونیک نشسته باشند،
-        در گفت‌وگویی واقعی با سینت‌ها و ریتم‌های دیجیتال قرار می‌گیرند.
+        {{ article.body|slice:":100" }}
       </p>
-
+      {% if article.quotes %}
       <blockquote>
-        «نمی‌خواستم سنت را به موزه ببرم؛ می‌خواستم نشان بدهم هنوز نفس می‌کشد.» — آرمان کیا
+        {{ article.quotes }}
       </blockquote>
+      {% endif %}
 
       <p>
-        این رویکرد به‌وضوح در ترک سوم آلبوم، «بی‌قرار»، شنیده می‌شود؛ جایی که ملودی مقام‌محور
-        با یک بیت مینیمال الکترونیک ترکیب شده است.
+        {{ article.body|slice:"100:" }}
       </p>
 
       <!-- کارت معرفی ترک داخل مقاله -->
-      <div class="embed-track" data-track data-title="بی‌قرار" data-artist="آرمان کیا" data-cover="images/cover-01.svg" data-duration="230" data-src="/media/tracks/bi-gharar.mp3">
-        <img src="{% static 'images/cover-01.svg' %}" alt="بی‌قرار">
+      <div class="embed-track" data-track data-title="{{ article.track.title }}" data-artist="{{ article.track.artist.name }}" data-cover="{{ article.track.cover.url }}" data-duration="{{ article.track.duration }}" data-src="{{ article.track.audio_file.url }}">
+        <img src="{{ article.track.cover.url }}" alt="بی‌قرار">
         <div class="meta">
           <span>در حال بررسی</span>
-          <h4>بی‌قرار</h4>
-          <p>آرمان کیا · از آلبوم موج هزارم</p>
+          <h4>{{ article.track.title }}</h4>
+          <p>{{ article.track.artist.name }}</p>
         </div>
         <button type="button" data-play-track class="play-btn-circle" aria-label="پخش بی‌قرار" style="margin-inline-start:auto;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg></button>
-        <a href="detail.html" class="btn btn-outline btn-sm">جزئیات</a>
+        <a href="{% url 'music:detail' article.track.slug %}" class="btn btn-outline btn-sm">جزئیات</a>
       </div>
 
-      <h2>صدای سایه؛ لایه‌ای بی‌صدا اما تأثیرگذار</h2>
-      <p>
-        حضور سایه به‌عنوان خواننده‌ی همراه در چند ترک آلبوم، بعد تازه‌ای به کار داده است.
-        صدای او بیشتر شبیه به یک ساز اضافه عمل می‌کند تا یک خط ملودیک مستقل؛ انتخابی که
-        فضای اتمسفریک آلبوم را تقویت می‌کند.
-      </p>
-
-      <h2>جمع‌بندی</h2>
-      <p>
-        «موج هزارم» اثری است که هم برای شنونده‌ی علاقه‌مند به موسیقی سنتی و هم برای طرفداران
-        الکترونیک، حرفی برای گفتن دارد. آرمان کیا با این آلبوم نشان داد که پل زدن میان دو دنیای
-        به‌ظاهر متفاوت، وقتی با دقت انجام شود، می‌تواند به یکی از تازه‌ترین تجربه‌های شنیداری
-        سال تبدیل شود.
-      </p>
-
+      
       <!-- جعبه‌ی نویسنده -->
       <div class="author-box">
-        <img src="{% static 'images/avatar-01.svg' %}" alt="محمد رستمی">
+        <img src="{{ article.author.profile.avatar.url }}" alt="محمد رستمی">
         <div>
-          <h4>محمد رستمی</h4>
-          <p>نویسنده و منتقد موسیقی؛ علاقه‌مند به موسیقی الکترونیک و ردیف‌های سنتی ایرانی. نوشته‌های بیشتر او را در وبلاگ کنار دنبال کنید.</p>
+          <h4> {{ article.author.username }}</h4>
+          <p>{{ article.author.profile.bio  }}</p>
         </div>
       </div>
     </article>
@@ -104,21 +85,21 @@
     <aside>
       <div class="sidebar-box">
         <h4>محبوب‌ترین یادداشت‌ها</h4>
+          {% for article in popular_articles %}
         <div class="popular-post">
-          <img src="{% static 'images/blog-cover-03.svg' %}" alt="">
-          <div><h5>گام‌ها چگونه احساس می‌سازند؟</h5><span>۸ هزار بازدید</span></div>
+        <a href="{% url 'blog:detail' article.slug %}"><img src="{{ article.image.url }}" alt=""></a>
+          <div><h5>{{ article.title }}</h5><span>{{ article.view_count }} هزار بازدید</span></div>
         </div>
-        <div class="popular-post">
-          <img src="{% static 'images/blog-cover-02.svg' %}" alt="">
-          <div><h5>نیلوفر راد: صدایی از دل سکوت</h5><span>۶٫۲ هزار بازدید</span></div>
-        </div>
+      {% endfor %}
+        
       </div>
       <div class="sidebar-box">
         <h4>دسته‌بندی‌ها</h4>
+          {% for category in categories %}
         <div class="sidebar-tag-list">
-          <a href="blog.html" class="tag is-active">تحلیل آلبوم</a>
-          <a href="blog.html" class="tag">مصاحبه</a>
-          <a href="blog.html" class="tag">نظریه موسیقی</a>
+          <a href="blog.html" class="tag is-active">{{ category.title }}</a>
+          {% endfor %}
+          
         </div>
       </div>
     </aside>
@@ -185,7 +166,7 @@
 
 <!-- ========== فوتر ========== -->
 <div class="global-player" data-global-player="" hidden>
-  <img alt="جلد آهنگ در حال پخش" class="global-player-cover" data-gp-cover="" src="{% static 'images/cover-01.svg' %}"/>
+  <img alt="جلد آهنگ در حال پخش" class="global-player-cover" data-gp-cover="" src="{{ article.track.cover.url }}"/>
   <div class="global-player-meta"><strong data-gp-title="">—</strong><span data-gp-artist="">—</span></div>
   <button aria-label="قبلی" class="icon-btn" data-gp-prev="" type="button">‹</button>
   <button aria-label="پخش" class="play-btn-circle" data-gp-play="" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg></button>
