@@ -23,12 +23,13 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     view_count = models.PositiveBigIntegerField(default=0)
     reading_time = models.PositiveBigIntegerField(default=0)
+    is_featured  = models.BooleanField(default=False)
     slug = models.SlugField(blank=True, null=True, allow_unicode=True)
     
     def save(self, *args, **kwargs):
             if not self.slug :
                 self.slug = slugify(self.title, allow_unicode=True)
-                
+            super(Article, self).save()                
     def __str__(self):
         return self.title
     
