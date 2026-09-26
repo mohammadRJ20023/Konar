@@ -7,12 +7,16 @@
           <span class="sub">KONAR</span>
         </a>
         <nav class="main-nav">
-          <a class="is-active" href="index.html">خانه</a>
+          <a class="is-active" href="{% url 'core:home' %}">خانه</a>
           <a href="{% url 'music:list' %}">آهنگ‌ها</a>
           <a href="artist.html">هنرمندان</a>
           <a href="{% url 'analytics:pannel' %}">کاوش</a>
           <a href="blog.html">وبلاگ</a>
-          <a href="dashboard.html">پنل کاربری</a>
+          {% if request.user.is_staff %}
+          <a href="{% url 'analytics:pannel' %}">پنل کاربری</a>
+          {% else %} 
+          <a href="{% url 'core:home' %}">پنل کاربری</a>
+          {% endif %}
         </nav>
         <div class="header-actions">
           <div class="search-box">
@@ -50,12 +54,13 @@
         </div>
       </div>
       <div class="mobile-nav-panel">
-        <a href="index.html">خانه</a>
-        <a href="songs.html">آهنگ‌ها</a>
+        <a href="{% url 'core:home' %}">خانه</a>
+        <a href="{% url 'music:list' %}">آهنگ‌ها</a>
         <a href="artist.html">هنرمندان</a>
         <a href="index.html#explore">کاوش</a>
         <a href="blog.html">وبلاگ</a>
-        <a href="dashboard.html">پنل کاربری</a>
+        
+        
         <a href="login.html">ورود / ثبت‌نام</a>
       </div>
     </header>

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'music.apps.MusicConfig',
     'analytics.apps.AnalyticsConfig',
+    'blog.apps.BlogConfig'
     
     'django_cleanup.apps.CleanupConfig'
 ]
