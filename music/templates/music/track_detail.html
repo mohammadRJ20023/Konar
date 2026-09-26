@@ -1,54 +1,6 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-
-<html dir="rtl" lang="fa">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>{{ track.title }} — {{ track.artist.name }} | کنار</title>
-<meta content="پخش و دانلود آهنگ «بی‌قرار» از آرمان کیا، از آلبوم موج هزارم. متن کامل آهنگ همراه با ترک‌های دیگر آلبوم." name="description"/>
-<link href="{% static 'images/logo-mark.svg' %}" rel="icon" type="image/svg+xml"/>
-<link href="{% static 'css/variables.css' %}" rel="stylesheet"/>
-<link href="{% static 'css/base.css' %}" rel="stylesheet"/>
-<link href="{% static 'css/components.css' %}" rel="stylesheet"/>
-<link href="{% static 'css/layout.css' %}" rel="stylesheet"/>
-<link href="{% static 'css/responsive.css' %}" rel="stylesheet"/>
-<link href="{% static 'css/player-v13.css' %}" rel="stylesheet"/>
-</head>
-<body class="inner-page detail-page">
-<!-- ========== هدر ========== -->
-<header class="site-header">
-<div class="container header-inner">
-<a class="logo" href="index.html">
-<img alt="نماد کنار" src="{% static 'images/logo-mark.svg' %}"/>
-      کنار<span class="sub">KONAR</span>
-</a>
-<nav class="main-nav">
-<a href="index.html">خانه</a>
-<a class="is-active" href="index.html#explore">کاوش</a>
-<a href="blog.html">وبلاگ</a>
-<a href="dashboard.html">پنل کاربری</a>
-</nav>
-<div class="header-actions">
-<div class="search-box">
-<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
-<input placeholder="جستجوی آهنگ، آلبوم یا هنرمند..." type="text"/>
-</div>
-<a class="btn btn-outline btn-sm" href="login.html">ورود</a>
-<button aria-expanded="false" aria-label="باز کردن منو" class="nav-toggle">
-<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" viewbox="0 0 24 24"><line x1="4" x2="20" y1="7" y2="7"></line><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="17" y2="17"></line></svg>
-</button>
-</div>
-</div>
-<div class="mobile-nav-panel">
-<a href="index.html">خانه</a>
-<a href="songs.html">آهنگ‌ها</a><a href="artist.html">هنرمندان</a>
-<a href="index.html#explore">کاوش</a>
-<a href="blog.html">وبلاگ</a>
-<a href="dashboard.html">پنل کاربری</a>
-<a href="login.html">ورود / ثبت‌نام</a>
-</div>
-</header>
+{% block content %}
 <main>
       
 <section class="detail-hero">
@@ -238,42 +190,4 @@
 </aside>
 </section>
 </main>
-<!-- ========== فوتر ========== -->
-</div><footer class="site-footer">
-<div class="container">
-<div class="footer-grid">
-<div class="footer-col">
-<a class="logo" href="index.html">
-<img alt="نماد کنار" src="images/logo-mark.svg"/>
-          کنار<span class="sub">KONAR</span>
-</a>
-<p class="footer-desc">کنار پلتفرمی برای شنیدن، کشف و درک عمیق‌تر موسیقی است.</p>
-<div class="social-row">
-<a aria-label="اینستاگرام" class="icon-btn" href="#"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24"><rect height="18" rx="5" width="18" x="3" y="3"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" fill="currentColor" r="0.6" stroke="none"></circle></svg></a>
-<a aria-label="تلگرام" class="icon-btn" href="#"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewbox="0 0 24 24"><path d="M21 3.5L2.8 10.7c-.8.3-.8.9.1 1.2l4.6 1.5L19.5 6l-9.6 8.4-.3 4.5c.4 0 .6-.2.9-.4l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.7L21.9 5c.3-1.1-.4-1.7-1.4-1.4z"></path></svg></a>
-<a aria-label="یوتیوب" class="icon-btn" href="#"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewbox="0 0 24 24"><rect height="13" rx="3.5" width="19" x="2.5" y="5.5"></rect><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"></path></svg></a>
-</div>
-</div>
-<div class="footer-col">
-<h4>کاوش</h4>
-<ul><li><a href="index.html">ترک‌های پرطرفدار</a></li><li><a href="index.html">آلبوم‌های تازه</a></li><li><a href="blog.html">وبلاگ تحلیلی</a></li></ul>
-</div>
-<div class="footer-col">
-<h4>حساب کاربری</h4>
-<ul><li><a href="login.html">ورود</a></li><li><a href="login.html">ثبت‌نام</a></li><li><a href="dashboard.html">پنل کاربری</a></li></ul>
-</div>
-<div class="footer-col">
-<h4>کنار</h4>
-<ul><li><a href="index.html">درباره ما</a></li><li><a href="index.html">تماس با ما</a></li><li><a href="index.html">حریم خصوصی</a></li></ul>
-</div>
-</div>
-<div class="footer-bottom">
-<span>© ۱۴۰۴ کنار. تمام حقوق محفوظ است.</span>
-<span>ساخته‌شده با ♪ برای عاشقان موسیقی</span>
-</div>
-</div>
-</footer>
-<script src="{% static 'js/main.js' %}"></script>
-<script src="{% static 'js/player.js' %}"></script>
-</body>
-</html>
+{% endblock %}

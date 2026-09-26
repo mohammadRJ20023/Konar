@@ -1,56 +1,6 @@
+{% extends "base.html" %}
 {% load static %}
-<!doctype html>
-<html dir="rtl" lang="fa">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>لیست آهنگ‌ها | کنار</title>
-    <meta content="لیست آهنگ‌های کنار با امکان جست‌وجو و صفحه‌بندی." name="description" />
-    <link href="{% static 'images/logo-mark.svg' %}" rel="icon" type="image/svg+xml" />
-    <link href="{% static 'css/variables.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/base.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/components.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/layout.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/player-v13.css' %}" rel="stylesheet" />
-  </head>
-  <body class="inner-page songs-page">
-    <header class="site-header">
-      <div class="container header-inner">
-        <a class="logo" href="index.html">
-          <img alt="نماد کنار" src="{% static 'images/logo-mark.svg' %}" />
-          کنار
-          <span class="sub">KONAR</span>
-        </a>
-
-        <nav class="main-nav">
-          <a href="index.html">خانه</a>
-          <a class="is-active" href="songs.html">آهنگ‌ها</a>
-          <a href="artist.html">هنرمندان</a>
-          <a href="index.html#explore">کاوش</a>
-          <a href="blog.html">وبلاگ</a>
-          <a href="dashboard.html">پنل کاربری</a>
-        </nav>
-
-        <div class="header-actions">
-          <div class="search-box">
-            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
-              <circle cx="11" cy="11" r="7"></circle>
-              <path d="m20 20-4-4"></path>
-            </svg>
-            <input id="song-search" placeholder="جست‌وجوی آهنگ..." type="search" />
-          </div>
-
-          <a class="btn btn-outline btn-sm" href="login.html">ورود</a>
-
-          <button aria-label="منو" class="nav-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </div>
-    </header>
+{% block content %}
 
     <main>
       
@@ -162,15 +112,7 @@
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="container footer-bottom">
-        <span>© ۱۴۰۴ کنار. تمام حقوق محفوظ است.</span>
-        <span>ساخته‌شده برای عاشقان موسیقی ♪</span>
-      </div>
-    </footer>
-
-    <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/player.js' %}"></script>
+  
 
     <div class="global-player" data-global-player="" hidden="">
       <img
@@ -214,5 +156,4 @@
 
       <audio data-gp-audio="" preload="metadata"></audio>
     </div>
-  </body>
-</html>
+  {% endblock %}

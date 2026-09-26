@@ -1,0 +1,18 @@
+{% load static %}
+<!doctype html>
+
+<html dir="rtl" lang="fa">
+  <head>
+        {% include "includes/head_references.html" %}
+  </head>
+
+  <body>
+    <!-- ========== هدر ========== -->
+        {% include "includes/header.html" %}
+    {% block content %}
+
+    {% endblock %}
+    {% include "includes/footer.html" %}
+    {% include "includes/footer_references.html" %}
+  </body>
+</html>

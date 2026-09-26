@@ -1,0 +1,50 @@
+{% load static %}
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/player.js' %}"></script>
+    <div class="global-player" data-global-player="" hidden="">
+      <img
+        alt=""
+        class="global-player-cover"
+        data-gp-cover=""
+        src="{% static 'images/cover-01.svg' %}"
+      />
+      <div class="global-player-meta">
+        <strong data-gp-title="">—</strong>
+        <span data-gp-artist="">—</span>
+      </div>
+      <button aria-label="قبلی" class="icon-btn" data-gp-prev="" type="button">
+        ‹
+      </button>
+      <button
+        aria-label="پخش"
+        class="play-btn-circle"
+        data-gp-play=""
+        type="button"
+      >
+        <svg fill="currentColor" viewbox="0 0 24 24">
+          <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
+        </svg>
+      </button>
+      <button aria-label="بعدی" class="icon-btn" data-gp-next="" type="button">
+        ›
+      </button>
+      <div class="global-player-progress">
+        <input
+          aria-label="پیشرفت پخش"
+          data-gp-progress=""
+          max="100"
+          min="0"
+          type="range"
+          value="0"
+        />
+        <div>
+          <span data-gp-current="">۰:۰۰</span>
+          <span data-gp-duration="">۰:۰۰</span>
+        </div>
+      </div>
+      <button aria-label="بستن" class="icon-btn" data-gp-close="" type="button">
+        ×
+      </button>
+      <audio data-gp-audio="" preload="metadata"></audio>
+    </div>

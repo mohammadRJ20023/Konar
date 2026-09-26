@@ -1,32 +1,6 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html dir="rtl" lang="fa">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>{{ album.title }}  | آرمان کیا | کنار</title>
-<meta content="صفحه آلبوم موج هزارم از آرمان کیا؛ معرفی آلبوم و فهرست کامل آهنگ‌ها." name="description"/>
-<link href="{% static 'images/logo-mark.svg' %}" rel="icon" type="image/svg+xml"/>
-<link href="{% static 'css/variables.css' %}" rel="stylesheet"/>
-<link href="{% static 'css/base.css' %}" rel="stylesheet"/>
-<link href="{% static 'css/components.css' %}" rel="stylesheet"/>
-<link href="{% static 'css/layout.css' %}" rel="stylesheet"/>
-<link href="{% static 'css/responsive.css' %}" rel="stylesheet"/>
-<link href="{% static 'css/player-v13.css' %}" rel="stylesheet"/>
-</head>
-<body class="inner-page album-page">
-<header class="site-header">
-<div class="container header-inner">
-<a class="logo" href="index.html"><img alt="نماد کنار" src="{% static 'images/logo-mark.svg' %}"/>کنار<span class="sub">KONAR</span></a>
-<nav class="main-nav">
-<a href="index.html">خانه</a><a href="songs.html">آهنگ‌ها</a><a href="artists.html">هنرمندان</a><a class="is-active" href="album.html">آلبوم‌ها</a><a href="index.html#explore">کاوش</a><a href="blog.html">وبلاگ</a><a href="dashboard.html">پنل کاربری</a>
-</nav>
-<div class="header-actions">
-<div class="search-box"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-5-5"></path></svg><input placeholder="جستجوی آهنگ، آلبوم یا هنرمند..." type="search"/></div>
-<a class="btn btn-outline btn-sm" href="login.html">ورود</a><button aria-expanded="false" aria-label="باز کردن منو" class="nav-toggle"><span></span><span></span><span></span></button>
-</div></div>
-<div class="mobile-nav-panel"><a href="index.html">خانه</a><a href="songs.html">آهنگ‌ها</a><a href="artists.html">هنرمندان</a><a href="album.html">آلبوم‌ها</a><a href="index.html#explore">کاوش</a><a href="blog.html">وبلاگ</a><a href="dashboard.html">پنل کاربری</a><a href="login.html">ورود / ثبت‌نام</a></div>
-</header>
+{% block content %}
 <main>
 <section class="album-hero">
 <div class="container album-hero-inner">
@@ -54,9 +28,9 @@
 </div></section>
 </main>
 <div class="global-player" data-global-player hidden></div>
-<footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© ۱۴۰۴ کنار. تمام حقوق محفوظ است.</span><span>ساخته‌شده با ♪ برای عاشقان موسیقی</span></div></div></footer>
-<script src="{% static 'js/main.js' %}"></script><script src="{% static 'js/player.js' %}"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('[data-album-play-all]');if(!b)return;b.addEventListener('click',()=>{const first=document.querySelector('.album-track-list [data-track]');if(first&&window.KonarPlayer)window.KonarPlayer.playTrack(first,true);});});
 </script>
 </body></html>
+{% endblock %}
