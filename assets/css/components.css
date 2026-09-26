@@ -1478,3 +1478,116 @@ body.has-global-player { padding-bottom: 126px; }
 .tabs { box-shadow:0 12px 35px rgba(0,0,0,.18); }
 .tab-btn.is-active { color:#fff; box-shadow:0 7px 20px rgba(154,124,255,.12); }
 .badge-gold, .tag { border-color:rgba(154,124,255,.15); background:rgba(154,124,255,.07); color:#cbbdff; }
+
+/* ---------- آلبوم و فهرست هنرمندان ---------- */
+.album-hero { padding: 72px 0 58px; background: radial-gradient(circle at 18% 25%, rgba(139,92,246,.14), transparent 34%), linear-gradient(180deg,var(--bg-elevated),var(--bg)); border-bottom:1px solid var(--line-soft); }
+.album-hero-inner { display:grid; grid-template-columns:minmax(260px,360px) minmax(0,1fr); gap:48px; align-items:center; }
+.album-cover-large img { width:100%; aspect-ratio:1; object-fit:cover; border-radius:22px; border:1px solid var(--line); box-shadow:0 30px 80px rgba(0,0,0,.3); }
+.album-hero-info .page-title { margin:8px 0 6px; }
+.album-artist-link { color:var(--gold); font-size:17px; font-weight:700; }
+.album-artist-link:hover { text-decoration:underline; }
+.album-meta-grid { display:grid; grid-template-columns:repeat(4,minmax(90px,1fr)); gap:12px; margin-top:24px; }
+.album-meta-grid div { padding:14px 16px; background:var(--bg-card); border:1px solid var(--line-soft); border-radius:14px; }
+.album-meta-grid strong,.album-meta-grid span { display:block; }
+.album-meta-grid strong { font-size:17px; margin-bottom:3px; }
+.album-meta-grid span { color:var(--text-muted); font-size:11px; }
+.album-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+.album-actions svg { width:17px; height:17px; margin-left:6px; vertical-align:-3px; }
+.album-layout { display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:36px; }
+.album-sidebar { display:grid; gap:18px; align-content:start; }
+.album-side-stat { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-top:1px solid var(--line-soft); }
+.album-side-stat span { color:var(--text-muted); font-size:12px; }
+.album-side-stat strong { font-size:14px; }
+.album-mini { text-decoration:none; }
+.album-mini:hover strong { color:var(--gold); }
+.album-track-list .track-row { grid-template-columns:42px 54px minmax(150px,1fr) minmax(120px,260px) auto auto; }
+.artists-banner { padding:70px 0 48px; }
+.artists-banner-inner { display:flex; align-items:center; justify-content:space-between; gap:30px; }
+.artists-banner-stats { display:flex; gap:28px; flex-shrink:0; }
+.artists-banner-stats div { display:flex; flex-direction:column; gap:3px; min-width:70px; }
+.artists-banner-stats strong { font-size:25px; color:var(--text-primary); }
+.artists-banner-stats span { font-size:12px; color:var(--text-muted); }
+.artists-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.artist-list-card { position:relative; display:grid; grid-template-columns:92px minmax(0,1fr) auto; gap:18px; align-items:center; padding:20px; border:1px solid var(--line-soft); border-radius:20px; background:var(--bg-card); text-decoration:none; transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease; }
+.artist-list-card:hover { transform:translateY(-4px); border-color:rgba(139,92,246,.3); box-shadow:0 18px 50px rgba(0,0,0,.15); }
+.artist-list-card > img { width:92px; height:92px; border-radius:50%; object-fit:cover; border:1px solid var(--line); }
+.artist-list-info .eyebrow { font-size:9px; }
+.artist-list-info h3 { margin:5px 0 3px; font-size:20px; color:var(--text-primary); }
+.artist-list-info p { margin:0 0 13px; color:var(--text-muted); font-size:12px; }
+.artist-list-info > div { display:flex; align-items:center; gap:7px; }
+.artist-list-info > div strong { font-size:14px; color:var(--gold); margin-right:5px; }
+.artist-list-info > div span { font-size:10px; color:var(--text-faint); }
+.artist-arrow { color:var(--gold); font-size:20px; transition:transform .2s ease; }
+.artist-list-card:hover .artist-arrow { transform:translateX(-4px); }
+
+/* Album & Artists polish */
+.album-page .site-header,
+.artists-page .site-header { position: relative; z-index: 20; }
+.album-hero { overflow:hidden; }
+.album-cover-large { position:relative; max-width:360px; width:100%; }
+.album-cover-large::after { content:""; position:absolute; inset:14px -14px -14px 14px; border-radius:24px; border:1px solid rgba(139,92,246,.18); pointer-events:none; z-index:-1; }
+.album-cover-large img { display:block; }
+.album-hero-info { min-width:0; }
+.album-hero-info .page-desc { max-width:760px; line-height:2; }
+.album-meta-grid div { min-height:76px; display:flex; flex-direction:column; justify-content:center; }
+.album-actions .btn { min-height:44px; }
+.album-layout > div:first-child { min-width:0; }
+.album-track-list { overflow:hidden; border:1px solid var(--line-soft); border-radius:18px; background:var(--bg-card); }
+.album-track-list .track-row { border-bottom:1px solid var(--line-soft); border-radius:0; padding:11px 14px; }
+.album-track-list .track-row:last-child { border-bottom:0; }
+.album-track-list .track-row:hover { background:rgba(139,92,246,.045); }
+.album-track-list .track-row.is-top { background:rgba(139,92,246,.055); }
+.album-track-list .cover-sm img { display:block; }
+.album-track-list .meta { min-width:0; }
+.album-track-list .meta h4 { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:4px; }
+.album-track-list .artist-link { font-size:11px; }
+.album-track-list .duration { white-space:nowrap; }
+.album-sidebar .artist-card { padding:22px; }
+.album-sidebar .artist-card > p { line-height:2; color:var(--text-muted); font-size:13px; }
+.album-mini { padding:14px 0; margin-top:0; }
+.album-mini + .album-mini { margin-top:0; }
+
+.artists-page main { min-height:calc(100vh - 180px); }
+.artists-banner { position:relative; overflow:hidden; border-bottom:1px solid var(--line-soft); background:radial-gradient(circle at 10% 20%,rgba(139,92,246,.12),transparent 34%),linear-gradient(180deg,var(--bg-elevated),var(--bg)); }
+.artists-banner-inner { min-height:230px; }
+.artists-banner-inner > div:first-child { min-width:0; }
+.artists-banner .page-desc { max-width:680px; line-height:2; }
+.artists-banner-stats { padding:18px 22px; border:1px solid var(--line-soft); border-radius:18px; background:rgba(255,255,255,.018); }
+.artists-banner-stats div + div { border-right:1px solid var(--line-soft); padding-right:28px; }
+.artists-grid { align-items:stretch; }
+.artist-list-card { min-height:138px; overflow:hidden; }
+.artist-list-card > img { flex:none; }
+.artist-list-info { min-width:0; }
+.artist-list-info h3 { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.artist-list-info p { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.artist-list-info > div { flex-wrap:wrap; }
+.artist-arrow { display:grid; place-items:center; width:34px; height:34px; border:1px solid var(--line-soft); border-radius:50%; color:var(--text-muted); transition:.2s ease; }
+.artist-list-card:hover .artist-arrow { color:var(--gold); border-color:rgba(139,92,246,.35); }
+.artist-list-card:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
+.artists-toolbar { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:22px; }
+.artists-toolbar .search-box { width:min(100%,360px); }
+.artists-pagination { margin-top:34px; }
+.artists-pagination .pagination-info { margin-left:auto; color:var(--text-faint); font-size:12px; }
+.artists-pagination .pagination-controls { display:flex; align-items:center; justify-content:center; gap:7px; }
+.artists-pagination .pagination-controls button { cursor:pointer; }
+.artists-pagination .pagination-controls button[disabled] { cursor:not-allowed; }
+@media (max-width:760px){
+  .album-hero { padding:44px 0 36px; }
+  .album-cover-large::after { inset:8px -8px -8px 8px; }
+  .album-meta-grid { gap:8px; }
+  .album-meta-grid div { min-height:68px; padding:11px 12px; }
+  .album-layout { gap:24px; }
+  .album-track-list { border-radius:14px; }
+  .album-track-list .track-row { padding:10px 9px; }
+  .artists-banner { padding:42px 0 34px; }
+  .artists-banner-inner { min-height:0; }
+  .artists-banner-stats { gap:0; padding:14px; }
+  .artists-banner-stats div { flex:1; min-width:0; text-align:center; }
+  .artists-banner-stats div + div { padding-right:14px; }
+  .artists-toolbar { align-items:stretch; flex-direction:column; }
+  .artists-toolbar .search-box { width:100%; }
+  .artist-list-card { min-height:112px; gap:12px; }
+  .artist-arrow { width:30px; height:30px; }
+  .artists-pagination { flex-wrap:wrap; }
+  .artists-pagination .pagination-info { width:100%; text-align:center; order:2; margin:6px 0 0; }
+}

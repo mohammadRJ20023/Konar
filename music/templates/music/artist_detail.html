@@ -173,7 +173,7 @@
                 <img alt="" src="{{ album.cover.url }}" />
                 
                 <div>
-                  <strong>{{ album.title }}</strong>
+                  <a  href="{% url 'music:album_detail' album.slug %}" ><strong>{{ album.title }}</strong></a>
                   <span>{{album.release_date|date:"Y"}} · {{ album.tracks.count }} ترک</span>
                 </div>
                 {% endfor %}

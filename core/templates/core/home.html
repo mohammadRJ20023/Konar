@@ -31,7 +31,7 @@
           <a class="is-active" href="index.html">خانه</a>
           <a href="{% url 'music:list' %}">آهنگ‌ها</a>
           <a href="artist.html">هنرمندان</a>
-          <a href="index.html#explore">کاوش</a>
+          <a href="{% url 'analytics:pannel' %}">کاوش</a>
           <a href="blog.html">وبلاگ</a>
           <a href="dashboard.html">پنل کاربری</a>
         </nav>
@@ -247,7 +247,7 @@
               <span class="eyebrow">تازه‌منتشرشده</span>
               <h2 class="section-title">آلبوم‌های این هفته</h2>
             </div>
-            <a class="btn btn-ghost" href="index.html">مشاهده همه ←</a>
+            <a class="btn btn-ghost" href="">مشاهده همه ←</a>
           </div>
           <div class="grid-4">
             {% for album in albums|slice:"a:4" %}

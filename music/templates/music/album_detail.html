@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>{{ album.title }}  | آرمان کیا | کنار</title>
+<meta content="صفحه آلبوم موج هزارم از آرمان کیا؛ معرفی آلبوم و فهرست کامل آهنگ‌ها." name="description"/>
+<link href="{% static 'images/logo-mark.svg' %}" rel="icon" type="image/svg+xml"/>
+<link href="{% static 'css/variables.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/base.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/components.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/layout.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/player-v13.css' %}" rel="stylesheet"/>
+</head>
+<body class="inner-page album-page">
+<header class="site-header">
+<div class="container header-inner">
+<a class="logo" href="index.html"><img alt="نماد کنار" src="{% static 'images/logo-mark.svg' %}"/>کنار<span class="sub">KONAR</span></a>
+<nav class="main-nav">
+<a href="index.html">خانه</a><a href="songs.html">آهنگ‌ها</a><a href="artists.html">هنرمندان</a><a class="is-active" href="album.html">آلبوم‌ها</a><a href="index.html#explore">کاوش</a><a href="blog.html">وبلاگ</a><a href="dashboard.html">پنل کاربری</a>
+</nav>
+<div class="header-actions">
+<div class="search-box"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-5-5"></path></svg><input placeholder="جستجوی آهنگ، آلبوم یا هنرمند..." type="search"/></div>
+<a class="btn btn-outline btn-sm" href="login.html">ورود</a><button aria-expanded="false" aria-label="باز کردن منو" class="nav-toggle"><span></span><span></span><span></span></button>
+</div></div>
+<div class="mobile-nav-panel"><a href="index.html">خانه</a><a href="songs.html">آهنگ‌ها</a><a href="artists.html">هنرمندان</a><a href="album.html">آلبوم‌ها</a><a href="index.html#explore">کاوش</a><a href="blog.html">وبلاگ</a><a href="dashboard.html">پنل کاربری</a><a href="login.html">ورود / ثبت‌نام</a></div>
+</header>
+<main>
+<section class="album-hero">
+<div class="container album-hero-inner">
+<div class="album-cover-large"><img src="{{ album.cover.url }}" alt="جلد آلبوم موج هزارم"></div>
+<div class="album-hero-info">
+
+<span class="eyebrow">صفحه آلبوم</span>
+<h1 class="page-title">{{ album.title }} </h1>
+<a class="album-artist-link" href="{% url 'music:artist' album.artist.slug %}">{{ album.artist }}</a>
+<p class="page-desc"></p>
+<div class="album-meta-grid"><div><strong>{{ album.release_date|date:"Y, m , d" }}</strong><span>سال انتشار</span></div><div><strong>{{ tracks.count }}</strong><span>ترک</span></div><div><strong>{% for track in tracks %}{{ track.genre.first }}{% endfor %}</strong><span>ژانر</span></div></div>
+<div class="album-actions"><button class="btn btn-primary" data-album-play-all type="button"><svg fill="currentColor" viewbox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg>پخش آلبوم</button><a class="btn btn-outline" href="{% url 'music:artist' album.artist.slug %}">مشاهده هنرمند</a></div>
+</div></div>
+</section>
+<section class="section">
+<div class="container album-layout">
+<div>
+<div class="section-head"><div><span class="eyebrow">فهرست آلبوم</span><h2 class="section-title">   ترک های {{ album.title }} </h2></div><span class="text-muted">همه قطعات</span></div>
+<div class="track-list album-track-list" data-album-queue>
+{% for track in tracks %}
+<div class="track-row is-top" data-track data-artist="{{ track.artist }}" data-album="{{ album.title }}" data-cover="{{ track.cover.url }}" data-duration="{{ track.duration }}" data-src="{{ track.audio_file.url  }}" data-title="{{ track.title }}"><span class="idx rank-badge">{{ forloop.counter }}</span><a class="cover-sm" href="{% url 'music:detail' track.slug %}"><img alt="{{ track.title }}" src="{{ track.cover.url }}"></a><div class="meta"><h4>{{ track.title }}</h4><a class="artist-link" >{{ track.artist }}</a></div><div class="waveform mini-wave" data-bars="24" data-seed="album1" data-waveform style="height:26px"></div><button class="icon-btn" data-play-track type="button" aria-label="پخش بی‌قرار"><svg fill="currentColor" viewbox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg></button><span class="duration">{{ track.duration_display }}</span></div>
+{% endfor %}
+</div></div>
+<aside class="album-sidebar"><div class="artist-card"><span class="eyebrow">درباره آلبوم</span><p>{{ album.bio }}</p><div class="album-side-stat"><span>منتشرشده</span><strong>{{ album.release_date|date:"Y" }}</strong></div><div class="album-side-stat"><span>تعداد قطعات</span><strong>{{ tracks.count }} ترک</strong></div></div></aside>
+</div></section>
+</main>
+<div class="global-player" data-global-player hidden></div>
+<footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© ۱۴۰۴ کنار. تمام حقوق محفوظ است.</span><span>ساخته‌شده با ♪ برای عاشقان موسیقی</span></div></div></footer>
+<script src="{% static 'js/main.js' %}"></script><script src="{% static 'js/player.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('[data-album-play-all]');if(!b)return;b.addEventListener('click',()=>{const first=document.querySelector('.album-track-list [data-track]');if(first&&window.KonarPlayer)window.KonarPlayer.playTrack(first,true);});});
+</script>
+</body></html>

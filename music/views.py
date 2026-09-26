@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Track, Artist
+from .models import Track, Artist, Album
 from core.models import AppStat
 from django.views.generic import ListView
 
@@ -26,6 +26,16 @@ def Artist_Detail_View(request, slug):
     
     return render(request, "music/artist_detail.html", context)
 
+def Album_detail_View(reqeust, slug):
+    
+    album = get_object_or_404(Album.objects.prefetch_related("tracks"), slug=slug)
+    context ={
+        "album":album,
+        "tracks": album.tracks.all()
+    }
+    
+    return render(reqeust, "music/album_detail.html", context)
+
 class Track_List_View(ListView):
     
     model = Track
@@ -38,4 +48,6 @@ class Track_List_View(ListView):
         context = super().get_context_data(**kwargs)
         context["app_stats"]= AppStat.objects.first()
         return context
+    
+
     

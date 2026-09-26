@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'accounts.apps.AccountsConfig',
     'music.apps.MusicConfig',
+    'analytics.apps.AnalyticsConfig',
     
     'django_cleanup.apps.CleanupConfig'
 ]
@@ -55,6 +56,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    #my middleware:
+    "analytics.middleware.MyMiddleware",
 ]
 
 ROOT_URLCONF = 'konar_music.urls'

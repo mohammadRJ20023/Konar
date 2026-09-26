@@ -1,0 +1,323 @@
+{% load static %}<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>داشبورد مدیریت | کنار</title>
+<meta content="داشبورد مدیریتی کنار؛ آمار کاربران، بازدید، مرورگر، سیستم‌عامل و لاگ ورود و خروج." name="description"/>
+<link href="{% static '/images/logo-mark.svg' %}" rel="icon" type="image/svg+xml"/>
+<link href="{% static '/css/variables.css' %}" rel="stylesheet"/>
+<link href="{% static '/css/base.css' %}" rel="stylesheet"/>
+<link href="{% static '/css/components.css' %}" rel="stylesheet"/>
+<link href="{% static '/css/layout.css' %}" rel="stylesheet"/>
+<link href="{% static '/css/responsive.css' %}" rel="stylesheet"/>
+<link href="{% static '/css/dashboard.css' %}" rel="stylesheet"/>
+</head>
+<body class="inner-page dashboard-page admin-page">
+
+<!-- ========== هدر ========== -->
+<header class="site-header">
+<div class="container header-inner">
+<a class="logo" href="/"><img alt="نماد کنار" src="{% static '/images/logo-mark.svg' %}"/>کنار<span class="sub">KONAR</span></a>
+<nav class="main-nav">
+<a href="/">خانه</a>
+<a class="is-active" href="#">مدیریت</a>
+</nav>
+<div class="header-actions">
+<a class="btn btn-primary btn-sm" href="/admin/" rel="noopener" target="_blank">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="16" height="16"><path d="M12 3l8 4v5c0 4.4-3.1 8.2-8 9-4.9-.8-8-4.6-8-9V7l8-4z"></path><path d="M9.5 12.2l1.8 1.8 3.4-3.6"></path></svg>
+پنل ادمین جنگو
+</a>
+<button aria-expanded="false" aria-label="باز کردن منو" class="nav-toggle"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div class="mobile-nav-panel">
+<a href="/">خانه</a>
+<a href="/admin/">پنل ادمین جنگو</a>
+</div>
+</header>
+
+<div class="dashboard-wrap">
+
+<!-- ========== سایدبار ========== -->
+<aside class="dashboard-sidebar">
+<div class="user-mini">
+<img alt="" src="{% static '/images/avatar-01.svg' %}"/>
+<div><h5>{{ request.user.get_full_name|default:request.user.username }}</h5><span>دسترسی کامل</span></div>
+</div>
+
+<nav class="dash-nav">
+<a class="is-active" data-dashboard-target="overview" href="#overview">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><line x1="5" x2="5" y1="20" y2="12"></line><line x1="12" x2="12" y1="20" y2="6"></line><line x1="19" x2="19" y1="20" y2="15"></line></svg>
+نمای کلی
+</a>
+<a data-dashboard-target="traffic" href="#traffic">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"></path></svg>
+بازدید و ترافیک
+</a>
+<a data-dashboard-target="tech" href="#tech">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><rect height="12" rx="2" width="18" x="3" y="4"></rect><path d="M8 20h8M12 16v4"></path></svg>
+مرورگر و دستگاه
+</a>
+<a data-dashboard-target="users" href="#users">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>
+کاربران
+</a>
+<a data-dashboard-target="logs" href="#logs">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><line x1="10" x2="3" y1="12" y2="12"></line><path d="M6 8l-4 4 4 4"></path></svg>
+لاگ ورود و خروج
+</a>
+<a href="/admin/" rel="noopener" style="margin-top:14px; color:var(--gold);" target="_blank">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="M12 3l8 4v5c0 4.4-3.1 8.2-8 9-4.9-.8-8-4.6-8-9V7l8-4z"></path></svg>
+پنل ادمین جنگو
+</a>
+</nav>
+</aside>
+
+<!-- ========== محتوای اصلی ========== -->
+<main class="dashboard-main">
+
+<!-- ---------- نمای کلی ---------- -->
+<section class="dashboard-section is-active" data-dashboard-section="overview">
+<div class="dash-header">
+<div><span class="eyebrow">آمار سایت</span><h1>داشبورد مدیریت</h1></div>
+</div>
+
+<!-- 📅 فیلتر زمانی — واقعاً کار می‌کنه: هرکدوم یه لینک با ?range=... هست -->
+<div class="admin-filterbar range-switch">
+<label>📅 بازه زمانی:</label>
+<a class="btn btn-sm {% if selected_range == 'today' %}btn-primary{% endif %}" href="?range=today#overview">امروز</a>
+<a class="btn btn-sm {% if selected_range == '7d' %}btn-primary{% endif %}" href="?range=7d#overview">۷ روز اخیر</a>
+<a class="btn btn-sm {% if selected_range == '30d' %}btn-primary{% endif %}" href="?range=30d#overview">۳۰ روز اخیر</a>
+<span class="admin-badge is-live" style="margin-inline-start:auto;"><i class="live-dot"></i> داده‌ها زنده هستند</span>
+</div>
+
+<div class="stat-grid">
+<div class="stat-card"><span class="num">{{ total_users }}</span><div class="label">👤 کل کاربران</div><span class="trend up">{{ new_users_week }}+ کاربر این هفته</span></div>
+<div class="stat-card"><span class="num">{{ active_users|add:active_visitors }}</span><div class="label">🟢 کاربران فعال (۳۰ دقیقه اخیر)</div><span class="trend up">{{ active_visitors }} مهمان · {{ active_users }} عضو</span></div>
+<div class="stat-card"><span class="num">{{ today_visits }}</span><div class="label">👀 بازدید امروز</div></div>
+<div class="stat-card"><span class="num">{{ last_7_days }}</span><div class="label">👀 بازدید بازه‌ی انتخابی</div></div>
+</div>
+
+<div class="grid-2" style="grid-template-columns:1.5fr 1fr; align-items:start;">
+<!-- 👀 نمودار بازدید ۷ روز اخیر -->
+<div class="sidebar-box">
+<h4>👀 بازدید ۷ روز اخیر</h4>
+<div class="mini-chart">
+{% for day in visits_last_7_days %}
+<div class="chart-col"><span class="chart-num">{{ day.count }}</span><div class="chart-bar" style="height:{{ day.percentage }}%;"></div><span class="chart-day">{{ day.label }}</span></div>
+{% endfor %}
+</div>
+</div>
+
+<!-- 🟢 کاربران فعال لحظه‌ای -->
+<div class="sidebar-box">
+<h4>🟢 آنلاین در ۳۰ دقیقه اخیر <span>{{ active_users|add:active_visitors }} نفر</span></h4>
+{% for v in active_sessions %}
+<div class="log-row">
+<span class="log-icon is-in">{% if v.user %}👤{% else %}👥{% endif %}</span>
+<div class="log-meta"><strong>{{ v.user.username|default:"مهمان" }}</strong><span>{{ v.path }} · {{ v.ip|default:"—" }}</span></div>
+<time>{{ v.created_at|timesince }} پیش</time>
+</div>
+{% empty %}
+<p class="admin-empty">کسی الان فعال نیست.</p>
+{% endfor %}
+</div>
+</div>
+
+<!-- 📄 پربازدیدترین صفحات -->
+<div class="sidebar-box" style="margin-top:22px;">
+<h4>📄 پربازدیدترین صفحات <span>بازه‌ی انتخابی</span></h4>
+{% for p in top_pages %}
+<div class="bar-row"><span class="bar-label">{{ p.path }}</span><span class="bar-value">{{ p.total }}</span><span class="bar-track"><span class="bar-fill" style="width:{{ p.percentage }}%"></span></span></div>
+{% empty %}
+<p class="admin-empty">بازدیدی توی این بازه نیست.</p>
+{% endfor %}
+</div>
+</section>
+
+<!-- ---------- بازدید و ترافیک ---------- -->
+<section class="dashboard-section" data-dashboard-section="traffic">
+<div class="dash-header"><div><span class="eyebrow">ترافیک</span><h1>بازدید و صفحات</h1></div></div>
+
+<!-- 🔎 جست‌وجو - سمت سرور؛ همین صفحه دوباره با ?visit_q=... لود میشه -->
+<form class="admin-filterbar" method="get" action="#traffic">
+<input type="hidden" name="range" value="{{ selected_range }}"/>
+<input class="grow" name="visit_q" placeholder="🔎 جست‌وجوی مسیر، IP یا کاربر ..." type="search" value="{{ visit_search }}"/>
+<button class="btn btn-sm" type="submit">جست‌وجو</button>
+</form>
+
+<div class="sidebar-box">
+<h4>📄 لیست بازدیدها <span>بازه‌ی انتخابی</span></h4>
+<div class="admin-table-wrap">
+<table class="admin-table">
+<thead>
+<tr>
+<th>کاربر</th>
+<th>مسیر</th>
+<th>IP</th>
+<th>مرورگر</th>
+<th>سیستم‌عامل</th>
+<th>زمان</th>
+</tr>
+</thead>
+<tbody>
+{% for v in traffic_visits %}
+<tr>
+<td>{{ v.user.username|default:"مهمان" }}</td>
+<td><code>{{ v.path }}</code></td>
+<td>{{ v.ip|default:"—" }}</td>
+<td>{{ v.browser|default:"—" }}</td>
+<td>{{ v.os|default:"—" }}</td>
+<td>{{ v.created_at|timesince }} پیش</td>
+</tr>
+{% empty %}
+<tr><td colspan="6">چیزی پیدا نشد.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% if traffic_visits.paginator.num_pages > 1 %}
+<div class="pagination">
+{% if traffic_visits.has_previous %}<a href="?range={{ selected_range }}&visit_q={{ visit_search|urlencode }}&vpage={{ traffic_visits.previous_page_number }}#traffic">« قبلی</a>{% endif %}
+<span>صفحه {{ traffic_visits.number }} از {{ traffic_visits.paginator.num_pages }}</span>
+{% if traffic_visits.has_next %}<a href="?range={{ selected_range }}&visit_q={{ visit_search|urlencode }}&vpage={{ traffic_visits.next_page_number }}#traffic">بعدی »</a>{% endif %}
+</div>
+{% endif %}
+</div>
+</section>
+
+<!-- ---------- مرورگر و دستگاه ---------- -->
+<section class="dashboard-section" data-dashboard-section="tech">
+<div class="dash-header"><div><span class="eyebrow">تحلیل فنی</span><h1>مرورگر، سیستم‌عامل و دستگاه</h1></div></div>
+
+<div class="grid-2" style="align-items:start;">
+<!-- 🌐 مرورگرها -->
+<div class="sidebar-box">
+<h4>🌐 مرورگرها <span>بازه‌ی انتخابی</span></h4>
+{% for b in browsers %}
+<div class="bar-row"><span class="bar-label">{{ b.browser }}</span><span class="bar-value">{{ b.percentage }}٪</span><span class="bar-track"><span class="bar-fill" style="width:{{ b.percentage }}%"></span></span></div>
+{% empty %}
+<p class="admin-empty">داده‌ای نیست.</p>
+{% endfor %}
+</div>
+
+<!-- 💻 سیستم‌عامل‌ها -->
+<div class="sidebar-box">
+<h4>💻 سیستم‌عامل‌ها <span>بازه‌ی انتخابی</span></h4>
+{% for o in operating_systems %}
+<div class="bar-row is-cyan"><span class="bar-label">{{ o.os }}</span><span class="bar-value">{{ o.percentage }}٪</span><span class="bar-track"><span class="bar-fill" style="width:{{ o.percentage }}%"></span></span></div>
+{% empty %}
+<p class="admin-empty">داده‌ای نیست.</p>
+{% endfor %}
+</div>
+</div>
+
+<!-- 📱 دستگاه‌ها -->
+<div class="sidebar-box" style="margin-top:22px;">
+<h4>📱 دستگاه‌ها</h4>
+{% for d in devices %}
+<div class="bar-row"><span class="bar-label">{{ d.device }}</span><span class="bar-value">{{ d.percentage }}٪</span><span class="bar-track"><span class="bar-fill" style="width:{{ d.percentage }}%"></span></span></div>
+{% empty %}
+<p class="admin-empty">داده‌ای نیست.</p>
+{% endfor %}
+</div>
+</section>
+
+<!-- ---------- کاربران ---------- -->
+<section class="dashboard-section" data-dashboard-section="users">
+<div class="dash-header"><div><span class="eyebrow">مدیریت</span><h1>کاربران</h1></div>
+<a class="btn btn-outline btn-sm" href="/admin/auth/user/" rel="noopener" target="_blank">مدیریت کاربران در جنگو</a>
+</div>
+
+<div class="stat-grid" style="grid-template-columns:repeat(3,1fr);">
+<div class="stat-card"><span class="num">{{ total_users }}</span><div class="label">👤 کل کاربران ثبت‌نام‌شده</div></div>
+<div class="stat-card"><span class="num">{{ active_users }}</span><div class="label">🟢 آنلاین (۳۰ دقیقه اخیر)</div></div>
+<div class="stat-card"><span class="num">{{ new_users_week }}</span><div class="label">🆕 عضو جدید این هفته</div></div>
+</div>
+
+<!-- 🔎 جست‌وجوی کاربر - سمت سرور -->
+<form class="admin-filterbar" method="get" action="#users">
+<input type="hidden" name="range" value="{{ selected_range }}"/>
+<input class="grow" name="user_q" placeholder="🔎 جست‌وجوی نام کاربری، ایمیل یا IP ..." type="search" value="{{ user_search }}"/>
+<button class="btn btn-sm" type="submit">جست‌وجو</button>
+</form>
+
+<div class="sidebar-box">
+<h4>📊 جدول کاربران</h4>
+<div class="admin-table-wrap">
+<table class="admin-table">
+<thead>
+<tr>
+<th>کاربر</th>
+<th>ایمیل</th>
+<th>تاریخ عضویت</th>
+</tr>
+</thead>
+<tbody>
+{% for u in users_page %}
+<tr>
+<td><div class="user-cell"><img alt="" src="{% static '/images/avatar-01.svg' %}"/><div><strong>{{ u.username }}</strong></div></div></td>
+<td>{{ u.email|default:"—" }}</td>
+<td>{{ u.date_joined|date:"Y-m-d" }}</td>
+</tr>
+{% empty %}
+<tr><td colspan="3">کاربری پیدا نشد.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% if users_page.paginator.num_pages > 1 %}
+<div class="pagination">
+{% if users_page.has_previous %}<a href="?range={{ selected_range }}&user_q={{ user_search|urlencode }}&upage={{ users_page.previous_page_number }}#users">« قبلی</a>{% endif %}
+<span>صفحه {{ users_page.number }} از {{ users_page.paginator.num_pages }}</span>
+{% if users_page.has_next %}<a href="?range={{ selected_range }}&user_q={{ user_search|urlencode }}&upage={{ users_page.next_page_number }}#users">بعدی »</a>{% endif %}
+</div>
+{% endif %}
+</div>
+</section>
+
+<!-- ---------- لاگ ورود و خروج ---------- -->
+<section class="dashboard-section" data-dashboard-section="logs">
+<div class="dash-header"><div><span class="eyebrow">امنیت</span><h1>🔐 لاگ ورود و خروج کاربران</h1></div></div>
+
+<!-- 🔎 جست‌وجو + فیلتر نوع - سمت سرور -->
+<form class="admin-filterbar" method="get" action="#logs">
+<input type="hidden" name="range" value="{{ selected_range }}"/>
+<input class="grow" name="log_q" placeholder="🔎 جست‌وجوی کاربر یا IP ..." type="search" value="{{ log_search }}"/>
+<select name="log_type">
+<option value="all" {% if log_type == "all" %}selected{% endif %}>همه رویدادها</option>
+<option value="login" {% if log_type == "login" %}selected{% endif %}>فقط ورود</option>
+<option value="logout" {% if log_type == "logout" %}selected{% endif %}>فقط خروج</option>
+</select>
+<button class="btn btn-sm" type="submit">جست‌وجو</button>
+</form>
+
+<div class="sidebar-box">
+<h4>آخرین رویدادها <span>بازه‌ی انتخابی</span></h4>
+{% for log in login_logs %}
+<div class="log-row">
+<span class="log-icon {% if log.action == 'login' %}is-in{% else %}is-out{% endif %}">{% if log.action == 'login' %}→{% else %}←{% endif %}</span>
+<div class="log-meta"><strong>{% if log.action == 'login' %}ورود موفق{% else %}خروج{% endif %} — {{ log.user.username }}</strong><span>{{ log.ip|default:"—" }}</span></div>
+<time>{{ log.created_at|timesince }} پیش</time>
+</div>
+{% empty %}
+<p class="admin-empty">رویدادی توی این بازه نیست.</p>
+{% endfor %}
+</div>
+{% if login_logs.paginator.num_pages > 1 %}
+<div class="pagination">
+{% if login_logs.has_previous %}<a href="?range={{ selected_range }}&log_q={{ log_search|urlencode }}&log_type={{ log_type }}&lpage={{ login_logs.previous_page_number }}#logs">« قبلی</a>{% endif %}
+<span>صفحه {{ login_logs.number }} از {{ login_logs.paginator.num_pages }}</span>
+{% if login_logs.has_next %}<a href="?range={{ selected_range }}&log_q={{ log_search|urlencode }}&log_type={{ log_type }}&lpage={{ login_logs.next_page_number }}#logs">بعدی »</a>{% endif %}
+</div>
+{% endif %}
+</section>
+
+</main>
+</div>
+
+<script src="{% static '/js/main.js' %}"></script>
+<style>.pagination{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:13px;}.pagination a{color:var(--gold,#c9a24b);}</style>
+</body>
+</html>

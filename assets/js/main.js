@@ -157,7 +157,7 @@ function initComments() {
     const item = document.createElement('article');
     item.className = 'comment comment-new';
     item.innerHTML = `
-      <img src="images/avatar-01.svg" alt="">
+      <img src="assets/images/avatar-01.svg" alt="">
       <div>
         <div class="head"><h5></h5><span>همین حالا</span></div>
         <p></p>
@@ -242,3 +242,34 @@ function initPagination() {
     render();
   });
 }
+
+/* ---------- انتخاب هنرمند در صفحه جزئیات ---------- */
+function initArtistProfile() {
+  if (!document.body.classList.contains('artist-page')) return;
+  const params = new URLSearchParams(location.search);
+  const artist = params.get('artist');
+  if (!artist) return;
+
+  const profiles = {
+    'آرمان کیا': { avatar:'assets/images/avatar-01.svg', bio:'از هنرمندان نسل تازه موسیقی پاپ؛ روایت‌های شهری و ملودی‌های مینیمال، بخش مهمی از هویت آثار او را شکل می‌دهند.', tracks:'۶', albums:'۲', listeners:'۱۲۸K' },
+    'نیلوفر راد': { avatar:'assets/images/avatar-02.svg', bio:'خواننده‌ای با تمرکز بر پاپ فارسی و تلفیق رنگ‌های صوتی مدرن با روایت‌های شخصی و شهری.', tracks:'۷', albums:'۱', listeners:'۹۶K' },
+    'پویا صدر': { avatar:'assets/images/avatar-03.svg', bio:'آهنگساز و هنرمند حوزه الکترونیک و امبینت؛ شناخته‌شده برای فضاهای سینمایی و تنظیم‌های مینیمال.', tracks:'۵', albums:'۱', listeners:'۷۴K' },
+    'بهراد مهر': { avatar:'assets/images/avatar-01.svg', bio:'هنرمندی در مرز پاپ و آکوستیک که روایت‌های صمیمی را با سازبندی گرم و ساده همراه می‌کند.', tracks:'۶', albums:'۲', listeners:'۶۸K' }
+  };
+  const profile = profiles[artist];
+  if (!profile) return;
+  const name = document.querySelector('#artist-name');
+  const avatar = document.querySelector('#artist-avatar');
+  const bio = document.querySelector('#artist-bio');
+  const count = document.querySelector('#artist-track-count');
+  const stats = document.querySelectorAll('.artist-stats strong');
+  if (name) name.textContent = artist;
+  if (avatar) { avatar.src = profile.avatar; avatar.alt = artist; }
+  if (bio) bio.textContent = profile.bio;
+  if (count) count.textContent = profile.tracks;
+  if (stats[1]) stats[1].textContent = profile.albums;
+  if (stats[2]) stats[2].textContent = profile.listeners;
+  document.title = `${artist} | کنار`;
+}
+
+document.addEventListener('DOMContentLoaded', initArtistProfile);
