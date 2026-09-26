@@ -1,0 +1,218 @@
+{% load static %}
+<!doctype html>
+<html dir="rtl" lang="fa">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>لیست آهنگ‌ها | کنار</title>
+    <meta content="لیست آهنگ‌های کنار با امکان جست‌وجو و صفحه‌بندی." name="description" />
+    <link href="{% static 'images/logo-mark.svg' %}" rel="icon" type="image/svg+xml" />
+    <link href="{% static 'css/variables.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/base.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/components.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/layout.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/player-v13.css' %}" rel="stylesheet" />
+  </head>
+  <body class="inner-page songs-page">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="index.html">
+          <img alt="نماد کنار" src="{% static 'images/logo-mark.svg' %}" />
+          کنار
+          <span class="sub">KONAR</span>
+        </a>
+
+        <nav class="main-nav">
+          <a href="index.html">خانه</a>
+          <a class="is-active" href="songs.html">آهنگ‌ها</a>
+          <a href="artist.html">هنرمندان</a>
+          <a href="index.html#explore">کاوش</a>
+          <a href="blog.html">وبلاگ</a>
+          <a href="dashboard.html">پنل کاربری</a>
+        </nav>
+
+        <div class="header-actions">
+          <div class="search-box">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-4-4"></path>
+            </svg>
+            <input id="song-search" placeholder="جست‌وجوی آهنگ..." type="search" />
+          </div>
+
+          <a class="btn btn-outline btn-sm" href="login.html">ورود</a>
+
+          <button aria-label="منو" class="nav-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      
+      <section class="page-banner songs-banner">
+        <div class="container songs-banner-inner">
+          <div>
+            <span class="eyebrow">کتابخانه موسیقی</span>
+            <h1 class="page-title">همه آهنگ‌ها</h1>
+            <p class="page-desc">
+              جدیدترین و محبوب‌ترین ترک‌ها را پیدا کن .
+            </p>
+          </div>
+
+          <div class="songs-banner-stats">
+            <div>
+              <strong>{{ app_stats.album_count }}</strong>
+              <span>آلبوم</span>
+            </div>
+            <div>
+                
+              <strong>{{ app_stats.genre_count }}</strong>
+              <span>ژانر</span>
+              
+            </div>
+            <div>
+              <strong>{{ app_stats.artist_count }}</strong>
+              <span>هنرمند</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="list-toolbar">
+            <div>
+              <h2 class="section-title">لیست آلبوم ها</h2>
+              <span class="text-muted">{{ app_stats.album_count }} آلبوم</span>
+            </div>
+
+            <div class="list-filters">
+              
+            </div>
+          </div>
+
+          <div class="track-list songs-list">
+            {% for album in albums %}
+            <div
+              class="track-row is-top"
+              data-artist="{{ album.artist.title }} "
+              data-cover="{{ album.cover.url }}"
+              data-duration="{{ album.duration }}"
+              data-genre="{{ album.genre.first }}"
+              data-popularity="94"
+              data-src="{{ album.audio_file.url }}"
+              data-title="{{ album.title }}"
+              data-track=""
+            >
+              <span class="idx rank-badge">{{ forloop.counter }}</span>
+
+              <a class="cover-sm" href="{% url 'music:album_detail' album.slug %}">
+                <img alt="{{ album.title }}" src="{{ album.cover.url }}" />
+              </a>
+
+              <div class="meta">
+                <h4><a href="{% url 'music:album_detail' album.slug %}">{{ album.title }}</a></h4>
+                <a class="artist-link" href="{% url 'music:artist' album.artist.slug %}">{{ album.artist.name }}</a>
+              </div>
+
+              <div
+                class="waveform mini-wave"
+                data-bars="24"
+                data-progress="0"
+                data-seed="song1"
+                data-waveform=""
+                style="height: 26px"
+              ></div>
+
+              <button
+                aria-label="{{ track.ttile }}"
+                class="icon-btn"
+                data-play-track=""
+                type="button"
+              >
+                <svg fill="currentColor" viewbox="0 0 24 24">
+                  <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
+                </svg>
+              </button>
+
+              
+            </div>
+             {% endfor %}
+          </div>
+        
+
+            <nav class="pagination" aria-label="صفحه‌های آهنگ‌ها">
+     
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}"><</a>
+                    {% endif %}
+                    {% for numb in page_obj.paginator.page_range %}
+                    <a href="?page={{ numb }}" class="{% if page_obj.number == numb %}active{% endif %}">{{  numb }}</a>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">></a>
+                    {% endif %}
+            </nav>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-bottom">
+        <span>© ۱۴۰۴ کنار. تمام حقوق محفوظ است.</span>
+        <span>ساخته‌شده برای عاشقان موسیقی ♪</span>
+      </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/player.js' %}"></script>
+
+    <div class="global-player" data-global-player="" hidden="">
+      <img
+        alt=""
+        class="global-player-cover"
+        data-gp-cover=""
+        src="{% static 'images/cover-01.svg' %}"
+      />
+
+      <div class="global-player-meta">
+        <strong data-gp-title="">—</strong>
+        <span data-gp-artist="">—</span>
+      </div>
+
+      <button aria-label="قبلی" class="icon-btn" data-gp-prev="" type="button">‹</button>
+
+      <button aria-label="پخش" class="play-btn-circle" data-gp-play="" type="button">
+        <svg fill="currentColor" viewbox="0 0 24 24">
+          <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
+        </svg>
+      </button>
+
+      <button aria-label="بعدی" class="icon-btn" data-gp-next="" type="button">›</button>
+
+      <div class="global-player-progress">
+        <input
+          aria-label="پیشرفت پخش"
+          data-gp-progress=""
+          max="100"
+          min="0"
+          type="range"
+          value="0"
+        />
+        <div>
+          <span data-gp-current="">۰:۰۰</span>
+          <span data-gp-duration="">۰:۰۰</span>
+        </div>
+      </div>
+
+      <button aria-label="بستن" class="icon-btn" data-gp-close="" type="button">×</button>
+
+      <audio data-gp-audio="" preload="metadata"></audio>
+    </div>
+  </body>
+</html>

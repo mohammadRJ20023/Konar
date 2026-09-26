@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from music.models import Track, Genre, Artist
+from music.models import Track, Genre, Artist, Album
 
 
 
@@ -12,6 +12,7 @@ class AppStat(models.Model):
     song_count = models.PositiveIntegerField(null=True, blank=True)
     genre_count = models.PositiveIntegerField(null=True, blank=True)
     artist_count = models.PositiveIntegerField(null=True, blank=True)
+    album_count = models.PositiveBigIntegerField(null=True, blank=True)
     
     def save(self, *args, **kwargs):
         if self.user_count is None or self.song_count is None:
@@ -19,6 +20,7 @@ class AppStat(models.Model):
             self.song_count = Track.objects.all().count()
             self.genre_count = Genre.objects.all().count()
             self.artist_count = Artist.objects.all().count()
+            self.album_count = Album.objects.all().count()
         super(AppStat, self).save()
     
     def __str__(self):

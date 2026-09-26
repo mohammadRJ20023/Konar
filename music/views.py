@@ -48,6 +48,15 @@ class Track_List_View(ListView):
         context = super().get_context_data(**kwargs)
         context["app_stats"]= AppStat.objects.first()
         return context
+class Album_List_View(ListView):
+    model = Album
+    template_name = "music/album_list"
+    paginate_by = 15
+    queryset = Album.objects.all()
+    context_object_name = "albums"
     
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["app_stats"] = AppStat.objects.first()
+        return context
     
