@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}وبلاگ تحلیل موسیقی | کنار{% endblock %}
+{% block content %}
+
+<main>
+
+  <!-- ========== هیرو وبلاگ ========== -->
+  <section class="blog-hero">
+    <div class="container">
+      <span class="eyebrow" style="justify-content:center;">نگاه کارشناسی به موسیقی</span>
+      <h1 class="section-title">وبلاگ تحلیل موسیقی کنار</h1>
+      <p class="section-desc">تحلیل آلبوم، مصاحبه با هنرمندان و نگاهی به نظریه‌ی موسیقی — نوشته‌شده برای گوش‌های کنجکاو.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:24px;">
+    <div class="container blog-layout">
+
+      <!-- ========== ستون اصلی ========== -->
+      <div>
+        <!-- پست ویژه -->
+        <article class="featured-post">
+          <img src="{% static 'images/blog-cover-01.svg' %}" alt="">
+          <div class="content">
+            <span class="badge badge-wine" style="width:fit-content;">تحلیل آلبوم</span>
+            <a href="blog-detail.html"><h2>موج هزارم: وقتی الکترونیک با سنت گفت‌وگو می‌کند</h2></a>
+            <p class="text-muted" style="font-size:14.5px;">نگاهی به تازه‌ترین آلبوم آرمان کیا و شیوه‌ای که در آن سازهای الکترونیک با ردیف موسیقی سنتی ایرانی درهم می‌آمیزند.</p>
+            <div class="post-meta">
+              <img src="{% static 'images/avatar-01.svg' %}" alt="">
+              <span>محمد رستمی</span> · <span>۶ شهریور ۱۴۰۴</span> · <span>۸ دقیقه مطالعه</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- شبکه‌ی مقالات -->
+        <div class="blog-grid">
+          <!-- DJANGO: {% for post in posts %} -->
+          <article class="post-card">
+            <a href="blog-detail.html"><img src="{% static 'images/blog-cover-02.svg' %}" alt=""></a>
+            <div class="content">
+              <span class="badge badge-gold">مصاحبه</span>
+              <a href="blog-detail.html"><h3>نیلوفر راد: صدایی از دل سکوت</h3></a>
+              <div class="post-meta">
+                <img src="{% static 'images/avatar-02.svg' %}" alt="">
+                <span>سارا احمدی</span> · <span>۲ شهریور</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="post-card">
+            <a href="blog-detail.html"><img src="{% static 'images/blog-cover-03.svg' %}" alt=""></a>
+            <div class="content">
+              <span class="badge badge-wine">نظریه موسیقی</span>
+              <a href="blog-detail.html"><h3>گام‌ها چگونه احساس می‌سازند؟</h3></a>
+              <div class="post-meta">
+                <img src="{% static 'images/avatar-03.svg' %}" alt="">
+                <span>رضا کمالی</span> · <span>۲۸ مرداد</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="post-card">
+            <a href="blog-detail.html"><img src="{% static 'images/blog-cover-04.svg' %}" alt=""></a>
+            <div class="content">
+              <span class="badge badge-gold">مصاحبه</span>
+              <a href="blog-detail.html"><h3>پویا صدر و ساخت موسیقی برای فیلم</h3></a>
+              <div class="post-meta">
+                <img src="{% static 'images/avatar-01.svg' %}" alt="">
+                <span>محمد رستمی</span> · <span>۲۰ مرداد</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="post-card">
+            <a href="blog-detail.html"><img src="{% static 'images/blog-cover-01.svg' %}" alt=""></a>
+            <div class="content">
+              <span class="badge badge-wine">تحلیل آلبوم</span>
+              <a href="blog-detail.html"><h3>کوچه‌های خیس: یادداشتی بر آلبوم کیان آروین</h3></a>
+              <div class="post-meta">
+                <img src="{% static 'images/avatar-02.svg' %}" alt="">
+                <span>سارا احمدی</span> · <span>۱۲ مرداد</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="post-card">
+            <a href="blog-detail.html"><img src="{% static 'images/blog-cover-02.svg' %}" alt=""></a>
+            <div class="content">
+              <span class="badge badge-gold">راهنما</span>
+              <a href="blog-detail.html"><h3>راهنمای شروع میکس خانگی برای نوازندگان تازه‌کار</h3></a>
+              <div class="post-meta">
+                <img src="{% static 'images/avatar-03.svg' %}" alt="">
+                <span>رضا کمالی</span> · <span>۳ مرداد</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="post-card">
+            <a href="blog-detail.html"><img src="{% static 'images/blog-cover-03.svg' %}" alt=""></a>
+            <div class="content">
+              <span class="badge badge-wine">تحلیل آلبوم</span>
+              <a href="blog-detail.html"><h3>بی‌قرار: تشریح لایه‌های صوتی یک تک‌آهنگ</h3></a>
+              <div class="post-meta">
+                <img src="{% static 'images/avatar-01.svg' %}" alt="">
+                <span>محمد رستمی</span> · <span>۲۲ تیر</span>
+              </div>
+            </div>
+          </article>
+          <!-- DJANGO: {% endfor %} -->
+        </div>
+
+        <div class="pagination">
+          <a href="#">‹</a>
+          <span class="is-active">۱</span>
+          <a href="#">۲</a>
+          <a href="#">۳</a>
+          <a href="#">›</a>
+        </div>
+      </div>
+
+      <!-- ========== سایدبار ========== -->
+      <aside>
+        <div class="sidebar-box">
+          <h4>دسته‌بندی‌ها</h4>
+          <div class="sidebar-tag-list">
+            <a href="blog.html" class="tag is-active">همه</a>
+            <a href="blog.html" class="tag">تحلیل آلبوم</a>
+            <a href="blog.html" class="tag">مصاحبه</a>
+            <a href="blog.html" class="tag">نظریه موسیقی</a>
+            <a href="blog.html" class="tag">راهنما</a>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <h4>محبوب‌ترین یادداشت‌ها</h4>
+          <div class="popular-post">
+            <img src="{% static 'images/blog-cover-01.svg' %}" alt="">
+            <div><h5>موج هزارم: وقتی الکترونیک با سنت گفت‌وگو می‌کند</h5><span>۱۲ هزار بازدید</span></div>
+          </div>
+          <div class="popular-post">
+            <img src="{% static 'images/blog-cover-03.svg' %}" alt="">
+            <div><h5>گام‌ها چگونه احساس می‌سازند؟</h5><span>۸ هزار بازدید</span></div>
+          </div>
+          <div class="popular-post">
+            <img src="{% static 'images/blog-cover-02.svg' %}" alt="">
+            <div><h5>نیلوفر راد: صدایی از دل سکوت</h5><span>۶٫۲ هزار بازدید</span></div>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <h4>خبرنامه‌ی وبلاگ</h4>
+          <p class="text-muted" style="font-size:13.5px; margin-bottom:16px;">تازه‌ترین یادداشت‌های تحلیلی، هر جمعه در ایمیلت.</p>
+          <form>
+            <div class="field"><input type="email" placeholder="ایمیل شما"></div>
+            <button type="submit" class="btn btn-primary btn-block btn-sm">عضویت</button>
+          </form>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+</main>
+
+{% endblock %}

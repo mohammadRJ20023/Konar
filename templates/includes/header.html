@@ -11,7 +11,7 @@
           <a href="{% url 'music:list' %}">آهنگ‌ها</a>
           <a href="artist.html">هنرمندان</a>
           <a href="{% url 'analytics:pannel' %}">کاوش</a>
-          <a href="blog.html">وبلاگ</a>
+          <a href="{% url 'blog:list' %}">وبلاگ</a>
           {% if request.user.is_staff %}
           <a href="{% url 'analytics:pannel' %}">پنل کاربری</a>
           {% else %} 

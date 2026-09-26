@@ -18,8 +18,11 @@ class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category ,on_delete=models.SET_NULL, null=True, blank=True, related_name="articles")
     body = models.TextField()
+    quotes = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='images/blog')
     created_at = models.DateTimeField(auto_now_add=True)
+    view_count = models.PositiveBigIntegerField(default=0)
+    reading_time = models.PositiveBigIntegerField(default=0)
     slug = models.SlugField(blank=True, null=True, allow_unicode=True)
     
     def save(self, *args, **kwargs):
