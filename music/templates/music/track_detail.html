@@ -154,9 +154,41 @@
 </div>
 <div class="tab-panel" data-tab-panel="comments">
 
-<div class="comment-list">
-  <p class="text-muted" style="font-size:14px;">هنوز دیدگاهی برای این ترک ثبت نشده است.</p>
+    {% if comments %}
+
+        <div class="comment-list">
+
+            {% for comment in comments %}
+
+                <div class="comment">
+                    <img alt="" src="{{ comment.user.profile.avatar.url }}"/>
+
+                    <div>
+                        <div class="head">
+                            <h5>{{ comment.user.username }}</h5>
+                            <span>{{ comment.created_at|date:"Y/m/d" }}</span>
+                        </div>
+
+                        <p>{{ comment.body }}</p>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="comment-list">
+            <p class="text-muted" style="font-size:14px;">
+                هنوز دیدگاهی برای این ترک ثبت نشده است.
+            </p>
+        </div>
+
+    {% endif %}
+
 </div>
+
 
 <form class="comment-form" id="comment-form" style="margin-top:26px;">
 <div class="field">
@@ -165,13 +197,14 @@
 </div>
 <div class="field">
 <label for="comment-text">دیدگاه شما</label>
-<textarea id="comment-text" placeholder="نظرت رو درباره‌ی این ترک بنویس..." required="" rows="3"></textarea>
+<textarea id="comment-text" placeholder="نظرت رو درباره‌ی این آلبوم بنویس..." required="" rows="3"></textarea>
 </div>
 <button class="btn btn-primary btn-sm" type="submit">ارسال دیدگاه</button>
 <p class="form-message" id="comment-message" role="status"></p>
 </form>
 </div>
 </div>
+
 <!-- ========== سایدبار ========== -->
 <aside>
 <div class="sidebar-box">

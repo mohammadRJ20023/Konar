@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Track, Artist, Album
+from comments.models import Comment
 from core.models import AppStat
 from django.views.generic import ListView
+from django.contrib.contenttypes.models import ContentType
 
 
 
@@ -11,7 +13,14 @@ def Track_Detail_View(request, slug):
     track.play_count += 1
     track.save(update_fields=["play_count"])
     
-    return render(request, "music/track_detail.html", {"track":track})
+    
+    track_type = ContentType.objects.get_for_model(Track)
+    comments =  Comment.objects.filter(
+        content_type = track_type,
+        object_id = track.id
+    )
+    
+    return render(request, "music/track_detail.html", {"track":track, 'comments':comments})
 
 
 def Artist_Detail_View(request, slug):
