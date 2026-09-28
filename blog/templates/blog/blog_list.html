@@ -34,7 +34,7 @@
             </div>
           </div>
         </article>
-      `{% endif %}
+      {% endif %}
       {% endfor %}
 
         <!-- شبکه‌ی مقالات -->
@@ -85,7 +85,7 @@
            {% for article in popular_articles %} 
           <div class="popular-post">
             
-            <img src="{{ article.image.url }}" alt="">
+          <a href="{% url 'blog:detail' article.slug %}"><img src="{{ article.image.url }}" alt=""></a>
             <div><h5>{{ article.title }}</h5><span>{{ article.view_count }} هزار بازدید</span></div>
             
           </div>

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'music.apps.MusicConfig',
     'analytics.apps.AnalyticsConfig',
     'blog.apps.BlogConfig',
+    'comments.apps.CommentsConfig',
     
     'django_cleanup.apps.CleanupConfig'
 ]
