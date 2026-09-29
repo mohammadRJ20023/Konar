@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Track, Artist, Album
 from comments.models import Comment
 from core.models import AppStat
+from comments.forms import CommentForm
 from django.views.generic import ListView
 from django.contrib.contenttypes.models import ContentType
 
@@ -13,14 +14,32 @@ def Track_Detail_View(request, slug):
     track.play_count += 1
     track.save(update_fields=["play_count"])
     
-    
     track_type = ContentType.objects.get_for_model(Track)
+    
+    
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        parent_id = request.POST.get("parent")
+        if form.is_valid():
+            body = form.cleaned_data.get("body")
+            
+            comments =  Comment.objects.create(
+                    user = request.user,
+                    content_type = track_type,
+                    object_id = track.id,
+                    parent_id = parent_id or None,
+                    body = body
+                )
+            return redirect("music:detail", slug=track.slug)       
+        
+    form = CommentForm()
+    
     comments =  Comment.objects.filter(
         content_type = track_type,
         object_id = track.id
-    )
+    ).order_by('-created_at')
     
-    return render(request, "music/track_detail.html", {"track":track, 'comments':comments})
+    return render(request, "music/track_detail.html", {"track":track, 'comments':comments, 'form':form})
 
 
 def Artist_Detail_View(request, slug):

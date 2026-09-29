@@ -625,13 +625,29 @@ input[type="range"]::-webkit-slider-thumb {
 .comment .head h5 { margin: 0; font-size: 14px; color: var(--text-primary); }
 .comment .head span { font-size: 12px; color: var(--text-faint); }
 .comment p { margin: 0; color: var(--text-secondary); line-height: 1.9; }
-.comment-form {
-  margin-top: 22px;
-  padding: 22px;
-  background: var(--bg-card);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius-md);
+.comment-content { flex: 1; min-width: 0; }
+.comment-reply-btn {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-faint);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
 }
+.comment-reply-btn:hover { color: var(--gold); }
+.comment-replies {
+  display: grid;
+  gap: 10px;
+  margin-right: 58px;
+  margin-top: -4px;
+  padding-right: 14px;
+  border-right: 2px solid var(--line-soft);
+}
+.comment-reply { margin: 0; }
 .comment-form textarea { resize: vertical; min-height: 110px; }
 .form-message.is-success { color: var(--success); }
 

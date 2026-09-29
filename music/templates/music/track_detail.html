@@ -160,18 +160,51 @@
 
             {% for comment in comments %}
 
-                <div class="comment">
+                <div class="comment" data-comment-id="{{ comment.id }}">
                     <img alt="" src="{{ comment.user.profile.avatar.url }}"/>
 
-                    <div>
+                    <div class="comment-content">
                         <div class="head">
                             <h5>{{ comment.user.username }}</h5>
                             <span>{{ comment.created_at|date:"Y/m/d" }}</span>
                         </div>
 
                         <p>{{ comment.body }}</p>
+
+                        <button
+                            class="comment-reply-btn"
+                            data-comment-id="{{ comment.id }}"
+                            type="button">
+                            پاسخ
+                        </button>
                     </div>
                 </div>
+
+                {% if comment.replies.all %}
+                    <div class="comment-replies">
+                        {% for reply in comment.replies.all %}
+                            <div class="comment comment-reply" data-comment-id="{{ reply.id }}">
+                                <img alt="" src="{{ reply.user.profile.avatar.url }}"/>
+
+                                <div class="comment-content">
+                                    <div class="head">
+                                        <h5>{{ reply.user.username }}</h5>
+                                        <span>{{ reply.created_at|date:"Y/m/d" }}</span>
+                                    </div>
+
+                                    <p>{{ reply.body }}</p>
+
+                                    <button
+                                        class="comment-reply-btn"
+                                        data-comment-id="{{ reply.id }}"
+                                        type="button">
+                                        پاسخ
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
 
             {% endfor %}
 
@@ -187,21 +220,23 @@
 
     {% endif %}
 
-</div>
+    <form class="comment-form" id="comment-form" method="post" style="margin-top:26px;">
+        {% csrf_token %}
 
+        <input id="comment-parent" name="parent" type="hidden" value="">
 
-<form class="comment-form" id="comment-form" style="margin-top:26px;">
-<div class="field">
-<label for="comment-name">نام شما</label>
-<input id="comment-name" placeholder="نام خود را وارد کنید" required="" type="text"/>
-</div>
-<div class="field">
-<label for="comment-text">دیدگاه شما</label>
-<textarea id="comment-text" placeholder="نظرت رو درباره‌ی این آلبوم بنویس..." required="" rows="3"></textarea>
-</div>
-<button class="btn btn-primary btn-sm" type="submit">ارسال دیدگاه</button>
-<p class="form-message" id="comment-message" role="status"></p>
-</form>
+        <div class="field">
+            <label for="{{ form.body.id_for_label }}">دیدگاه شما</label>
+            {{ form.body }}
+            {% if form.body.errors %}
+                <div class="form-message">{{ form.body.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button class="btn btn-primary btn-sm" type="submit">ارسال دیدگاه</button>
+        <p class="form-message" id="comment-message" role="status"></p>
+    </form>
+
 </div>
 </div>
 

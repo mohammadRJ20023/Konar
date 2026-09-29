@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTabs();
   generateWaveforms();
   initCounters();
-  initComments();
+  initCommentReplies();
   initDashboard();
   initPagination();
 });
@@ -122,59 +122,34 @@ function initCounters() {
 }
 
 
-/* ---------- دیدگاه‌های صفحه‌ی جزئیات ---------- */
-function initComments() {
+/* ---------- پاسخ به دیدگاه‌ها ---------- */
+function initCommentReplies() {
   const form = document.querySelector('#comment-form');
-  const panel = document.querySelector('[data-tab-panel="comments"]');
-  if (!form || !panel) return;
+  const parentInput = document.querySelector('#comment-parent');
+  const bodyField = document.querySelector('#comment-form textarea, #comment-form [name="body"]');
+  const replyButtons = document.querySelectorAll('.comment-reply-btn');
 
-  let list = panel.querySelector('.comment-list');
-  if (!list) {
-    list = document.createElement('div');
-    list.className = 'comment-list';
-    panel.insertBefore(list, form);
-    panel.querySelectorAll(':scope > .comment').forEach(comment => list.appendChild(comment));
-  }
+  if (!form || !parentInput || !replyButtons.length) return;
 
-  const message = document.querySelector('#comment-message');
+  replyButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const commentId = button.dataset.commentId;
+      if (!commentId) return;
 
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
+      // فقط مشخص می‌کنیم پاسخ متعلق به کدام کامنت است.
+      // هیچ تغییری در ظاهر فرم ایجاد نمی‌شود.
+      parentInput.value = commentId;
 
-    const nameInput = form.querySelector('#comment-name');
-    const textInput = form.querySelector('#comment-text');
-    const name = nameInput?.value.trim();
-    const text = textInput?.value.trim();
+      // کاربر را به همان فرم معمولی کامنت می‌بریم.
+      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-    if (!name || !text) {
-      if (message) {
-        message.className = 'form-message';
-        message.textContent = 'لطفاً نام و متن دیدگاه را وارد کنید.';
+      if (bodyField) {
+        setTimeout(() => bodyField.focus(), 300);
       }
-      return;
-    }
-
-    const item = document.createElement('article');
-    item.className = 'comment comment-new';
-    item.innerHTML = `
-      <img src="assets/images/avatar-01.svg" alt="">
-      <div>
-        <div class="head"><h5></h5><span>همین حالا</span></div>
-        <p></p>
-      </div>
-    `;
-    item.querySelector('h5').textContent = name;
-    item.querySelector('p').textContent = text;
-    list.prepend(item);
-
-    form.reset();
-    if (message) {
-      message.className = 'form-message is-success';
-      message.textContent = 'دیدگاه شما با موفقیت ثبت شد.';
-      setTimeout(() => { message.textContent = ''; }, 3000);
-    }
+    });
   });
 }
+
 
 /* ---------- ناوبری پنل کاربری ---------- */
 function initDashboard() {
